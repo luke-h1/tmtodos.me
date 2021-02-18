@@ -11,7 +11,6 @@
     "client": "npm run dev --prefix frontend",
     "client:start": "npm run start --prefix frontend",
     "dev": "concurrently \"npm run server\" \" npm run client\""
-
   },
   "repository": {
     "type": "git",
@@ -27,9 +26,11 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.17"
   },
