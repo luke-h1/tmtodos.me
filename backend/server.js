@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import colors from "colors";
-
-
+import helmet from 'helmet';
+import cors from 'cors'
 dotenv.config();
 
 // run connect to DB function here
@@ -10,6 +10,13 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+// secure apps by setting various HTTP headers
+app.use(helmet());
+
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors());
+
 
 /* 
 define routes and controller methods here
