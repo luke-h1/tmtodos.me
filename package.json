@@ -9,10 +9,12 @@
     "start": "node backend/server",
     "lint:backend": "eslint ./backend/ --ignore-path .gitignore --ignore-pattern node_modules --fix",
     "lint:frontend": "npm run lint --prefix frontend", 
+    "lint:all": "npm run lint:backend && npm run lint:frontend",
     "server": "nodemon backend/server",
     "frontend": "npm run dev --prefix frontend",
     "client:start": "npm run start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \" npm run frontend\""
+    "dev": "concurrently \"npm run server\" \" npm run frontend\"",
+    "deploy:dev": "sh deploy.sh"
   },
   "repository": {
     "type": "git",
