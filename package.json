@@ -1,7 +1,7 @@
 {
   "name": "take-my-notes.com",
   "version": "1.0.0",
-  "description": "takemynotes.com - full stack notes app",
+  "description": "takemynotes.com -full stack notes app",
   "main": "server.js",
   "type": "module",
   "scripts": {
