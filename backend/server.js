@@ -1,8 +1,9 @@
-import express from "express";
-import dotenv from "dotenv";
-import colors from "colors";
+import express from 'express';
+import dotenv from 'dotenv';
+import colors from 'colors';
 import helmet from 'helmet';
-import cors from 'cors'
+import cors from 'cors';
+
 dotenv.config();
 
 // run connect to DB function here
@@ -17,14 +18,13 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
-
-/* 
+/*
 define routes and controller methods here
 
 */
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "API is running :)" });
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'API is running :)' });
 });
 
 const PORT = process.env.PORT || 5000;
