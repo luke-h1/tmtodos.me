@@ -14,7 +14,9 @@
     "frontend": "npm run dev --prefix frontend",
     "client:start": "npm run start --prefix frontend",
     "dev": "concurrently \"npm run server\" \" npm run frontend\"",
-    "deploy:dev": "sh ./deploy.sh"
+    "deploy:dev": "sh ./deploy.sh",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "repository": {
     "type": "git",

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import helmet from 'helmet';
 import cors from 'cors';
-import connectDB from './config/db.js';
+import connectDB from './config/db.js'; 
 
 dotenv.config();
 
