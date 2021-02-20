@@ -10,7 +10,7 @@
     "lint:frontend": "npm run lint --prefix frontend",
     "lint:all": "npm run lint:backend && npm run lint:frontend",
     "server": "nodemon backend/server",
-    "frontend": "npm run start --prefix frontend",
+    "frontend": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run server\" \" npm run frontend\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
