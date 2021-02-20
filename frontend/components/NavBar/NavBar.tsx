@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { NavIcon } from '../../Icons/NavIcon';
+import { NavIcon } from '../../Icons/Logo';
 import Link from 'next/link';
 import { SignUpButton, SignInButton } from '../Button';
 import {
