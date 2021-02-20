@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { FiCode } from 'react-icons/fi';
+import { VscNote } from 'react-icons/vsc';
 
-export const NavIcon: React.FC = styled(FiCode)`
+export const NavIcon: React.FC = styled(VscNote)`
   color: #000;
   height: 80px;
-  font-size: 20px;
+  font-size: 50px;
+  margin-right: 20px;
 `;
