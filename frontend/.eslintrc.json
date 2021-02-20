@@ -33,6 +33,6 @@
     "react/prop-types": "off",
     "jsx-a11y/anchor-has-content": "off",
     "import/prefer-default-export": "off",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
   }
 }
