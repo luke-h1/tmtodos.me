@@ -1,51 +1,43 @@
+import React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
-    Navbar, Form, FormControl, Button, Nav,
-  } from 'react-bootstrap';
-  
-  const NavTesting = () => {
-    return (
-      <>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-info">Search</Button>
-          </Form>
-        </Navbar>
-        <br />
-        <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light">Search</Button>
-          </Form>
-        </Navbar>
-  
-        <br />
-        <Navbar bg="light" variant="light">
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-primary">Search</Button>
-          </Form>
-        </Navbar>
-      </>
-    );
-  };
-  export default NavTesting;
-  
+  Navbar, Nav, Container,
+} from 'react-bootstrap';
+
+const Header = () => {
+  return (
+    <header>
+      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>Take my notes</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <LinkContainer to="/signup">
+                <Nav.Link>
+                  SignUp
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/login">
+                <Nav.Link>
+                  Sign in
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/login">
+                <Nav.Link>
+                  About
+                </Nav.Link>
+              </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
+  );
+};
+
+export default Header;
