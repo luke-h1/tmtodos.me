@@ -1,5 +1,5 @@
-import { normalize } from 'polished';
-import { css, Global } from '@emotion/react';
+import { normalize } from "polished";
+import { css, Global } from "@emotion/react";
 
 export const Reset = (
   <Global
@@ -31,7 +31,6 @@ export const Reset = (
         color: #000 !important;
         text-decoration: none;
         padding: 0;
-        margin: 0;
       }
       pre {
         background: #000;
