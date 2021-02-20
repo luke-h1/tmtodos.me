@@ -1,4 +1,4 @@
-const title = 'tmn';
+const title = 'Take My Notes';
 const description = 'take my notes';
 
 const SEO = {
