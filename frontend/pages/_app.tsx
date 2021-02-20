@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import type { AppProps } from 'next/app';
 import NavBar from '../components/NavBar';
-import 'tailwindcss/tailwind.css';
+// import 'tailwindcss/tailwind.css';
+import '../styles/tailwind.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
