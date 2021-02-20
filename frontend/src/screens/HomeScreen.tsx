@@ -1,9 +1,9 @@
 import React from 'react';
 
-const HomeScreen: React.FC = () => {
+const HomeScreen = () => {
   return (
     <>
-      <h1>Hello</h1>
+      <h1>Home Screen</h1>
     </>
   );
 };

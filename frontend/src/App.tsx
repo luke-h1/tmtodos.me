@@ -4,13 +4,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import HomeScreen from './screens/HomeScreen';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <NavBar />
       <Route exact path="/" component={HomeScreen} />
-
-      <h1>Hello</h1>
     </Router>
   );
 };
