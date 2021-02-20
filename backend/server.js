@@ -5,6 +5,7 @@ import colors from 'colors';
 import helmet from 'helmet';
 import cors from 'cors';
 import connectDB from './config/db.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running :)' });
 });
+
+app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
