@@ -34,8 +34,6 @@
     "import/prefer-default-export": "off",
     "react/no-unescaped-entities": "off"
   },
-  "globals": {
-    "React": "writable"
-  },
-  "ignorePatterns": ["node_modules/", ".next/"]
+  "ignorePatterns": ["node_modules/", "./public/, build"]
+
 }
