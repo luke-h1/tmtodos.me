@@ -11,12 +11,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-/* 
- Take My notes. A full stack, privacy oriented, open source note taking
-        app ,made with Express, Node, Next, Mongoose, emotion & chakra UI
-
-*/
-
 const HomeScreen = () => (
   <>
     <Container>
@@ -40,14 +34,16 @@ const HomeScreen = () => (
       <Box mb={4}>
         <Text fontSize="40px" mb={4}>Get started today</Text>
         <Button colorScheme="teal" size="md">
-          <Link href="/register">register</Link>
-        </Button>{' '}
+          <Link href="/register">register ⚡️</Link>
+        </Button>
+        {' '}
       </Box>
       <Box>
         <Text fontSize="40px" mb={4}>Already a user ?</Text>
         <Button colorScheme="teal" size="md">
-          <Link href="/signin">Sign In 😎</Link>
-        </Button>{' '}
+          <Link href="/signin">Login 😎</Link>
+        </Button>
+        {' '}
       </Box>
     </Container>
   </>
