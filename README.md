@@ -9,7 +9,7 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 - [React](https://github.com/facebook/react)
 - [Next](https://github.com/vercel/next.js)
 - [typescript](https://github.com/Microsoft/TypeScript)
-- [tailwindcss](https://github.com/tailwindlabs/tailwindcss)
+- [ChakraUI]https://chakra-ui.com/)
 - [emotion](https://github.com/emotion-js/emotion)
 - [polished](https://github.com/styled-components/polished)
 - [react-icons](https://github.com/react-icons/react-icons)
