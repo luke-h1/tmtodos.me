@@ -3,6 +3,7 @@
     "browser": true,
     "es2021": true,
     "jest": true
+
   },
   "extends": ["plugin:react/recommended", "airbnb"],
   "parser": "@typescript-eslint/parser",
@@ -33,7 +34,5 @@
     "jsx-a11y/anchor-has-content": "off",
     "import/prefer-default-export": "off",
     "react/no-unescaped-entities": "off"
-  },
-  "ignorePatterns": ["node_modules/", "./public/, build"]
-
+  }
 }
