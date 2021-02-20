@@ -2,71 +2,72 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint \"./*.{js, jsx,ts,tsx}\" --quiet",
+    "lint:fix": "eslint \"./*.{js, jsx,ts,tsx}\" --quiet --fix"
+  },
   "dependencies": {
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@mdx-js/loader": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "@next/mdx": "^10.0.7",
+    "@tailwindcss/typography": "^0.4.0",
+    "axios": "^0.21.1",
+    "date-fns": "^2.17.0",
+    "gray-matter": "^4.0.2",
+    "next": "10.0.7",
+    "next-seo": "^4.20.0",
+    "polished": "^4.1.1",
+    "prop-types": "^15.7.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.2.0",
+    "remark-autolink-headings": "^6.0.1",
+    "remark-code-titles": "^0.1.1",
+    "remark-slug": "^6.0.0",
+    "webpack-bundle-size-analyzer": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.17",
+    "@babel/plugin-transform-flow-strip-types": "^7.12.13",
+    "@testing-library/dom": "^7.29.6",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
     "@types/jest": "^26.0.20",
-    "@types/node": "^12.20.4",
+    "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
     "@types/react-test-renderer": "^17.0.1",
     "@types/styled-components": "^5.1.7",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
-    "polished": "^4.1.1",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.5.0",
-    "react-dom": "^17.0.1",
-    "react-icons": "^4.2.0",
-    "react-router-bootstrap": "^0.25.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^2.0.5",
-    "typescript": "^4.1.5",
-    "web-vitals": "^1.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet --fix",
-    "type-check": "tsc --noEmit"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@types/react-router-bootstrap": "^0.24.5",
-    "@types/react-router-dom": "^5.1.7",
+    "@types/testing-library__jest-dom": "^5.9.5",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
-    "babel-eslint": "^9.0.0",
+    "autoprefixer": "^10.2.4",
+    "babel-jest": "^26.6.3",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.2.1"
+    "globby": "^11.0.2",
+    "husky": "^5.0.9",
+    "jest": "^26.6.3",
+    "postcss": "^8.2.6",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1",
+    "rehype": "^11.0.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-parse": "^8.0.3",
+    "remark-stringify": "^9.0.1",
+    "tailwindcss": "^2.0.3",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.1.5"
   }
 }
