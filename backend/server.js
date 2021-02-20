@@ -1,29 +1,20 @@
+/* eslint-disable import/prefer-default-export */
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import helmet from 'helmet';
 import cors from 'cors';
-import connectDB from './config/db.js'; 
+import connectDB from './config/db.js';
 
 dotenv.config();
 
-// run connect to DB function here
 connectDB();
 
 const app = express();
 
 app.use(express.json());
-
-// secure apps by setting various HTTP headers
 app.use(helmet());
-
-// enable CORS - Cross Origin Resource Sharing
 app.use(cors());
-
-/*
-define routes and controller methods here
-
-*/
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running :)' });
@@ -31,7 +22,7 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-const start = async (req, res) => {
+async (req, res) => {
   try {
     app.listen(PORT, () => {
       `Server running in ${process.env.NODE_ENV} mode on port ${PORT}.yellow.bold`;
