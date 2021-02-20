@@ -18,15 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "."
+    "baseUrl": "./",
+    "rootDir": "./"
   },
-  "paths": {
-    "@tests/*": ["__tests__/*"],
-    "@pages/*": ["pages/*"],
-    "@components/*": ["components/*"],
-    "@icons/*": ["Icons/*"],
-    "@styles/*": ["styles/*"]
-  },
+ 
   "exclude": [
     "node_modules, __tests__"
   ],
