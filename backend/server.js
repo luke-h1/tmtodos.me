@@ -3,10 +3,12 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import helmet from 'helmet';
 import cors from 'cors';
+import connectDB from './config/db.js';
 
 dotenv.config();
 
 // run connect to DB function here
+connectDB();
 
 const app = express();
 
