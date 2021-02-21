@@ -27,3 +27,8 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 - [nodeJS](https://nodejs.org/en/)
 - [Heroku](https://www.heroku.com/)
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+
+### Tests 
+
+[![Node.js CI](https://github.com/luke-h1/take-my-notes.com/actions/workflows/node.js.yml/badge.svg)](https://github.com/luke-h1/take-my-notes.com/actions/workflows/node.js.yml)
