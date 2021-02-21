@@ -6,3 +6,5 @@ import { addNote } from '../controllers/noteController.js';
 const router = express.Router();
 
 router.route('/').post(protect, addNote);
+
+export default router;
