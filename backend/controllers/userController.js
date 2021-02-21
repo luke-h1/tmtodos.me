@@ -5,8 +5,8 @@ import User from '../models/userModel.js';
 // @desc    Authenticate a user & get JWT token
 // @route   POST /api/users/login
 // @access  public
-// done testing
-
+// done manual testing
+// needs jest unit test
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -28,7 +28,8 @@ const authUser = asyncHandler(async (req, res) => {
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  public
-// done testing
+// done manual testing
+// needs jest unit test
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -59,7 +60,8 @@ const registerUser = asyncHandler(async (req, res) => {
 // @desc    get user profile
 // @route   GET /api/users/profile
 // @access  Private
-// done testing
+// done manual testing
+// needs jest unit test
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -79,7 +81,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
-// done testing
+// done manual testing
+// needs jest unit test
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
@@ -101,14 +104,18 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('user not found');
   }
 });
+
 // @desc    GET all users
 // @route   GET /api/users
 // @access  Private / Admin only
+// done manual testing
+// needs jest unit test
 
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
   res.json(users);
 });
+
 
 // @desc    delete a single user
 // @route   DELETE /api/users/:id
@@ -118,7 +125,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
     await user.remove();
-    res.status(204).json({ message: 'User removed succesfully' });
+    res.status(200).json({ message: 'User removed succesfully' });
   } else {
     res.status(404);
     throw new Error('User not found');
