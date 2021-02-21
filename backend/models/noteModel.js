@@ -7,13 +7,9 @@ const noteSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    note: [
-      {
-        title: { type: String, required: true },
-        body: { type: String, required: true },
-        date: { type: Date, required: false, default: Date.now },
-      },
-    ],
+    title: { type: String, required: true },
+    body: { type: String, required: true },
+    date: { type: Date, required: false, default: Date.now },
   },
   {
     timestamps: true,

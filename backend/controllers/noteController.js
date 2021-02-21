@@ -8,11 +8,7 @@ import Note from '../models/noteModel.js';
 // needs manual testing
 // needs jest test
 const addNote = asyncHandler(async (req, res) => {
-  const {
-    title,
-    body,
-    date,
-  } = req.body;
+  const { title, body, date } = req.body;
   if (title && title.length === 0) {
     res.status(400);
     throw new Error('Enter a Title');
@@ -34,16 +30,13 @@ const addNote = asyncHandler(async (req, res) => {
 // @desc    GET note by ID
 // @route   GET /api/notes/:id
 // @access  Private
-// needs manual testing
+// done manual testing
 // needs jest test
 // need to test if other users can get another users note
 
 const getNoteById = asyncHandler(async (req, res) => {
-  const note = await Note.findById(req.params.id).populate(
-    'user',
-    'body',
-    'title',
-  );
+  const note = await (await Note.findById(req.params.id)).populate('user');
+  console.log(note);
   if (note) {
     res.json(note);
   } else {
@@ -52,7 +45,29 @@ const getNoteById = asyncHandler(async (req, res) => {
   }
 });
 
-export {
-  addNote,
-  getNoteById,
-};
+// @desc    Update Note by ID
+// @route   PUT /api/notes/:id
+// @access  Private
+// needs manual testing
+// needs jest unit test
+const updateNote = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id);
+  if (note) {
+    note.title = req.body.title || note.title;
+    note.body = req.body.body || note.body;
+
+    const updatednote = await note.save();
+    res.json({
+      _id: updatednote._id,
+      title: updatednote.title,
+      body: updatednote.body,
+      user: updatednote.user,
+      updatedAt: updateNote.updatedAt,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+});
+
+export { addNote, getNoteById, updateNote };
