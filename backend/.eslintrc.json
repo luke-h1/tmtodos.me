@@ -19,7 +19,7 @@
     "prefer-destructuring": "off",
     "func-names": "off",
     "max-len": "off",
-    "no-return-await": "off"
-
+    "no-return-await": "off",
+    "import/prefer-default-export": "off"
   }
 }
