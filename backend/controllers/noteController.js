@@ -2,6 +2,14 @@ import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 import Note from '../models/noteModel.js';
 
+/*
+TODO:
+- add custom piece of middlware to make sure the user performing ops on notes is the user who owns the note
+
+- Associate Notes with the user model
+
+*/
+
 // @desc    Create a new Note
 // @route   POST /api/notes
 // @access  Private
@@ -48,7 +56,7 @@ const getNoteById = asyncHandler(async (req, res) => {
 // @desc    Update Note by ID
 // @route   PUT /api/notes/:id
 // @access  Private
-// needs manual testing
+// done manual testing
 // needs jest unit test
 const updateNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
@@ -70,4 +78,22 @@ const updateNote = asyncHandler(async (req, res) => {
   }
 });
 
-export { addNote, getNoteById, updateNote };
+// @desc    delete a single note by ID
+// @route   DELETE /api/notes/:id
+// @access  Private / Admin only
+// done manual testing
+// needs jest unit test
+const deleteNote = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id);
+  if (note) {
+    await note.remove();
+    res.status(200).json({ message: 'Note deleted succesfully' });
+  } else {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+});
+
+export {
+  addNote, getNoteById, updateNote, deleteNote,
+};
