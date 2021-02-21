@@ -41,7 +41,7 @@ const HomeScreen = () => (
       <Box>
         <Text fontSize="40px" mb={4}>Already a user ?</Text>
         <Button colorScheme="teal" size="md">
-          <Link href="/signin">Login 😎</Link>
+          <Link href="/login">Login 😎</Link>
         </Button>
         {' '}
       </Box>
