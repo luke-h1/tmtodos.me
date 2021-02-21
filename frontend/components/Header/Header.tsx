@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Box, Flex, Text, Button,
@@ -7,7 +7,13 @@ import Logo from '../../Icons/Logo';
 
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
 
-const MenuItems = (props) => {
+interface MenuProps {
+  children: string;
+  isLast?: Boolean;
+  href: string;
+}
+
+const MenuItems: React.FC<MenuProps> = (props) => {
   const {
     children, isLast, href, ...rest
   } = props;
@@ -23,8 +29,12 @@ const MenuItems = (props) => {
   );
 };
 
-const Header = (props) => {
-  const [show, setShow] = React.useState(false);
+interface HeaderProps {
+  props: void;
+}
+
+const Header: React.FC<HeaderProps> = (props) => {
+  const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
 
   return (
