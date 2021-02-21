@@ -28,7 +28,8 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  await bcrypt.compare(enteredPassword, this.password);
+  // If you don't return this function for some reason the API throws an error (passwords do not match)
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
 userSchema.pre('save', async function (next) {
