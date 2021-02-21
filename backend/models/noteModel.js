@@ -2,22 +2,18 @@ import mongoose from 'mongoose';
 
 const noteSchema = mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
-    body: {
-      type: String,
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
+    note: [
+      {
+        title: { type: String, required: true },
+        body: { type: String, required: true },
+        date: { type: Date, required: false, default: Date.now },
+      },
+    ],
   },
   {
     timestamps: true,
