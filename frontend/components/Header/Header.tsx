@@ -50,8 +50,8 @@ const Header: React.FC<HeaderProps> = (props) => {
       {...props}
     >
       <Flex align="center">
-        <Link href='/'><a><Logo /></a></Link>
-        
+        <Link href="/"><a><Logo /></a></Link>
+
       </Flex>
 
       <Box display={{ base: 'block', md: 'none' }} onClick={toggleMenu}>
