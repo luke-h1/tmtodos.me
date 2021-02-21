@@ -5,8 +5,8 @@ import Note from '../models/noteModel.js';
 // @desc    Create a new Note
 // @route   POST /api/notes
 // @access  Private
-// needs manual testing 
-// needs jest test 
+// needs manual testing
+// needs jest test
 // need to test if other users can edit another users note
 const addNote = asyncHandler(async (req, res) => {
   const {
