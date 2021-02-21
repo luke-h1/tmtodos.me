@@ -135,26 +135,17 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @desc    delete a single user
 // @route   DELETE /api/users/me/:id
 // @access  Private / only can be used if user is deleting their own profile
-
+// done manual testing
 // needs jest unit test
 const deleteMyUser = asyncHandler(async (req, res) => {
-  const { password, id } = req.body;
   const user = await User.findById(req.params.id);
-  if (req.params.id === user) {
-    console.log('All good :)');
+  if (user) {
+    await user.remove();
+    res.status(200).json({ message: 'User removed succesfully' });
   } else {
-    console.log('No good :(');
-    res.end();
+    res.status(404);
+    throw new Error('User not found');
   }
-  // if (user._id === id) {
-  //   if (user && (await user.matchPassword(password))) {
-  //     user.remove();
-  //     res.status(200).json({ message: 'Your account has been deleted successfully' });
-  //   } else {
-  //     res.status(401);
-  //     throw new Error('Invalid Email or Password');
-  //   }
-  // }
 });
 
 // @desc    GET user by ID
