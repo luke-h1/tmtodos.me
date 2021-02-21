@@ -116,11 +116,11 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
-
 // @desc    delete a single user
 // @route   DELETE /api/users/:id
 // @access  Private / Admin only
-
+// done manual testing
+// needs jest unit test
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
@@ -135,7 +135,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @desc    GET user by ID
 // @route   GET /api/users/:id
 // @access  Private / Admin only
-
+// done manual testing
+// needs jest unit test
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
 
@@ -150,7 +151,8 @@ const getUserById = asyncHandler(async (req, res) => {
 // @desc    Update user
 // @route   PUT /api/users/:id
 // @access  Private / Admin only
-
+// done manual testing
+// needs jest unit test
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
