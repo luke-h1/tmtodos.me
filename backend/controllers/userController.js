@@ -53,9 +53,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Register a new user
-// @route   POST /api/users
-// @access  public
+// @desc    get user profile
+// @route   GET /api/users/profile
+// @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findOne(req.user_id);

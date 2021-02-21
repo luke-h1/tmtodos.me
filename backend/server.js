@@ -21,7 +21,7 @@ app.use(cors());
 app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'API is running :)' });
+  res.send('API is running');
 });
 
 app.use(notFound);
