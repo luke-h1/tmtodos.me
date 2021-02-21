@@ -7,7 +7,6 @@ import Note from '../models/noteModel.js';
 // @access  Private
 // needs manual testing
 // needs jest test
-// need to test if other users can edit another users note
 const addNote = asyncHandler(async (req, res) => {
   const {
     title,
@@ -32,6 +31,28 @@ const addNote = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    GET note by ID
+// @route   GET /api/notes/:id
+// @access  Private
+// needs manual testing
+// needs jest test
+// need to test if other users can get another users note
+
+const getNoteById = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id).populate(
+    'user',
+    'body',
+    'title',
+  );
+  if (note) {
+    res.json(note);
+  } else {
+    res.status(404);
+    throw new Error('Note not found');
+  }
+});
+
 export {
   addNote,
+  getNoteById,
 };
