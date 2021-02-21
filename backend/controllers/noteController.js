@@ -15,6 +15,7 @@ TODO:
 // @access  Private
 // needs manual testing
 // needs jest test
+
 const addNote = asyncHandler(async (req, res) => {
   const { title, body, date } = req.body;
   if (title && title.length === 0) {
