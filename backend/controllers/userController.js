@@ -138,15 +138,22 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // needs jest unit test
 const deleteMyUser = asyncHandler(async (req, res) => {
+  const { password, id } = req.body;
   const user = await User.findById(req.params.id);
-  // Create custom schema method for this....
-  // if (user._id === req.params.id) {
-  //   await user.remove();
-  //   res.send('user removed');
-  // } else if (user._id !== req.params.id) {
-  //   res.send('no auth');
-  // } else {
-  //   res.status(401);
+  if (req.params.id === user) {
+    console.log('All good :)');
+  } else {
+    console.log('No good :(');
+    res.end();
+  }
+  // if (user._id === id) {
+  //   if (user && (await user.matchPassword(password))) {
+  //     user.remove();
+  //     res.status(200).json({ message: 'Your account has been deleted successfully' });
+  //   } else {
+  //     res.status(401);
+  //     throw new Error('Invalid Email or Password');
+  //   }
   // }
 });
 
