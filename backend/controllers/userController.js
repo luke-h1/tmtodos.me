@@ -132,6 +132,24 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    delete a single user
+// @route   DELETE /api/users/me/:id
+// @access  Private / only can be used if user is deleting their own profile
+
+// needs jest unit test
+const deleteMyUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  // Create custom schema method for this....
+  // if (user._id === req.params.id) {
+  //   await user.remove();
+  //   res.send('user removed');
+  // } else if (user._id !== req.params.id) {
+  //   res.send('no auth');
+  // } else {
+  //   res.status(401);
+  // }
+});
+
 // @desc    GET user by ID
 // @route   GET /api/users/:id
 // @access  Private / Admin only
@@ -182,4 +200,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  deleteMyUser,
 };
