@@ -16,6 +16,10 @@
     "no-multi-str": "off",
     "no-unused-expressions": "off",
     "import/extensions": "off",
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "func-names": "off",
+    "max-len": "off",
+    "no-return-await": "off"
+
   }
 }
