@@ -1,7 +1,14 @@
+import React from 'react';
 import { Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const MenuItem = ({
+interface Iprops {
+  children: string;
+  isLast?: Boolean;
+  href: string;
+}
+
+const MenuItem: React.FC<Iprops> = ({
   children, isLast, href, ...rest
 }) => {
   return (
