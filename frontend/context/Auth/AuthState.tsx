@@ -32,7 +32,7 @@ import {
   CLEAR_ERRORS,
 } from '../../constants/userConstants';
 
-const AuthState = (props) => {
+const AuthState = ({ children }) => {
   const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
@@ -151,79 +151,100 @@ const AuthState = (props) => {
                 : e.message,
       });
     }
-
-    const listUsers = async () => {
-      try {
-        dispatch({
-          type: USER_LIST_REQUEST,
-        });
-        const token = localStorage.getItem('token') && localStorage.getItem('token');
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await axios.get('/api/users', config);
-        dispatch({ type: USER_LIST_SUCCESS, payload: data });
-      } catch (e) {
-        dispatch({
-          type: USER_LIST_FAIL,
-          payload:
-              e.response && e.response.data.message
-                ? e.response.data.message
-                : e.message,
-        });
-      }
-    };
-    const deleteUser = async (id) => {
-      try {
-        dispatch({
-          type: USER_DELETE_REQUEST,
-        });
-        const token = localStorage.getItem('token') && localStorage.getItem('token');
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        await axios.delete(`/api/users/${id}`, config);
-        dispatch({ type: USER_DELETE_SUCCESS });
-      } catch (e) {
-        dispatch({
-          type: USER_DELETE_FAIL,
-          payload:
-              e.response && e.response.data.message
-                ? e.response.data.message
-                : e.message,
-        });
-      }
-    };
-
-    const updateUser = async (user) => {
-      try {
-        dispatch({
-          type: USER_UPDATE_REQUEST,
-
-        });
-        const token = localStorage.getItem('token') && localStorage.getItem('token');
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await axios.put(`/api/users/${user._id}`, user, config);
-        dispatch({ type: USER_UPDATE_SUCCESS });
-        dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
-      } catch (e) {
-        dispatch({
-          type: USER_UPDATE_FAIL,
-          payload:
-              e.response && e.response.data.message
-                ? e.response.data.message
-                : e.message,
-        });
-      }
-    };
   };
+
+  const listUsers = async () => {
+    try {
+      dispatch({
+        type: USER_LIST_REQUEST,
+      });
+      const token = localStorage.getItem('token') && localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.get('/api/users', config);
+      dispatch({ type: USER_LIST_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({
+        type: USER_LIST_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+  };
+  const deleteUser = async (id) => {
+    try {
+      dispatch({
+        type: USER_DELETE_REQUEST,
+      });
+      const token = localStorage.getItem('token') && localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await axios.delete(`/api/users/${id}`, config);
+      dispatch({ type: USER_DELETE_SUCCESS });
+    } catch (e) {
+      dispatch({
+        type: USER_DELETE_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+  };
+
+  const updateUser = async (user) => {
+    try {
+      dispatch({
+        type: USER_UPDATE_REQUEST,
+
+      });
+      const token = localStorage.getItem('token') && localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+      dispatch({ type: USER_UPDATE_SUCCESS });
+      dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({
+        type: USER_UPDATE_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+  };
+  return (
+    <AuthContext.Provider
+      value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
+        user: state.user,
+        error: state.error,
+        register,
+        login,
+        logout,
+        getUserDetails,
+        updateUserProfile,
+        listUsers,
+        deleteUser,
+        updateUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
