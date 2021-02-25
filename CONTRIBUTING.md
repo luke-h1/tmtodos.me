@@ -45,26 +45,26 @@ When opening a new issue for a bug, add a title and a clear description with cod
 
 ### Frontend 
 - [React](https://github.com/facebook/react)
-- [Next](https://github.com/vercel/next.js)
-- [typescript](https://github.com/Microsoft/TypeScript)
-- [ChakraUI](https://chakra-ui.com/)
-- [emotion](https://github.com/emotion-js/emotion)
+- [Next](https://github.com/vercel/next.js) - For Frontend 
+- [typescript](https://github.com/Microsoft/TypeScript) - For typing 
+- [ChakraUI](https://chakra-ui.com/) - For the majority of styling 
+- [emotion](https://github.com/emotion-js/emotion) - For custom components 
 - [polished](https://github.com/styled-components/polished)
-- [react-icons](https://github.com/react-icons/react-icons)
-- [vercel](https://vercel.com/)
+- [react-icons](https://github.com/react-icons/react-icons) - For icons 
+- [vercel](https://vercel.com/) - Host the frontend 
 
 ### Backend 
-- [MongoDB](https://www.mongodb.com/)
-- [Helmet](https://helmetjs.github.io/)
-- [colors](https://github.com/marak/colors.js/)
-- [jsonwebtoken](https://jwt.io/)
-- [mongoose](https://mongoosejs.com/)
-- [bcrypt](https://www.npmjs.com/package/bcryptjs)
-- [nodemailer](https://nodemailer.com/about/)
-- [express](http://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/) - Database 
+- [Helmet](https://helmetjs.github.io/) - Security headers 
+- [colors](https://github.com/marak/colors.js/) - Colors in terminal 
+- [jsonwebtoken](https://jwt.io/) - Auth 
+- [mongoose](https://mongoosejs.com/) - Mongoose for interacting with MongoDB 
+- [bcrypt](https://www.npmjs.com/package/bcryptjs) - for hashing passwords
+- [nodemailer](https://nodemailer.com/about/) - for sending emails (eventually)
+- [express](http://expressjs.com/) 
 - [nodeJS](https://nodejs.org/en/)
-- [Heroku](https://www.heroku.com/)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [Heroku](https://www.heroku.com/) - For hosting backend in development environment 
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) - for hosting database in development environment 
 
 
 
@@ -76,7 +76,7 @@ The intention is to keep the amount of third-party dependencies to a minimum. Ho
 
 ## First Time Setup
 
-Please refer to the [README](https://github.com/luke-h1/take-my-notes/#readme)
+Please refer to the [README](https://github.com/luke-h1/take-my-notes.com/blob/main/README.md)
 
 ## Conclusion
 

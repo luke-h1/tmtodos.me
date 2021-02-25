@@ -62,7 +62,7 @@ Create a `.env` file in the root of the project and copy the contents below to t
 ## Contributing
 
 **We welcome any and all contributions that match our engineering standards!**
-Please, check out our [Contribution Guidelines](link here) to know more.
+Please, check out our [Contribution Guidelines](https://github.com/luke-h1/take-my-notes.com/blob/main/CONTRIBUTING.md) to know more.
 
 Have fun 
 ### Tests 
