@@ -33,7 +33,7 @@ const RegisterScreen = () => (
       maxW="660px"
     >
       <form>
-        <FormControl id="firstName">
+        <FormControl id="name">
           <FormLabel>Name</FormLabel>
           <Input type="text" mb={8} />
         </FormControl>
