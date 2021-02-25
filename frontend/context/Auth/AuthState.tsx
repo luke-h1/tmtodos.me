@@ -33,7 +33,8 @@ import {
 
 const AuthState = ({ children }) => {
   const initialState = {
-    token: localStorage.getItem('token'),
+    // eslint-disable-next-line valid-typeof
+    token: null,
     isAuthenticated: false,
     loading: false,
     error: null,
@@ -250,3 +251,4 @@ const AuthState = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+export default AuthState;
