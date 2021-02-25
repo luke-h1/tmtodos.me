@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 
+import { LoginSchema } from '../validations/userValidation';
+
 const LoginScreen = () => (
   <>
     <Flex direction="column" justify="center" align="center" mb="8">
