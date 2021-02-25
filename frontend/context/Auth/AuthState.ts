@@ -67,4 +67,113 @@ const AuthState = (props) => {
       });
     }
   };
+
+  const login = async (email, password) => {
+    try {
+      dispatch({
+        type: USER_LOGIN_REQUEST,
+      });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const { data } = await axios.post(
+        '/api/users/login',
+        { email, password },
+        config,
+      );
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+      localStorage.setItem('token', JSON.stringify(data));
+    } catch (e) {
+      dispatch({
+        type: USER_LOGIN_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+  };
+
+  const logout = async () => {
+    localStorage.removeItem('token');
+    dispatch({ type: USER_LOGOUT });
+    dispatch({ type: USER_DETAILS_RESET });
+    dispatch({ type: USER_LIST_RESET });
+  };
+
+  const getUserDetails = async (id) => {
+    try {
+      dispatch({
+        type: USER_DETAILS_REQUEST,
+      });
+      const token = localStorage.getItem('token') && localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.get(`/api/users/${id}`, config);
+      dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({
+        type: USER_DETAILS_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+  };
+
+  const updateUserProfile = async (user) => {
+    try {
+      dispatch({
+        type: USER_UPDATE_PROFILE_REQUEST,
+      });
+      const token = localStorage.getItem('token') && localStorage.getItem('token');
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put('/api/users/profile', user, config);
+      dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({
+        type: USER_UPDATE_PROFILE_FAIL,
+        payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+      });
+    }
+
+    const listUsers = async () => {
+      try {
+        dispatch({
+          type: USER_LIST_REQUEST,
+        });
+        const token = localStorage.getItem('token') && localStorage.getItem('token');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const { data } = await axios.get('/api/users', config);
+        dispatch({ type: USER_LIST_SUCCESS, payload: data });
+      } catch (e) {
+        dispatch({
+          type: USER_LIST_FAIL,
+          payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+        });
+      }
+    };
+  };
 };
