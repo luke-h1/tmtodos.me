@@ -26,7 +26,7 @@ import {
   USER_UPDATE_FAIL,
   USER_LOADED,
   CLEAR_ERRORS,
-} from '../constants/userConstants';
+} from '../../constants/userConstants';
 
 export default (state, action) => {
   switch (action.type) {
