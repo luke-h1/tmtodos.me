@@ -14,7 +14,7 @@ import {
 const HomeScreen = () => (
   <>
     <Container>
-      <Heading fontSize="40px">Take My Notes</Heading>
+      <Heading fontSize="40px" mb={10}>Take My Notes</Heading>
       <Text fontSize="20px" mb={10}>
         Take My notes is a full stack, privacy oriented, open source note taking
         app
