@@ -34,7 +34,7 @@ import {
 const AuthState = ({ children }) => {
   const initialState = {
     // eslint-disable-next-line valid-typeof
-    token: null,
+    token: typeof window !== 'undefined' ? localStorage.getItem('token') : '{}',
     isAuthenticated: false,
     loading: false,
     error: null,
