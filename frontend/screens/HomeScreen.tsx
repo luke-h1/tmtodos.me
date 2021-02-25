@@ -31,7 +31,7 @@ const HomeScreen = () => (
           <ListItem>Edit your profile</ListItem>
         </UnorderedList>
       </Box>
-      <Box mb={4}>
+      <Box mb={12}>
         <Text fontSize="40px" mb={4}>Get started today</Text>
         <Button colorScheme="teal" size="md">
           <Link href="/register">register ⚡️</Link>
