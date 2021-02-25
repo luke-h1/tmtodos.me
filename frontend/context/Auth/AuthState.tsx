@@ -28,7 +28,6 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
-  USER_LOADED,
   CLEAR_ERRORS,
 } from '../../constants/userConstants';
 
@@ -226,6 +225,8 @@ const AuthState = ({ children }) => {
       });
     }
   };
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <AuthContext.Provider
       value={{
@@ -242,6 +243,7 @@ const AuthState = ({ children }) => {
         listUsers,
         deleteUser,
         updateUser,
+        clearErrors,
       }}
     >
       {children}

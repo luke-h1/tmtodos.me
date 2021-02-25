@@ -24,7 +24,6 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
-  USER_LOADED,
   CLEAR_ERRORS,
 } from '../../constants/userConstants';
 
@@ -33,13 +32,7 @@ export default (state, action) => {
     default: {
       return state;
     }
-    case USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: action.payload,
-      };
+
     case USER_REGISTER_REQUEST:
       return {
         loading: true,

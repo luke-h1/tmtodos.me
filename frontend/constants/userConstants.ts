@@ -1,4 +1,3 @@
-export const USER_LOADED = 'USER_LOADED';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
