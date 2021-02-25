@@ -1,17 +1,47 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+} from '@chakra-ui/react';
 
+import Loader from 'components/Loader';
+import { Button } from 'components/Button';
 import { LoginSchema } from '../validations/userValidation';
 
 const LoginScreen = () => (
   <>
-    <Flex direction="column" justify="center" align="center" mb="8">
+    <Flex direction="column" justify="center" align="center" minH={50} mb={10}>
       <Box>
         <Heading as="h1" fontSize="40px" mb={4}>
           Login
         </Heading>
       </Box>
+    </Flex>
+    <Flex
+      direction="column"
+      justify="center"
+      align="center"
+      mx="auto"
+      maxW="660px"
+    >
+      <form>
+        <FormControl id="email">
+          <FormLabel>Email address</FormLabel>
+          <Input type="email" mb={8} />
+        </FormControl>
+
+        <FormControl id="password">
+          <FormLabel>Password</FormLabel>
+          <Input type="password" />
+        </FormControl>
+      </form>
+      <Button>Login</Button>
     </Flex>
   </>
 );
