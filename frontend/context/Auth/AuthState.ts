@@ -175,5 +175,55 @@ const AuthState = (props) => {
         });
       }
     };
+    const deleteUser = async (id) => {
+      try {
+        dispatch({
+          type: USER_DELETE_REQUEST,
+        });
+        const token = localStorage.getItem('token') && localStorage.getItem('token');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        await axios.delete(`/api/users/${id}`, config);
+        dispatch({ type: USER_DELETE_SUCCESS });
+      } catch (e) {
+        dispatch({
+          type: USER_DELETE_FAIL,
+          payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+        });
+      }
+    };
+
+    const updateUser = async (user) => {
+      try {
+        dispatch({
+          type: USER_UPDATE_REQUEST,
+
+        });
+        const token = localStorage.getItem('token') && localStorage.getItem('token');
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+        dispatch({ type: USER_UPDATE_SUCCESS });
+        dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+      } catch (e) {
+        dispatch({
+          type: USER_UPDATE_FAIL,
+          payload:
+              e.response && e.response.data.message
+                ? e.response.data.message
+                : e.message,
+        });
+      }
+    };
   };
 };
