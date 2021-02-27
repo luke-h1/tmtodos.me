@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import {
   Formik, Form, useField, FieldAttributes,
 } from 'formik';
@@ -9,7 +9,6 @@ import {
   Box,
   Flex,
   Heading,
-  FormControl,
   FormLabel,
   Input,
 } from '@chakra-ui/react';
@@ -17,16 +16,8 @@ import {
 import { Button } from 'components/Button';
 import { RegisterSchema } from 'validations/userValidation';
 import Error from 'components/Error';
+import Loader from 'components/Loader';
 import { register } from '../store/actions/userActions';
-
-// const submitHandler = (e) => {
-//   e.preventDefault();
-//   if (password !== confirmPassword) {
-//     setMessage('Passwords do not match');
-//   } else {
-//     dispatch(register(name, email, password));
-//   }
-// };
 
 const CustomInput: React.FC<FieldAttributes<{}>> = ({
   placeholder,
@@ -93,7 +84,6 @@ const RegisterScreen: React.FC = () => {
             const { name, email, password } = data;
             setSubmitting(true);
             dispatch(register(name, email, password));
-            console.log(data);
             setSubmitting(false);
           }}
         >
@@ -101,6 +91,7 @@ const RegisterScreen: React.FC = () => {
             <>
               <Form>
                 {error && <Error>{error}</Error>}
+                {loading && <Loader />}
                 <CustomInput
                   placeholder="name"
                   name="name"
@@ -133,8 +124,8 @@ const RegisterScreen: React.FC = () => {
                 <Button as="button" disabled={isSubmitting} type="submit">
                   Register
                 </Button>
-                {/* <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+                <pre>{JSON.stringify(values, null, 2)}</pre>
+                <pre>{JSON.stringify(errors, null, 2)}</pre>
               </Form>
             </>
           )}
