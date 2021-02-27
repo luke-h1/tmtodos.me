@@ -15,6 +15,8 @@ import {
 
 import Loader from 'components/Loader';
 import { Button } from 'components/Button';
+import Message from 'components/Message';
+import Error from 'components/Error';
 import { LoginSchema } from '../validations/userValidation';
 import AuthContext from '../context/Auth/authContext';
 
@@ -24,11 +26,11 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
 
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, register } = authContext;
+  const { isAuthenticated, register, error } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -41,7 +43,8 @@ const RegisterScreen = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
-      register();
+      console.log('user registered');
+      register(name, email, password);
     }
   };
 
@@ -54,6 +57,8 @@ const RegisterScreen = () => {
           </Heading>
         </Box>
       </Flex>
+      {message && <Message>{message}</Message>}
+      {error && <Error>{error}</Error>}
       <Flex
         direction="column"
         justify="center"
@@ -61,13 +66,14 @@ const RegisterScreen = () => {
         mx="auto"
         maxW="660px"
       >
-        <form>
+        <form onSubmit={submitHandler}>
           <FormControl id="name">
             <FormLabel>Name</FormLabel>
             <Input
               type="text"
               mb={8}
               onChange={(e) => setName(e.target.value)}
+              value={name}
             />
           </FormControl>
           <FormControl id="email">
@@ -76,6 +82,7 @@ const RegisterScreen = () => {
               type="email"
               mb={8}
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </FormControl>
 
@@ -84,6 +91,7 @@ const RegisterScreen = () => {
             <Input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </FormControl>
           <FormControl id="confirmPassword">
@@ -91,10 +99,12 @@ const RegisterScreen = () => {
             <Input
               type="password"
               onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
             />
           </FormControl>
+          <Button type="submit">Register</Button>
         </form>
-        <Button type="submit">Register</Button>
+
         {/* already have an account to go here */}
       </Flex>
     </>
