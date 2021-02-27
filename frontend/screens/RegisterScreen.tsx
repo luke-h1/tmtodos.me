@@ -18,7 +18,7 @@ import Error from 'components/Error';
 import { LoginSchema } from '../validations/userValidation';
 import { register } from '../store/actions/userActions';
 
-const RegisterScreen = ({ history }) => {
+const RegisterScreen = () => {
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -55,6 +55,7 @@ const RegisterScreen = ({ history }) => {
       </Flex>
       {message && <Message>{message}</Message>}
       {error && <Error>{error}</Error>}
+      {loading && <Loader />}
       <Flex
         direction="column"
         justify="center"
