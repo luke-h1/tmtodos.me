@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
-  Formik, Field, Form, useField, FieldAttributes,
+  Formik, Form, useField, FieldAttributes,
 } from 'formik';
 import * as yup from 'yup';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -15,10 +14,7 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-import Loader from 'components/Loader';
 import { Button } from 'components/Button';
-import Message from 'components/Message';
-import Error from 'components/Error';
 import { RegisterSchema } from 'validations/userValidation';
 import { register } from '../store/actions/userActions';
 
@@ -50,13 +46,8 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
     </>
   );
 };
-const RegisterScreen = () => {
+const RegisterScreen: React.FC = () => {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
   const dispatch = useDispatch();
@@ -82,10 +73,6 @@ const RegisterScreen = () => {
           </Heading>
         </Box>
       </Flex>
-
-      {message && <Message>{message}</Message>}
-      {error && <Error>{error}</Error>}
-      {loading && <Loader />}
       <Flex
         direction="column"
         justify="center"
@@ -95,74 +82,59 @@ const RegisterScreen = () => {
       >
         <Formik
           initialValues={{
-            name: '', email: '', password: '', confirmPassword: '',
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
           }}
           validationSchema={RegisterSchema}
           onSubmit={(data, { setSubmitting }) => {
+            const { name, email, password } = data;
             setSubmitting(true);
-            // make call to backend here...
-            console.log('formdata >', data);
+            dispatch(register(name, email, password));
+            console.log(data);
             setSubmitting(false);
           }}
         >
           {({ values, isSubmitting, errors }) => (
             <>
-              <Flex direction="column" align="center">
-                <CustomInput placeholder="name" name="name" type="input" as={Input} />
-                <CustomInput placeholder="email" name="email" type="input" as={Input} />
-                <CustomInput placeholder="password" name="password" type="input" as={Input} />
-                <CustomInput placeholder="confirmPassword" name="confirmPassword" type="input" as={Input} />
-
-              </Flex>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
+              <Form>
+                <CustomInput
+                  placeholder="name"
+                  name="name"
+                  type="input"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="email"
+                  name="email"
+                  type="input"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="password"
+                  name="password"
+                  type="input"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="confirmPassword"
+                  name="confirmPassword"
+                  type="input"
+                  as={Input}
+                />
+                <pre>{JSON.stringify(values, null, 2)}</pre>
+                <pre>{JSON.stringify(errors, null, 2)}</pre>
+                <Button as="button" disabled={isSubmitting} type="submit">
+                  Register
+                </Button>
+              </Form>
             </>
           )}
-
         </Formik>
-
       </Flex>
-
-      )
-      {/* <form onSubmit={submitHandler}>
-          <FormControl id="name">
-            <FormLabel>Name</FormLabel>
-            <Input
-              type="text"
-              mb={8}
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-          </FormControl>
-          <FormControl id="email">
-            <FormLabel>Email address</FormLabel>
-            <Input
-              type="email"
-              mb={8}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
-          </FormControl>
-
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-          </FormControl>
-          <FormControl id="confirmPassword">
-            <FormLabel>Confirm Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-            />
-          </FormControl>
-          <Button type="submit">Register</Button>
-        </form> */}
     </>
   );
 };
+
 export default RegisterScreen;
