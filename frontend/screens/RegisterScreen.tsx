@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import UserContext from 'context/user/userContext';
-
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Flex,
@@ -10,46 +9,38 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Text,
 } from '@chakra-ui/react';
 
 import Loader from 'components/Loader';
 import { Button } from 'components/Button';
 import Message from 'components/Message';
 import Error from 'components/Error';
+import { LoginSchema } from '../validations/userValidation';
+import { register } from '../store/actions/userActions';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const userContext = useContext(UserContext);
-
-  const {
-    user,
-    loading,
-    logout,
-    error: UserError,
-  } = userContext;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.isAuthenticated) {
+    if (userInfo) {
       router.push('/dashboard');
     }
-  }, [router, user]);
+  }, [router, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      setTimeout(() => {
-        setError('');
-      }, 500);
+      setMessage('Passwords do not match');
     } else {
-      // post to api
+      dispatch(register(name, email, password));
     }
   };
 
@@ -63,8 +54,7 @@ const RegisterScreen = () => {
         </Box>
       </Flex>
       {message && <Message>{message}</Message>}
-      {loading && <Loader />}
-      {UserError && <Error>{UserError}</Error>}
+      {error && <Error>{error}</Error>}
       <Flex
         direction="column"
         justify="center"
@@ -110,18 +100,8 @@ const RegisterScreen = () => {
           </FormControl>
           <Button type="submit">Register</Button>
         </form>
-        <Box p="8" w="500px" borderWidth="1px" rounded="lg" flexBasis="45%">
-          <Heading as="h3" size="lg" mb="2">
-            Not a user ?
-            {' '}
-          </Heading>
-          <Text fontSize="lg">Already have an account ?</Text>
-          <Button>
-            <Link href="/login">
-              <a>login</a>
-            </Link>
-          </Button>
-        </Box>
+
+        {/* already have an account to go here */}
       </Flex>
     </>
   );

@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Box, Flex, Text, Button,
 } from '@chakra-ui/react';
-import UserContext from 'context/user/userContext';
-import { useRouter } from 'next/router';
 import Logo from '../../Icons/Logo';
+
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
 
 interface MenuProps {
@@ -35,20 +34,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const router = useRouter();
-  const userContext = useContext(UserContext);
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const {
-    userInfo,
-    loading,
-    logout,
-    error,
-  } = userContext;
-
-  const logoutUser = () => {
-    logout();
-  };
 
   return (
     <Flex
@@ -81,32 +68,12 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {userInfo && userInfo.token !== null ? (
-            <>
-              <Text mr={25}>
-                Hello 👋
-                {' '}
-                {userInfo.name}
-              </Text>
-              <MenuItems href="/dashboard">Dasboard</MenuItems>
-              <MenuItems href="/notes">Notes</MenuItems>
-              <MenuItems href="/profile">Profile</MenuItems>
-              <Button colorScheme="teal" size="md" onClick={logoutUser}>
-                Logout
-              </Button>
-            </>
-
-          ) : (
-            <>
-              <MenuItems href="/">Home</MenuItems>
-              <MenuItems href="/about">About</MenuItems>
-              <MenuItems href="/register">Register</MenuItems>
-              <Button colorScheme="teal" size="md">
-                <Link href="/login">login 😎</Link>
-              </Button>
-
-            </>
-          )}
+          <MenuItems href="/">Home</MenuItems>
+          <MenuItems href="/about">About</MenuItems>
+          <MenuItems href="/register">Register</MenuItems>
+          <Button colorScheme="teal" size="md">
+            <Link href="/login">login 😎</Link>
+          </Button>
         </Flex>
       </Box>
     </Flex>

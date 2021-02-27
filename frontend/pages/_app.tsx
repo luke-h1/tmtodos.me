@@ -1,23 +1,18 @@
 import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import Header from 'components/Header/Header';
-import axios from 'axios';
-import { useEffect, useContext } from 'react';
-import UserContext from 'context/user/userContext';
-import UserState from '../context/user/UserState';
+import { Provider } from 'react-redux';
+import store from '../store/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const userContext = useContext(UserContext);
-  const { authUser } = userContext;
-
   return (
     <>
-      <UserState>
+      <Provider store={store}>
         <ChakraProvider>
           <Header />
           <Component {...pageProps} />
         </ChakraProvider>
-      </UserState>
+      </Provider>
     </>
   );
 }
