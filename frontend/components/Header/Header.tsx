@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
   Box, Flex, Text, Button,
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import Logo from '../../Icons/Logo';
 
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
@@ -36,7 +37,11 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
   return (
     <Flex
       as="nav"
@@ -68,12 +73,32 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItems href="/">Home</MenuItems>
-          <MenuItems href="/about">About</MenuItems>
-          <MenuItems href="/register">Register</MenuItems>
-          <Button colorScheme="teal" size="md">
-            <Link href="/login">login 😎</Link>
-          </Button>
+          {userInfo.token !== null ? (
+            <>
+              <Text mr={30}>
+                Welcome
+                {' '}
+                <strong>{userInfo.name}</strong>
+              </Text>
+              <MenuItems href="/">Notes</MenuItems>
+              <MenuItems href="/about">Profile</MenuItems>
+
+              <Button colorScheme="teal" size="md" onClick={logoutHandler}>
+                Logout
+              </Button>
+
+            </>
+          ) : (
+            <>
+              <MenuItems href="/">Home</MenuItems>
+              <MenuItems href="/about">About</MenuItems>
+              <MenuItems href="/register">Register</MenuItems>
+              <Button colorScheme="teal" size="md">
+                <Link href="/login">login 😎</Link>
+              </Button>
+            </>
+
+          )}
         </Flex>
       </Box>
     </Flex>
