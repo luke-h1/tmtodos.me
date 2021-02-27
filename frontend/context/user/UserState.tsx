@@ -34,16 +34,7 @@ import {
 
 const UserState = ({ children }) => {
   const initialState = {
-    user: {
-      token:
-      typeof localStorage !== 'undefined'
-        && localStorage.getItem('token'),
-      isAuthenticated: null,
-      user: null,
-    },
-    userDetails: {
-      user: {},
-    },
+    user: null,
     users: [],
     userList: [],
     loading: false,
@@ -70,7 +61,7 @@ const UserState = ({ children }) => {
       );
 
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (e) {
       dispatch({
         type: USER_LOGIN_FAIL,
@@ -92,7 +83,7 @@ const UserState = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        user: state.user,
+        userInfo: state.userInfo,
         userDetails: state.userDetails,
         users: state.users,
         userList: state.userList,

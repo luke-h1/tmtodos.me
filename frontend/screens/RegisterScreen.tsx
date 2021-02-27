@@ -10,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
 } from '@chakra-ui/react';
 
 import Loader from 'components/Loader';
@@ -109,8 +110,18 @@ const RegisterScreen = () => {
           </FormControl>
           <Button type="submit">Register</Button>
         </form>
-
-        {/* already have an account to go here */}
+        <Box p="8" w="500px" borderWidth="1px" rounded="lg" flexBasis="45%">
+          <Heading as="h3" size="lg" mb="2">
+            Not a user ?
+            {' '}
+          </Heading>
+          <Text fontSize="lg">Already have an account ?</Text>
+          <Button>
+            <Link href="/login">
+              <a>login</a>
+            </Link>
+          </Button>
+        </Box>
       </Flex>
     </>
   );
