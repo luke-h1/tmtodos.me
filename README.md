@@ -7,6 +7,7 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 
 ### Frontend 
 - [React](https://github.com/facebook/react)
+- [Redux](https://github.com/reduxjs/redux)
 - [Next](https://github.com/vercel/next.js)
 - [typescript](https://github.com/Microsoft/TypeScript)
 - [ChakraUI](https://chakra-ui.com/)
