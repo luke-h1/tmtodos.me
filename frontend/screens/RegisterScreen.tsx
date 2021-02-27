@@ -41,6 +41,9 @@ const RegisterScreen = ({ history }) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setTimeout(() => {
+        setError('');
+      }, 500);
     } else {
       dispatch(register(name, email, password));
     }
