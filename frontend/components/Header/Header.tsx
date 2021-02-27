@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
   const {
-    user,
+    userInfo,
     loading,
     logout,
     error,
@@ -81,12 +81,12 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {user && user.token !== null ? (
+          {userInfo && userInfo.token !== null ? (
             <>
               <Text mr={25}>
                 Hello 👋
                 {' '}
-                {user.name}
+                {userInfo.name}
               </Text>
               <MenuItems href="/dashboard">Dasboard</MenuItems>
               <MenuItems href="/notes">Notes</MenuItems>

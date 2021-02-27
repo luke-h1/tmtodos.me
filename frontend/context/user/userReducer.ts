@@ -39,7 +39,6 @@ export default (state, action) => {
 
     case USER_REGISTER_SUCCESS:
     case USER_LOGIN_SUCCESS: {
-      localStorage.setItem('user', JSON.stringify(action.payload));
       return {
         userInfo: action.payload,
       };
@@ -68,11 +67,9 @@ export default (state, action) => {
       };
     }
     case USER_LOGOUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
       return {
         ...state,
-        token: null,
-        isAuthenticated: false,
         loading: false,
         user: null,
       };
