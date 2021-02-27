@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   } = userContext;
 
   const logoutUser = () => {
-    // logout user here
+    logout();
     console.log('user logged out now');
   };
 
