@@ -14,7 +14,7 @@ import {
 const HomeScreen = () => (
   <>
     <Container>
-      <Heading fontSize="40px">Take My Notes</Heading>
+      <Heading fontSize="40px" mb={10}>Take My Notes</Heading>
       <Text fontSize="20px" mb={10}>
         Take My notes is a full stack, privacy oriented, open source note taking
         app
@@ -31,7 +31,7 @@ const HomeScreen = () => (
           <ListItem>Edit your profile</ListItem>
         </UnorderedList>
       </Box>
-      <Box mb={4}>
+      <Box mb={12}>
         <Text fontSize="40px" mb={4}>Get started today</Text>
         <Button colorScheme="teal" size="md">
           <Link href="/register">register ⚡️</Link>

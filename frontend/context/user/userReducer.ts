@@ -1,4 +1,3 @@
-import { USER_UPDATE_RESET } from 'constants/userConstants';
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -24,22 +23,15 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
-  USER_LOADED,
   CLEAR_ERRORS,
-} from '../../constants/userConstants';
+} from '../constants/userConstants';
 
 export default (state, action) => {
   switch (action.type) {
     default: {
       return state;
     }
-    case USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        user: action.payload,
-      };
+
     case USER_REGISTER_REQUEST:
       return {
         loading: true,
@@ -49,9 +41,8 @@ export default (state, action) => {
     case USER_LOGIN_SUCCESS: {
       localStorage.setItem('token', action.payload.token);
       return {
-        ...state,
-        ...action.payload,
-        isAuthenticated: true,
+        user: action.payload,
+        error: null,
         loading: false,
         success: true,
       };
