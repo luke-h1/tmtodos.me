@@ -5,8 +5,8 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import Logo from '../../Icons/Logo';
-
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
+import { logout } from '../../store/actions/userActions';
 
 interface MenuProps {
   children: string;
@@ -35,6 +35,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
   const userLogin = useSelector((state) => state.userLogin);
@@ -73,7 +74,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {userInfo.token !== null ? (
+          {userInfo ? (
             <>
               <Text mr={30}>
                 Welcome
@@ -97,7 +98,6 @@ const Header: React.FC<HeaderProps> = (props) => {
                 <Link href="/login">login 😎</Link>
               </Button>
             </>
-
           )}
         </Flex>
       </Box>
