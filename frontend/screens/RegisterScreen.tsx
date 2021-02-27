@@ -8,9 +8,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
-  Center,
-  Stack,
+
 } from '@chakra-ui/react';
 
 import Loader from 'components/Loader';
@@ -18,7 +16,6 @@ import { Button } from 'components/Button';
 import Message from 'components/Message';
 import Error from 'components/Error';
 import { LoginSchema } from '../validations/userValidation';
-import AuthContext from '../context/Auth/authContext';
 
 const RegisterScreen = () => {
   const router = useRouter();
@@ -28,34 +25,7 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, register, error } = authContext;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/');
-    }
-  }, [isAuthenticated, router]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (name === null || email === '' || password === '') {
-      console.log('not valid');
-    } else {
-      register(name, email, password)
-    }
-  };
-
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     setMessage('Passwords do not match');
-  //   } else {
-  //     console.log('user registered');
-  //     register(name, email, password);
-  //   }
-  // };
 
   return (
     <>
