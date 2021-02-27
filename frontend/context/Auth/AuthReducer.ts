@@ -41,12 +41,15 @@ export default (state, action) => {
     case USER_REGISTER_SUCCESS:
     case USER_LOGIN_SUCCESS: {
       localStorage.setItem('token', action.payload.token);
+      console.log(action.payload);
       return {
         ...state,
         ...action.payload,
         isAuthenticated: true,
         loading: false,
+        token: action.payload.token,
         success: true,
+        user: action.payload,
       };
     }
 
