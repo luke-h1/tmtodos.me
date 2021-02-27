@@ -25,7 +25,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/notes', noteRoutes);
 
 app.get('/', (req, res) => {
-  res.send('API is running');
+  res.status(200).json({ message: 'API is running' });
 });
 
 app.use(notFound);
