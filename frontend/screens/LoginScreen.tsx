@@ -24,7 +24,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   const {
-    userInfo,
+    user,
     loading,
     login,
     error,
@@ -36,10 +36,10 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if (userInfo && userInfo.isAuthenticated) {
+    if (user && user.isAuthenticated) {
       router.push('/');
     }
-  }, [userInfo, router]);
+  }, [user, router]);
 
   return (
     <>

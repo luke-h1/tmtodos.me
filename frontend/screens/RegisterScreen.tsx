@@ -28,17 +28,17 @@ const RegisterScreen = () => {
   const userContext = useContext(UserContext);
 
   const {
-    userInfo,
+    user,
     loading,
     logout,
     error: UserError,
   } = userContext;
 
   useEffect(() => {
-    if (userInfo.isAuthenticated) {
+    if (user.isAuthenticated) {
       router.push('/dashboard');
     }
-  }, [router, userInfo]);
+  }, [router, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();

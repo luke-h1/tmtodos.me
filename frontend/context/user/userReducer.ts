@@ -41,14 +41,7 @@ export default (state, action) => {
     case USER_LOGIN_SUCCESS: {
       localStorage.setItem('token', action.payload.token);
       return {
-        userInfo: {
-          ...state,
-          ...action.payload,
-          isAuthenticated: true,
-          token: action.payload.token,
-        },
-        users: [],
-        userList: [],
+        user: action.payload,
         error: null,
         loading: false,
         success: true,

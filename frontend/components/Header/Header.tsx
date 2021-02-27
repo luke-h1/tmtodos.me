@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
   const {
-    userInfo,
+    user,
     loading,
     logout,
     error,
@@ -50,39 +50,6 @@ const Header: React.FC<HeaderProps> = (props) => {
     // logout user here
     console.log('user logged out now');
   };
-
-  const GuestLinks = (
-    <>
-      <MenuItems href="/">Home</MenuItems>
-      <MenuItems href="/about">About</MenuItems>
-      <MenuItems href="/register">Register</MenuItems>
-      <Button colorScheme="teal" size="md">
-        <Link href="/login">login 😎</Link>
-      </Button>
-    </>
-  );
-
-  const AuthLinks = (
-    <>
-      <MenuItems href="/dashboard">Dasboard</MenuItems>
-      <MenuItems href="/notes">Notes</MenuItems>
-      <MenuItems href="/profile">Profile</MenuItems>
-      <Button colorScheme="teal" size="md" onClick={logoutUser}>
-        Logout
-      </Button>
-    </>
-  );
-
-  const AdminLinks = (
-    <>
-      <MenuItems href="/admin/users">Users</MenuItems>
-      <MenuItems href="/admin">Admin</MenuItems>
-      <Button colorScheme="teal" size="md" onClick={logoutUser}>
-        Logout
-      </Button>
-
-    </>
-  );
 
   return (
     <Flex
@@ -115,8 +82,32 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {userInfo.isAuthenticated ? AuthLinks : GuestLinks}
-          {userInfo.isAdmin && AdminLinks}
+          {user && user.token !== null ? (
+            <>
+              <MenuItems href="/">
+                👋
+                {' '}
+                {user.name}
+              </MenuItems>
+              <MenuItems href="/dashboard">Dasboard</MenuItems>
+              <MenuItems href="/notes">Notes</MenuItems>
+              <MenuItems href="/profile">Profile</MenuItems>
+              <Button colorScheme="teal" size="md" onClick={logoutUser}>
+                Logout
+              </Button>
+            </>
+
+          ) : (
+            <>
+              <MenuItems href="/">Home</MenuItems>
+              <MenuItems href="/about">About</MenuItems>
+              <MenuItems href="/register">Register</MenuItems>
+              <Button colorScheme="teal" size="md">
+                <Link href="/login">login 😎</Link>
+              </Button>
+
+            </>
+          )}
         </Flex>
       </Box>
     </Flex>

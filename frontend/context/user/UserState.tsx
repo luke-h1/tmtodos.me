@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
 import UserContext from './userContext';
 import userReducer from './userReducer';
 import setAuthToken from '../../utils/setAuthToken';
@@ -33,11 +34,10 @@ import {
 
 const UserState = ({ children }) => {
   const initialState = {
-    userInfo: {
+    user: {
       token:
       typeof localStorage !== 'undefined'
-        ? localStorage.getItem('token')
-        : '{}',
+        && localStorage.getItem('token'),
       isAuthenticated: null,
       user: null,
     },
@@ -70,7 +70,7 @@ const UserState = ({ children }) => {
       );
 
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
     } catch (e) {
       dispatch({
         type: USER_LOGIN_FAIL,
@@ -83,7 +83,7 @@ const UserState = ({ children }) => {
   };
 
   const logout = async () => {
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem('user');
     dispatch({ type: USER_LOGOUT });
     dispatch({ type: USER_DETAILS_RESET });
     dispatch({ type: USER_LIST_RESET });
@@ -92,9 +92,7 @@ const UserState = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        userInfo: {
-          ...state.userInfo,
-        },
+        user: state.user,
         userDetails: state.userDetails,
         users: state.users,
         userList: state.userList,
