@@ -84,11 +84,11 @@ const Header: React.FC<HeaderProps> = (props) => {
         >
           {user && user.token !== null ? (
             <>
-              <MenuItems href="/">
-                👋
+              <Text mr={25}>
+                Hello 👋
                 {' '}
                 {user.name}
-              </MenuItems>
+              </Text>
               <MenuItems href="/dashboard">Dasboard</MenuItems>
               <MenuItems href="/notes">Notes</MenuItems>
               <MenuItems href="/profile">Profile</MenuItems>
