@@ -18,7 +18,10 @@ import {
 // /api/users/profile
 const AuthState = (props) => {
   const initialState = {
-    token: typeof localStorage !== 'undefined' ? localStorage.getItem('token') : '{}',
+    token:
+      typeof localStorage !== 'undefined'
+        ? localStorage.getItem('token')
+        : '{}',
     isAuthenticated: null,
     loading: true,
     error: null,
@@ -40,6 +43,7 @@ const AuthState = (props) => {
     }
   };
 
+  // register a user & log them in after succesfull registration
   const register = async (name, email, password) => {
     try {
       const config = {
@@ -47,7 +51,11 @@ const AuthState = (props) => {
           'Content-Type': 'application/json',
         },
       };
-      const res = await axios.post('/api/users', { name, email, password }, config);
+      const res = await axios.post(
+        '/api/users',
+        { name, email, password },
+        config,
+      );
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -56,10 +64,57 @@ const AuthState = (props) => {
     } catch (e) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: e.response && e.response.data.message
+        payload:
+          e.response && e.response.data.message
+            ? e.response.data.message
+            : e.message,
+      });
+    }
+  };
+
+  const login = async (email, password) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/api/login',
+        { email, password },
+        config,
+      );
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      loadUser();
+    } catch (e) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload:
+        e.response && e.response.data.message
           ? e.response.data.message
           : e.message,
       });
     }
   };
+  const logout = () => dispatch({ type: LOGOUT });
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+  return (
+    <AuthContext.Provider
+      value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
+        user: state.user,
+        error: state.error,
+        register,
+        loadUser,
+        login,
+        logout,
+        clearErrors,
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  );
 };
+export default AuthState;
