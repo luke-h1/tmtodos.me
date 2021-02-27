@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Flex,
@@ -8,7 +9,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-
 } from '@chakra-ui/react';
 
 import Loader from 'components/Loader';
@@ -16,16 +16,33 @@ import { Button } from 'components/Button';
 import Message from 'components/Message';
 import Error from 'components/Error';
 import { LoginSchema } from '../validations/userValidation';
+import { register } from '../store/actions/userActions';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/dashboard');
+    }
+  }, [router, userInfo]);
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+    } else {
+      dispatch(register(name, email, password));
+    }
+  };
 
   return (
     <>
