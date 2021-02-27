@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Flex,
@@ -15,10 +14,8 @@ import Loader from 'components/Loader';
 import { Button } from 'components/Button';
 import Message from 'components/Message';
 import Error from 'components/Error';
-import { LoginSchema } from '../validations/userValidation';
-import { register } from '../store/actions/userActions';
 
-const RegisterScreen = ({ history }) => {
+const RegisterScreen = () => {
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,10 +23,6 @@ const RegisterScreen = ({ history }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error: userError, userInfo } = userRegister;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userInfo) {
@@ -45,7 +38,7 @@ const RegisterScreen = ({ history }) => {
         setError('');
       }, 500);
     } else {
-      dispatch(register(name, email, password));
+      // post to api
     }
   };
 
@@ -58,9 +51,9 @@ const RegisterScreen = ({ history }) => {
           </Heading>
         </Box>
       </Flex>
-      {message && <Message>{message}</Message>}
+      {/* {message && <Message>{message}</Message>}
       {loading && <Loader />}
-      {error && <Error>{error}</Error>}
+      {error && <Error>{error}</Error>} */}
       <Flex
         direction="column"
         justify="center"

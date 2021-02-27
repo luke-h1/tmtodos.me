@@ -10,26 +10,17 @@ import {
   Text,
   Center,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'components/Loader';
 import { Button } from 'components/Button';
 import Error from 'components/Error';
-
-import { login } from '../store/actions/userActions';
-import { LoginSchema } from '../validations/userValidation';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
-
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    // post
   };
   return (
     <>
@@ -40,8 +31,8 @@ const LoginScreen = () => {
           </Heading>
         </Box>
       </Flex>
-      {loading && <Loader />}
-      {error && <Error>{error}</Error>}
+      {/* {loading && <Loader />}
+      {error && <Error>{error}</Error>} */}
 
       <Flex
         direction="column"
