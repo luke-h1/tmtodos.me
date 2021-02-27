@@ -69,5 +69,19 @@
     "remark-stringify": "^9.0.1",
     "ts-jest": "^26.5.1",
     "typescript": "^4.1.5"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@tests/(.*)$": "<rootDir>/__tests__/$1",
+      "^@pages/(.*)$": "<rootDir>/pages/$1",
+      "^@components/(.*)$": "<rootDir>/components/$1",
+      "^@icons/(.*)$": "<rootDir>/Icons/$1",
+      "^@screens/(.*)$": "<rootDir>/screens/$1",
+      "^@validation/(.*)$": "<rootDir>/validation/$1",
+      "^@context/(.*)$": "<rootDir>/context/$1",
+      "^@utils/(.*)$": "<rootDir>/utils/$1",
+      "^@styles/(.*)$": "<rootDir>/styles/$1",
+      "^@types/(.*)$": "<rootDir>/types/$1"
+    }
   }
 }
