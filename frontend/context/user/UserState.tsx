@@ -82,6 +82,13 @@ const UserState = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    localStorage.removeItem('userInfo');
+    dispatch({ type: USER_LOGOUT });
+    dispatch({ type: USER_DETAILS_RESET });
+    dispatch({ type: USER_LIST_RESET });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -94,6 +101,7 @@ const UserState = ({ children }) => {
         loading: state.loading,
         error: state.error,
         login,
+        logout,
       }}
     >
       {children}

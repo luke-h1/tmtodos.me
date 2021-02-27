@@ -36,7 +36,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if (userInfo.isAuthenticated) {
+    if (userInfo && userInfo.isAuthenticated) {
       router.push('/');
     }
   }, [userInfo, router]);

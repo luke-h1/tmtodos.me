@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import UserContext from 'context/user/userContext';
+
 import {
   Box,
   Flex,
@@ -23,9 +25,17 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const userContext = useContext(UserContext);
+
+  const {
+    userInfo,
+    loading,
+    logout,
+    error: UserError,
+  } = userContext;
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo.isAuthenticated) {
       router.push('/dashboard');
     }
   }, [router, userInfo]);
@@ -51,9 +61,9 @@ const RegisterScreen = () => {
           </Heading>
         </Box>
       </Flex>
-      {/* {message && <Message>{message}</Message>}
+      {message && <Message>{message}</Message>}
       {loading && <Loader />}
-      {error && <Error>{error}</Error>} */}
+      {UserError && <Error>{UserError}</Error>}
       <Flex
         direction="column"
         justify="center"
