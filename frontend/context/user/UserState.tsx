@@ -14,9 +14,9 @@ import {
   CLEAR_ERRORS,
 } from './types';
 
-const UserState = (props) => {
+const UserState = ({ children }) => {
   const initialState = {
-   
+
     userInfo: {
       token:
       typeof localStorage !== 'undefined'
@@ -24,8 +24,10 @@ const UserState = (props) => {
         : '{}',
       isAuthenticated: null,
       error: null,
-      user: null,
     },
+      user: {},
+      users: [],
+    
     loading: false,
 
   };
@@ -109,7 +111,7 @@ const UserState = (props) => {
         clearErrors,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 };
