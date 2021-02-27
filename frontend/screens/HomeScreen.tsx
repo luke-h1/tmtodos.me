@@ -9,6 +9,7 @@ import {
   Text,
   Box,
   Button,
+  Flex,
 } from '@chakra-ui/react';
 
 const HomeScreen = () => (

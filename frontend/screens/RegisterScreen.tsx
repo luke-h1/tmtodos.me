@@ -1,4 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
+import {
+  Formik, Field, Form, useField, FieldAttributes,
+} from 'formik';
+import * as yup from 'yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +19,37 @@ import Loader from 'components/Loader';
 import { Button } from 'components/Button';
 import Message from 'components/Message';
 import Error from 'components/Error';
-import { LoginSchema } from '../validations/userValidation';
+import { RegisterSchema } from 'validations/userValidation';
 import { register } from '../store/actions/userActions';
 
+// const submitHandler = (e) => {
+//   e.preventDefault();
+//   if (password !== confirmPassword) {
+//     setMessage('Passwords do not match');
+//   } else {
+//     dispatch(register(name, email, password));
+//   }
+// };
+
+const CustomInput: React.FC<FieldAttributes<{}>> = ({
+  placeholder,
+  ...props
+}) => {
+  const [field, meta] = useField<{}>(props);
+  const errorText = meta.error && meta.touched ? meta.error : '';
+  return (
+    <>
+      <FormLabel>{placeholder}</FormLabel>
+      <Input
+        {...field}
+        placeholder={placeholder}
+        error={!!errorText}
+        FormErrorMessage={errorText}
+        mb={6}
+      />
+    </>
+  );
+};
 const RegisterScreen = () => {
   const router = useRouter();
   const [name, setName] = useState('');
@@ -35,24 +67,22 @@ const RegisterScreen = () => {
     }
   }, [router, userInfo]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      dispatch(register(name, email, password));
-    }
-  };
-
   return (
     <>
-      <Flex direction="column" justify="center" align="center" minH={50} mb={10}>
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        minH={50}
+        mb={10}
+      >
         <Box>
           <Heading as="h1" fontSize="40px" mb={4}>
             Register
           </Heading>
         </Box>
       </Flex>
+
       {message && <Message>{message}</Message>}
       {error && <Error>{error}</Error>}
       {loading && <Loader />}
@@ -63,7 +93,38 @@ const RegisterScreen = () => {
         mx="auto"
         maxW="660px"
       >
-        <form onSubmit={submitHandler}>
+        <Formik
+          initialValues={{
+            name: '', email: '', password: '', confirmPassword: '',
+          }}
+          validationSchema={RegisterSchema}
+          onSubmit={(data, { setSubmitting }) => {
+            setSubmitting(true);
+            // make call to backend here...
+            console.log('formdata >', data);
+            setSubmitting(false);
+          }}
+        >
+          {({ values, isSubmitting, errors }) => (
+            <>
+              <Flex direction="column" align="center">
+                <CustomInput placeholder="name" name="name" type="input" as={Input} />
+                <CustomInput placeholder="email" name="email" type="input" as={Input} />
+                <CustomInput placeholder="password" name="password" type="input" as={Input} />
+                <CustomInput placeholder="confirmPassword" name="confirmPassword" type="input" as={Input} />
+
+              </Flex>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
+            </>
+          )}
+
+        </Formik>
+
+      </Flex>
+
+      )
+      {/* <form onSubmit={submitHandler}>
           <FormControl id="name">
             <FormLabel>Name</FormLabel>
             <Input
@@ -100,10 +161,7 @@ const RegisterScreen = () => {
             />
           </FormControl>
           <Button type="submit">Register</Button>
-        </form>
-
-        {/* already have an account to go here */}
-      </Flex>
+        </form> */}
     </>
   );
 };
