@@ -6,6 +6,8 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 
 
 ### Frontend 
+
+- Next JS CNA with the following tech stack: 
 - [React](https://github.com/facebook/react)
 - [Redux](https://github.com/reduxjs/redux)
 - [Next](https://github.com/vercel/next.js)
@@ -17,6 +19,7 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 - [vercel](https://vercel.com/)
 
 ### Backend 
+- Express / Node JS API & MongoDB with the following tech stack:
 - [MongoDB](https://www.mongodb.com/)
 - [Helmet](https://helmetjs.github.io/)
 - [colors](https://github.com/marak/colors.js/)
