@@ -39,7 +39,7 @@ const UserState = ({ children }) => {
         ? localStorage.getItem('token')
         : '{}',
       isAuthenticated: null,
-      error: null,
+      user: null,
     },
     userDetails: {
       user: {},
@@ -47,6 +47,7 @@ const UserState = ({ children }) => {
     users: [],
     userList: [],
     loading: false,
+    error: null,
 
   };
 
@@ -63,7 +64,7 @@ const UserState = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        '/api/users/login',
+        'http://localhost:5000/api/users/login',
         { email, password },
         config,
       );
@@ -89,7 +90,8 @@ const UserState = ({ children }) => {
         users: state.users,
         userList: state.userList,
         loading: state.loading,
-        login
+        error: state.error,
+        login,
       }}
     >
       {children}

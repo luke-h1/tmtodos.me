@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
+import UserContext from 'context/user/userContext';
+
 import {
   Box,
   Flex,
@@ -15,12 +17,15 @@ import { Button } from 'components/Button';
 import Error from 'components/Error';
 
 const LoginScreen = () => {
+  const userContext = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { userInfo, loading, login, error } = userContext;
+
   const submitHandler = (e) => {
     e.preventDefault();
-    // post
+    login(email, password);
   };
   return (
     <>
@@ -31,8 +36,8 @@ const LoginScreen = () => {
           </Heading>
         </Box>
       </Flex>
-      {/* {loading && <Loader />}
-      {error && <Error>{error}</Error>} */}
+      {loading && <Loader />}
+      {error && <Error>{error}</Error>}
 
       <Flex
         direction="column"
