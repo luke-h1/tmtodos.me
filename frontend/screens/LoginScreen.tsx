@@ -7,7 +7,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Stack,
+  Text,
+  Center,
 } from '@chakra-ui/react';
 
 import Loader from 'components/Loader';
@@ -43,6 +44,16 @@ const LoginScreen = () => (
       </form>
       <Button>Login</Button>
     </Flex>
+    <Center mt={10}>
+      <Box p="8" w="500px" borderWidth="1px" rounded="lg" flexBasis="45%">
+        <Heading as="h3" size="lg" mb="2">Not a user ? </Heading>
+        <Text fontSize="lg">Register today !</Text>
+        <Button><Link href='/register'><a>
+          Signup
+          </a></Link></Button>
+      </Box>
+    </Center>
+
   </>
 );
 export default LoginScreen;
