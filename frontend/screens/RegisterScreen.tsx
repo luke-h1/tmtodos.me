@@ -25,8 +25,10 @@ const RegisterScreen = ({ history }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const { loading, error: userError, userInfo } = userRegister;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const RegisterScreen = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      setError('Passwords do not match');
     } else {
       dispatch(register(name, email, password));
     }
@@ -54,6 +56,7 @@ const RegisterScreen = ({ history }) => {
         </Box>
       </Flex>
       {message && <Message>{message}</Message>}
+      {loading && <Loader />}
       {error && <Error>{error}</Error>}
       <Flex
         direction="column"
