@@ -34,19 +34,28 @@ const RegisterScreen = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/dashboard');
+      router.push('/');
     }
   }, [isAuthenticated, router]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+    if (name === null || email === '' || password === '') {
+      console.log('not valid');
     } else {
-      console.log('user registered');
-      register(name, email, password);
+      register(name, email, password)
     }
   };
+
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (password !== confirmPassword) {
+  //     setMessage('Passwords do not match');
+  //   } else {
+  //     console.log('user registered');
+  //     register(name, email, password);
+  //   }
+  // };
 
   return (
     <>
