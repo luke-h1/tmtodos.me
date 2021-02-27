@@ -12,6 +12,7 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_LOADED,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -39,7 +40,7 @@ const UserState = ({ children }) => {
     userList: [],
     loading: false,
     error: null,
-
+    isAuth: null,
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
@@ -61,7 +62,6 @@ const UserState = ({ children }) => {
       );
 
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (e) {
       dispatch({
         type: USER_LOGIN_FAIL,
@@ -70,6 +70,19 @@ const UserState = ({ children }) => {
             ? e.response.data.message
             : e.message,
       });
+    }
+  };
+
+  const authUser = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      const res = await axios.get('http://localhost:5000/api/users/auth');
+      dispatch({ type: USER_LOADED, payload: res.data }); // USER DATA
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: USER_LOGIN_FAIL });
     }
   };
 
@@ -89,8 +102,10 @@ const UserState = ({ children }) => {
         userList: state.userList,
         loading: state.loading,
         error: state.error,
+        isAuth: state.isAuth,
         login,
         logout,
+        authUser,
       }}
     >
       {children}

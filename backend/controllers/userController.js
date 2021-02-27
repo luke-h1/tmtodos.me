@@ -25,6 +25,21 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Authenticate a user & get JWT token
+// @route   POST /api/users/auth
+// @access  public
+// done manual testing
+// needs jest unit test
+const authLoggedInUser = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  public
@@ -199,4 +214,5 @@ export {
   getUserById,
   updateUser,
   deleteMyUser,
+  authLoggedInUser,
 };

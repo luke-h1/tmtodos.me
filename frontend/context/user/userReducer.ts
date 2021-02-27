@@ -24,6 +24,7 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   CLEAR_ERRORS,
+  USER_LOADED,
 } from '../constants/userConstants';
 
 export default (state, action) => {
@@ -32,6 +33,14 @@ export default (state, action) => {
       return state;
     }
 
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload,
+      };
+
     case USER_REGISTER_REQUEST:
       return {
         loading: true,
@@ -39,8 +48,14 @@ export default (state, action) => {
 
     case USER_REGISTER_SUCCESS:
     case USER_LOGIN_SUCCESS: {
+      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('userInfo', action.payload);
       return {
         userInfo: action.payload,
+        ...state,
+        ...action.payload,
+        isAuth: true,
+        loading: false,
       };
     }
 

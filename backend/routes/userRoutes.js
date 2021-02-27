@@ -10,6 +10,7 @@ import {
   getUserById,
   updateUser,
   deleteMyUser,
+  authLoggedInUser,
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -31,4 +32,5 @@ router
 
 router.route('/me/:id').delete(protect, deleteMyUser);
 
+router.route('/auth').get(protect, authLoggedInUser);
 export default router;
