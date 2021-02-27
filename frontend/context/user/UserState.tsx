@@ -85,7 +85,9 @@ const UserState = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        userInfo: state.userInfo,
+        userInfo: {
+          ...state.userInfo,
+        },
         userDetails: state.userDetails,
         users: state.users,
         userList: state.userList,

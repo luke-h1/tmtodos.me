@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import UserContext from 'context/user/userContext';
+import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -17,19 +18,38 @@ import { Button } from 'components/Button';
 import Error from 'components/Error';
 
 const LoginScreen = () => {
+  const router = useRouter();
   const userContext = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { userInfo, loading, login, error } = userContext;
+  const {
+    userInfo,
+    loading,
+    login,
+    error,
+  } = userContext;
 
   const submitHandler = (e) => {
     e.preventDefault();
     login(email, password);
   };
+
+  useEffect(() => {
+    if (userInfo.isAuthenticated) {
+      router.push('/');
+    }
+  }, [userInfo, router]);
+
   return (
     <>
-      <Flex direction="column" justify="center" align="center" minH={50} mb={10}>
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        minH={50}
+        mb={10}
+      >
         <Box>
           <Heading as="h1" fontSize="40px" mb={4}>
             Login
@@ -67,22 +87,21 @@ const LoginScreen = () => {
           </FormControl>
           <Button type="submit">Login</Button>
         </form>
-
       </Flex>
       <Center mt={10}>
         <Box p="8" w="500px" borderWidth="1px" rounded="lg" flexBasis="45%">
-          <Heading as="h3" size="lg" mb="2">Not a user ? </Heading>
+          <Heading as="h3" size="lg" mb="2">
+            Not a user ?
+            {' '}
+          </Heading>
           <Text fontSize="lg">Register today !</Text>
           <Button>
             <Link href="/register">
-              <a>
-                Signup
-              </a>
+              <a>Signup</a>
             </Link>
           </Button>
         </Box>
       </Center>
-
     </>
   );
 };
