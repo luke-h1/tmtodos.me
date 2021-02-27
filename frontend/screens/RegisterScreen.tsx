@@ -16,6 +16,7 @@ import {
 
 import { Button } from 'components/Button';
 import { RegisterSchema } from 'validations/userValidation';
+import Error from 'components/Error';
 import { register } from '../store/actions/userActions';
 
 // const submitHandler = (e) => {
@@ -99,6 +100,7 @@ const RegisterScreen: React.FC = () => {
           {({ values, isSubmitting, errors }) => (
             <>
               <Form>
+                {error && <Error>{error}</Error>}
                 <CustomInput
                   placeholder="name"
                   name="name"
@@ -123,11 +125,16 @@ const RegisterScreen: React.FC = () => {
                   type="input"
                   as={Input}
                 />
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
+                <FormLabel as="p" color="red">
+                  {' '}
+                  {errors.confirmPassword && 'Passwords Should Match!'}
+                </FormLabel>
+
                 <Button as="button" disabled={isSubmitting} type="submit">
                   Register
                 </Button>
+                {/* <pre>{JSON.stringify(values, null, 2)}</pre>
+                <pre>{JSON.stringify(errors, null, 2)}</pre> */}
               </Form>
             </>
           )}
