@@ -2,7 +2,7 @@ import {
   Box, ButtonGroup, Flex, IconButton, Link, Stack, Text,
 } from '@chakra-ui/react';
 import * as React from 'react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FiGithub } from 'react-icons/fi';
 import Logo from 'Icons/Logo';
 
 const Footer = () => {
@@ -11,14 +11,15 @@ const Footer = () => {
       as="footer"
       role="contentinfo"
       py="8"
-      bottom={0}
       pos="sticky"
+      minH="100px"
     >
       <Flex
         direction={{ base: 'column', md: 'row' }}
         maxW={{ base: 'xl', md: '7xl' }}
         mx="auto"
-        px={{ base: '6', md: '8' }}
+        py={{ base: '20' }}
+        px={{ base: '12', md: '8' }}
         align="center"
       >
         <a aria-current="page" aria-label="Back to Home page" href="/" rel="home">
@@ -40,7 +41,7 @@ const Footer = () => {
           <Link>License</Link>
         </Stack>
         <ButtonGroup marginStart={{ md: 'auto' }} color="gray.600" variant="ghost">
-          <IconButton as="a" href="https://github.com/luke-h1/take-my-notes.com" target="_blank" aria-label="LinkedIn" icon={<FaGithub />} />
+          <IconButton as="a" href="https://github.com/luke-h1/take-my-notes.com" target="_blank" aria-label="LinkedIn" icon={<FiGithub />} />
         </ButtonGroup>
       </Flex>
     </Box>
