@@ -38,10 +38,11 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
     </>
   );
 };
+
 const RegisterScreen: React.FC = () => {
   const router = useRouter();
   const userRegister = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo} = userRegister;
+  const { loading, error, userInfo } = userRegister;
   const dispatch = useDispatch();
 
   useEffect(() => {
