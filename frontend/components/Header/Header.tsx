@@ -81,8 +81,8 @@ const Header: React.FC<HeaderProps> = (props) => {
                 {' '}
                 <strong>{userInfo.name}</strong>
               </Text>
-              <MenuItems href="/">Notes</MenuItems>
-              <MenuItems href="/about">Profile</MenuItems>
+              <MenuItems href="/notes">Notes</MenuItems>
+              <MenuItems href="/profile">Profile</MenuItems>
 
               <Button colorScheme="teal" size="md" onClick={logoutHandler}>
                 Logout
