@@ -1,10 +1,8 @@
-import React from 'react';
-
 const NoteScreen = () => {
   return (
     <>
+      Note screen
     </>
-
   );
 };
 export default NoteScreen;
