@@ -13,6 +13,10 @@ export const RegisterSchema = yup.object().shape({
 });
 
 export const updateSchema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().email().required(),
+  name: yup.string().test(
+    (name) => !name || name.length === 0,
+  ),
+  email: yup.string().email().test(
+    (email) => !email || email.length === 0,
+  ),
 });

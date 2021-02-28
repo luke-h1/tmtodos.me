@@ -44,9 +44,7 @@ const UserListScreen = () => {
   }, [dispatch, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
-    if (window.confirm('Are you sure')) {
-      dispatch(deleteUser(id));
-    }
+    dispatch(deleteUser(id));
   };
 
   return (
@@ -54,7 +52,7 @@ const UserListScreen = () => {
       <Container>
         <Heading fontSize="40px" mb={10}>Users</Heading>
         <Text fontSize="20px" mb={10}>
-          This page lists users who are currently using this service
+          This page lists users who are currently using this service. Here you can update their details (name + email) or delete them
         </Text>
         {error && <Error>{error}</Error>}
         {loading ? <Loader /> : (
