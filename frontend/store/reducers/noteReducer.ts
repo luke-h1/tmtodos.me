@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   CREATE_NOTE_FAIL,
   CREATE_NOTE_REQUEST,

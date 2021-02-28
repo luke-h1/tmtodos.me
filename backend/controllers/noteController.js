@@ -95,6 +95,16 @@ const deleteNote = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllNotes = asyncHandler(async (req, res) => {
+  const allNotes = await Note.find(req.params._id);
+  if (allNotes) {
+    res.json(allNotes);
+  } else {
+    res.status(404);
+    throw new Error('note not found');
+  }
+});
+
 export {
-  addNote, getNoteById, updateNote, deleteNote,
+  addNote, getNoteById, updateNote, deleteNote, getAllNotes,
 };
