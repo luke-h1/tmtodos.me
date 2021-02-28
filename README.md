@@ -1,6 +1,6 @@
 # [take-my-notes.com](https://take-my-notes.com)
 
-Take My notes. A full stack, privacy oriented, open source note taking app
+Take My notes. A full stack, open source note taking app
 
 ## Tech Stack: 
 
