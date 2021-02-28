@@ -17,8 +17,8 @@ TODO:
 // needs jest test
 
 const addNote = asyncHandler(async (req, res) => {
-  const { title, body, date } = req.body;
-  if (title && title.length === 0) {
+  const { body, date } = req.body;
+  if (body && body.length === 0) {
     res.status(400);
     throw new Error('Enter a Title');
   } else if (body && body.length === 0) {
@@ -26,7 +26,6 @@ const addNote = asyncHandler(async (req, res) => {
     throw new Error('Enter a body');
   } else {
     const note = new Note({
-      title,
       date,
       body,
       user: req.user._id,
