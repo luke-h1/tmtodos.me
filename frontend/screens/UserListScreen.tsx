@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiCheck, FiX } from 'react-icons/fi';
-
+import { MdBuild } from 'react-icons/md';
 import {
   Container,
   Heading,
@@ -15,7 +15,7 @@ import {
   Th,
   Tbody,
   Td,
-  Tfoot,
+  Button,
 
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -77,10 +77,21 @@ const UserListScreen = () => {
                     <Td>{user.name}</Td>
                     <Td isNumeric>{user.email}</Td>
                     <Td isNumeric>{user.isAdmin ? <FiCheck /> : <FiX />}</Td>
+                    <Td>
+                      <Link href={`/admin/user/${user._id}/edit`}>
+                        <Button leftIcon={<MdBuild />} colorScheme="pink" variant="solid">
+                          Edit user
+                        </Button>
+                      </Link>
+                    </Td>
+                    <Td>
+                      <Button leftIcon={<FiX />} colorScheme="red" variant="solid" onClick={() => deleteHandler(user._id)}>
+                        Delete user
+                      </Button>
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
-
             </Table>
           </Flex>
         )}
