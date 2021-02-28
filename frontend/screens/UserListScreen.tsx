@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
+import { FiCheck, FiX } from 'react-icons/fi';
+
 import {
   Container,
   Heading,
@@ -17,6 +19,9 @@ import {
 
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import Loader from 'components/Loader';
+import Message from 'components/Message';
+import Error from 'components/Error';
 import { listUsers, deleteUser } from '../store/actions/userActions';
 
 const UserListScreen = () => {
@@ -39,6 +44,12 @@ const UserListScreen = () => {
     }
   }, [dispatch, successDelete, userInfo]);
 
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteUser(id));
+    }
+  };
+
   return (
     <>
       <Container>
@@ -46,51 +57,34 @@ const UserListScreen = () => {
         <Text fontSize="20px" mb={10}>
           This page lists users who are currently using this service
         </Text>
-        <Flex direction="column" justify="center" align="center">
-          <Table variant="simple">
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>ID</Th>
-                <Th>NAME</Th>
-                <Th isNumeric>Email</Th>
-                <th>Admin User</th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-                <Td isNumeric>25.4</Td>
+        {error && <Error>{error}</Error>}
+        {loading ? <Loader /> : (
+          <Flex direction="column" justify="center" align="center">
+            <Table variant="simple">
+              <TableCaption>Users</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>ID</Th>
+                  <Th>NAME</Th>
+                  <Th isNumeric>Email</Th>
+                  <Th>Admin</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {users.map((user) => (
+                  <Tr>
+                    <Td>{user._id}</Td>
+                    <Td>{user.name}</Td>
+                    <Td isNumeric>{user.email}</Td>
+                    <Td isNumeric>{user.isAdmin ? <FiCheck /> : <FiX />}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
 
-              </Tr>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-                <Td isNumeric>25.4</Td>
+            </Table>
+          </Flex>
+        )}
 
-              </Tr>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-                <Td isNumeric>25.4</Td>
-
-              </Tr>
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-                <Td isNumeric>25.4</Td>
-
-              </Tr>
-            </Tfoot>
-          </Table>
-        </Flex>
       </Container>
     </>
   );
