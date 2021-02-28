@@ -108,7 +108,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       `http://localhost:5000/api/users/${id}`,
       config,
     );
-    dispatch({ type: USER_DETAILS_REQUEST, payload: data });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (e) {
     dispatch({
       type: USER_DETAILS_FAIL,

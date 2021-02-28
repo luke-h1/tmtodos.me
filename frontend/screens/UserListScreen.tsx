@@ -20,7 +20,6 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Loader from 'components/Loader';
-import Message from 'components/Message';
 import Error from 'components/Error';
 import { listUsers, deleteUser } from '../store/actions/userActions';
 
@@ -72,13 +71,13 @@ const UserListScreen = () => {
               </Thead>
               <Tbody>
                 {users.map((user) => (
-                  <Tr>
+                  <Tr key={user._id}>
                     <Td>{user._id}</Td>
                     <Td>{user.name}</Td>
                     <Td isNumeric>{user.email}</Td>
                     <Td isNumeric>{user.isAdmin ? <FiCheck /> : <FiX />}</Td>
                     <Td>
-                      <Link href={`/admin/user/${user._id}/edit`}>
+                      <Link href={`/admin/user/${user._id}`}>
                         <Button leftIcon={<MdBuild />} colorScheme="pink" variant="solid">
                           Edit user
                         </Button>
