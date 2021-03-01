@@ -1,16 +1,24 @@
 import React from 'react';
 import {
-  Flex, Box, Center, Text, Heading, Input, FormLabel, Button,
+  Flex,
+  Box,
+  Center,
+  Text,
+  Heading,
+  Input,
+  FormLabel,
+  Button,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
-import {
-  Formik, Form, useField, FieldAttributes,
-} from 'formik';
+import { Formik, Form, useField, FieldAttributes } from 'formik';
 import * as yup from 'yup';
 import { noteSchema } from 'validations/noteValidation';
 import {
-  createNote, updateNote, deleteNote, listNotes,
+  createNote,
+  updateNote,
+  deleteNote,
+  listNotes,
 } from '../store/actions/noteActions';
 
 const CustomInput: React.FC<FieldAttributes<{}>> = ({
@@ -58,9 +66,8 @@ const NoteScreen = () => {
         >
           <Formik
             initialValues={{
-              email: '',
-              password: '',
-
+              title: '',
+              body: '',
             }}
             validationSchema={noteSchema}
             onSubmit={(data, { setSubmitting }) => {
@@ -82,22 +89,18 @@ const NoteScreen = () => {
                     type="input"
                     as={Input}
                   />
-                  <TextArea
-                    placeholder="body"
-                    size="lg"
-                    name="body"
-
-                  />
+                  <TextArea placeholder="body" name="body" />
 
                   <FormLabel as="p" color="red">
                     {' '}
-                    {errors.email || errors.password ? 'Invalid credentials!' : ''}
+                    {errors.title || errors.body
+                      ? 'Please enter a title / body :)'
+                      : ''}
                   </FormLabel>
 
                   <Button as="button" disabled={isSubmitting} type="submit">
                     Login
                   </Button>
-
                 </Form>
               </Form>
             )}
@@ -107,8 +110,12 @@ const NoteScreen = () => {
         <Center>
           <Box minW="md" borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Box m="5" p="5" as="div">
-              <Heading m="5" mb="0" as="h4" size="md">Title</Heading>
-              <Text m="5" mt="0">Body</Text>
+              <Heading m="5" mb="0" as="h4" size="md">
+                Title
+              </Heading>
+              <Text m="5" mt="0">
+                Body
+              </Text>
             </Box>
           </Box>
         </Center>
