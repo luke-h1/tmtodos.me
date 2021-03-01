@@ -10,7 +10,9 @@ import {
   userDeleteReducer,
   userUpdateReducer,
 } from './reducers/userReducers';
-import { createNoteReducer, deleteNoteReducer, listNotesReducer, updateNoteReducer } from './reducers/noteReducer';
+import {
+  noteCreationReducer, noteDeleteReducer, noteListReducer, noteUpdateReducer,
+} from './reducers/noteReducer';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -20,10 +22,10 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
-  createNote: createNoteReducer,
-  updateNote: updateNoteReducer,
-  deleteNote: deleteNoteReducer,
-  listNotes: listNotesReducer,
+  noteCreator: noteCreationReducer,
+  noteUpdate: noteUpdateReducer,
+  noteDelete: noteDeleteReducer,
+  noteList: noteListReducer,
 
 });
 

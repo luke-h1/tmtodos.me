@@ -13,7 +13,7 @@ import {
   LIST_NOTES_SUCCESS,
 } from '../constants/noteConstants';
 
-export const createNoteReducer = (state = { note: {} }, action) => {
+export const noteCreationReducer = (state = { note: {} }, action) => {
   switch (action.type) {
     case CREATE_NOTE_REQUEST:
       return { loading: true };
@@ -29,7 +29,7 @@ export const createNoteReducer = (state = { note: {} }, action) => {
   }
 };
 
-export const updateNoteReducer = (state = { note: {} }, action) => {
+export const noteUpdateReducer = (state = { note: {} }, action) => {
   switch (action.type) {
     case UPDATE_NOTE_REQUEST:
       return { loading: true };
@@ -45,7 +45,7 @@ export const updateNoteReducer = (state = { note: {} }, action) => {
   }
 };
 
-export const deleteNoteReducer = (state = { note: {} }, action) => {
+export const noteDeleteReducer = (state = { note: {} }, action) => {
   switch (action.type) {
     case DELETE_NOTE_REQUEST:
       return { loading: true };
@@ -61,7 +61,7 @@ export const deleteNoteReducer = (state = { note: {} }, action) => {
   }
 };
 
-export const listNotesReducer = (state = { notes: [] }, action) => {
+export const noteListReducer = (state = { notes: [] }, action) => {
   switch (action.type) {
     case LIST_NOTES_REQUEST:
       return { loading: true };
