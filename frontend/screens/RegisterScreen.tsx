@@ -87,7 +87,7 @@ const RegisterScreen: React.FC = () => {
             setSubmitting(false);
           }}
         >
-          {({ values, isSubmitting, errors }) => (
+          {({ isSubmitting, errors }) => (
             <>
               <Form>
                 {error && <Error>{error}</Error>}
@@ -124,8 +124,6 @@ const RegisterScreen: React.FC = () => {
                 <Button as="button" disabled={isSubmitting} type="submit">
                   Register
                 </Button>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
               </Form>
             </>
           )}

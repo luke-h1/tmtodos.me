@@ -66,11 +66,9 @@ const NoteScreen = () => {
 
           />
           <Button onClick={handleSubmit}>Submit</Button>
-          {console.log(notes)}
         </Flex>
         <Flex direction="column" justify="center" align="center">
-          {notes.length !== 0 && notes.map((note) => (
-            <>
+            {/* <>
               <Box
                 shadow="sm"
                 rounded="md"
@@ -93,8 +91,8 @@ const NoteScreen = () => {
                   {format(parseISO(note.updatedAt), 'MMMM dd, yyyy')}
                 </Text>
               </Box>
-            </>
-          ))}
+            </> */}
+
         </Flex>
       </Flex>
     </Center>
