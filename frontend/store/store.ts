@@ -22,11 +22,10 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
-  noteCreator: noteCreationReducer,
+  noteCreate: noteCreationReducer,
   noteUpdate: noteUpdateReducer,
   noteDelete: noteDeleteReducer,
   noteList: noteListReducer,
-
 });
 
 const userInfoFromStorage = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('userInfo') || '{}');

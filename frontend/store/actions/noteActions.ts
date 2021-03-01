@@ -14,7 +14,7 @@ import {
   LIST_NOTES_SUCCESS,
 } from '../constants/noteConstants';
 
-export const createNote = (user, title, body) => async (dispatch, getState) => {
+export const createNote = (title, body) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CREATE_NOTE_REQUEST,
@@ -30,9 +30,13 @@ export const createNote = (user, title, body) => async (dispatch, getState) => {
     };
     const { data } = await axios.post(
       'http://localhost:5000/api/notes',
+      { title, body },
       config,
     );
     dispatch({ type: CREATE_NOTE_SUCCESS, payload: data });
+    dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
+
+    console.log(data);
   } catch (e) {
     console.error(e);
     dispatch({
@@ -112,7 +116,7 @@ export const deleteNote = (user, id, title, body) => async (
   }
 };
 
-export const listNotes = (user) => async (dispatch, getState) => {
+export const listNotes = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: LIST_NOTES_REQUEST,
@@ -127,7 +131,7 @@ export const listNotes = (user) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      'http://localhost:5000/api/notes/',
+      `http://localhost:5000/api/notes/me/${userInfo._id}`,
       config,
     );
     dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
