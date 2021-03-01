@@ -21,7 +21,7 @@
     "@sentry/webpack-plugin": "^1.14.1",
     "@zeit/next-source-maps": "^0.0.3",
     "axios": "^0.21.1",
-    "date-fns": "^2.17.0",
+    "date-fns": "^2.18.0",
     "formik": "^2.2.6",
     "framer-motion": "^3.6.2",
     "gray-matter": "^4.0.2",

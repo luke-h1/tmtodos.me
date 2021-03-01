@@ -7,6 +7,8 @@ import TextArea from 'components/TextArea';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
 import { Button } from 'components/Button';
+import { parseISO, format } from 'date-fns';
+
 import {
   createNote,
   updateNote,
@@ -28,11 +30,8 @@ const NoteScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createNote(title, body));
-  };
-
-  useEffect(() => {
     dispatch(listNotes());
-  }, [createNote]);
+  };
 
   return (
     <Center>
@@ -67,8 +66,36 @@ const NoteScreen = () => {
 
           />
           <Button onClick={handleSubmit}>Submit</Button>
+          {console.log(notes)}
         </Flex>
-
+        <Flex direction="column" justify="center" align="center">
+          {notes.length !== 0 && notes.map((note) => (
+            <>
+              <Box
+                shadow="sm"
+                rounded="md"
+                data-testid="card"
+                maxW="md"
+                minW="lg"
+                mt={4}
+                borderWidth="1px"
+                borderRadius="md"
+                overflow="hidden"
+                _hover={{ color: '#2EC0F9' }}
+              >
+                <Heading m="5" mb="2" as="h1" size="lg">
+                  {note.title}
+                </Heading>
+                <Text m="5" mt="2" mb="4">
+                  {note.body}
+                </Text>
+                <Text m="5" mt="2" mb="4">
+                  {format(parseISO(note.updatedAt), 'MMMM dd, yyyy')}
+                </Text>
+              </Box>
+            </>
+          ))}
+        </Flex>
       </Flex>
     </Center>
   );
