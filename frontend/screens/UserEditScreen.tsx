@@ -38,8 +38,6 @@ const UserEditScreen = () => {
   } = userUpdate;
 
   useEffect(() => {
-    console.log(id);
-
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       router.push('/admin/userlist');

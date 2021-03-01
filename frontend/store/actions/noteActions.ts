@@ -35,10 +35,7 @@ export const createNote = (title, body) => async (dispatch, getState) => {
     );
     dispatch({ type: CREATE_NOTE_SUCCESS, payload: data });
     dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
-
-    console.log(data);
   } catch (e) {
-    console.error(e);
     dispatch({
       type: CREATE_NOTE_FAIL,
       payload:
