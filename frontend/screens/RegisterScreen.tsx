@@ -46,7 +46,7 @@ const RegisterScreen: React.FC = () => {
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/dashboard');
+      router.push('/notes');
     }
   }, [router, userInfo]);
 
