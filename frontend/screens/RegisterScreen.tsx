@@ -107,13 +107,13 @@ const RegisterScreen: React.FC = () => {
                 <CustomInput
                   placeholder="password"
                   name="password"
-                  type="input"
+                  type="password"
                   as={Input}
                 />
                 <CustomInput
                   placeholder="confirmPassword"
                   name="confirmPassword"
-                  type="input"
+                  type="password"
                   as={Input}
                 />
                 <FormLabel as="p" color="red">
