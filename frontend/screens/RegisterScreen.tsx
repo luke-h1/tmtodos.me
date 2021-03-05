@@ -15,25 +15,6 @@ import Error from 'components/Error';
 import Loader from 'components/Loader';
 import { register } from '../store/actions/userActions';
 
-const CustomInput: React.FC<FieldAttributes<{}>> = ({
-  placeholder,
-  ...props
-}) => {
-  const [field, meta] = useField<{}>(props);
-  const errorText = meta.error && meta.touched ? meta.error : '';
-  return (
-    <>
-      <FormLabel>{placeholder}</FormLabel>
-      <Input
-        {...field}
-        placeholder={placeholder}
-        error={!!errorText}
-        FormErrorMessage={errorText}
-        mb={6}
-      />
-    </>
-  );
-};
 const RegisterScreen: React.FC = () => {
   const router = useRouter();
   const userRegister = useSelector((state) => state.userRegister);
