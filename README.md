@@ -1,11 +1,12 @@
 # [take-my-notes.com](https://take-my-notes.com)
 
-Take My notes. A full stack, privacy oriented, open source note taking app
+Take My notes. A full stack, open source note taking app
 
 ## Tech Stack: 
 
 
 ### Frontend 
+
 - [React](https://github.com/facebook/react)
 - [Redux](https://github.com/reduxjs/redux)
 - [Next](https://github.com/vercel/next.js)
@@ -17,13 +18,13 @@ Take My notes. A full stack, privacy oriented, open source note taking app
 - [vercel](https://vercel.com/)
 
 ### Backend 
+- Express / Node JS API & MongoDB with the following tech stack:
 - [MongoDB](https://www.mongodb.com/)
 - [Helmet](https://helmetjs.github.io/)
 - [colors](https://github.com/marak/colors.js/)
 - [jsonwebtoken](https://jwt.io/)
 - [mongoose](https://mongoosejs.com/)
 - [bcrypt](https://www.npmjs.com/package/bcryptjs)
-- [nodemailer](https://nodemailer.com/about/)
 - [express](http://expressjs.com/)
 - [nodeJS](https://nodejs.org/en/)
 - [Heroku](https://www.heroku.com/)

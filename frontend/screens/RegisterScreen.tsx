@@ -1,61 +1,70 @@
-import { useState, useEffect, useContext } from 'react';
-import Link from 'next/link';
+import React, { useEffect } from 'react';
+import {
+  Formik, Form, useField, FieldAttributes,
+} from 'formik';
+import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Flex,
   Heading,
-  FormControl,
   FormLabel,
   Input,
 } from '@chakra-ui/react';
 
-import Loader from 'components/Loader';
 import { Button } from 'components/Button';
-import Message from 'components/Message';
+import { RegisterSchema } from 'validations/userValidation';
 import Error from 'components/Error';
-import { LoginSchema } from '../validations/userValidation';
+import Loader from 'components/Loader';
 import { register } from '../store/actions/userActions';
 
-const RegisterScreen = () => {
+const CustomInput: React.FC<FieldAttributes<{}>> = ({
+  placeholder,
+  ...props
+}) => {
+  const [field, meta] = useField<{}>(props);
+  const errorText = meta.error && meta.touched ? meta.error : '';
+  return (
+    <>
+      <FormLabel>{placeholder}</FormLabel>
+      <Input
+        {...field}
+        placeholder={placeholder}
+        error={!!errorText}
+        FormErrorMessage={errorText}
+        mb={6}
+      />
+    </>
+  );
+};
+const RegisterScreen: React.FC = () => {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/dashboard');
+      router.push('/notes');
     }
   }, [router, userInfo]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      dispatch(register(name, email, password));
-    }
-  };
-
   return (
     <>
-      <Flex direction="column" justify="center" align="center" minH={50} mb={10}>
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        minH={50}
+        mb={10}
+      >
         <Box>
           <Heading as="h1" fontSize="40px" mb={4}>
             Register
           </Heading>
         </Box>
       </Flex>
-      {message && <Message>{message}</Message>}
-      {error && <Error>{error}</Error>}
-      {loading && <Loader />}
       <Flex
         direction="column"
         justify="center"
@@ -63,48 +72,65 @@ const RegisterScreen = () => {
         mx="auto"
         maxW="660px"
       >
-        <form onSubmit={submitHandler}>
-          <FormControl id="name">
-            <FormLabel>Name</FormLabel>
-            <Input
-              type="text"
-              mb={8}
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-          </FormControl>
-          <FormControl id="email">
-            <FormLabel>Email address</FormLabel>
-            <Input
-              type="email"
-              mb={8}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
-          </FormControl>
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          validationSchema={RegisterSchema}
+          onSubmit={(data, { setSubmitting }) => {
+            const { name, email, password } = data;
+            setSubmitting(true);
+            dispatch(register(name, email, password));
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting, errors }) => (
+            <>
+              <Form>
+                {error && <Error>{error}</Error>}
+                {loading && <Loader />}
+                <CustomInput
+                  placeholder="name"
+                  name="name"
+                  type="input"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="email"
+                  name="email"
+                  type="input"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="password"
+                  name="password"
+                  type="password"
+                  as={Input}
+                />
+                <CustomInput
+                  placeholder="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  as={Input}
+                />
+                <FormLabel as="p" color="red">
+                  {' '}
+                  {errors.confirmPassword && 'Passwords Should Match!'}
+                </FormLabel>
 
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-          </FormControl>
-          <FormControl id="confirmPassword">
-            <FormLabel>Confirm Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-            />
-          </FormControl>
-          <Button type="submit">Register</Button>
-        </form>
-
-        {/* already have an account to go here */}
+                <Button as="button" disabled={isSubmitting} type="submit">
+                  Register
+                </Button>
+              </Form>
+            </>
+          )}
+        </Formik>
       </Flex>
     </>
   );
 };
+
 export default RegisterScreen;

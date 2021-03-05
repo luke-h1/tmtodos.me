@@ -1,51 +1,35 @@
 import React from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 import {
-  ListItem,
-  UnorderedList,
-  Container,
-  Heading,
   Text,
-  Box,
-  Button,
+  Flex,
 } from '@chakra-ui/react';
+import { Button } from 'components/Button';
 
-const HomeScreen = () => (
-  <>
-    <Container>
-      <Heading fontSize="40px" mb={10}>Take My Notes</Heading>
-      <Text fontSize="20px" mb={10}>
-        Take My notes is a full stack, privacy oriented, open source note taking
-        app
-      </Text>
-      <Box mb={10}>
-        <Text fontSize="25px">Features</Text>
-        <UnorderedList>
-          <ListItem>
-            MongoDB for storing your notes no matter what device you're on
-          </ListItem>
-          <ListItem>Express / Node for a performant, lightweight API</ListItem>
-          <ListItem>Next JS for a great frontend experience</ListItem>
-          <ListItem>Perform full CRUD operations on Notes</ListItem>
-          <ListItem>Edit your profile</ListItem>
-        </UnorderedList>
-      </Box>
-      <Box mb={12}>
-        <Text fontSize="40px" mb={4}>Get started today</Text>
-        <Button colorScheme="teal" size="md">
-          <Link href="/register">register ⚡️</Link>
-        </Button>
-        {' '}
-      </Box>
-      <Box>
-        <Text fontSize="40px" mb={4}>Already a user ?</Text>
-        <Button colorScheme="teal" size="md">
-          <Link href="/login">Login 😎</Link>
-        </Button>
-        {' '}
-      </Box>
-    </Container>
-  </>
-);
+const HomeScreen = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  return (
+    <>
+      <Flex direction="column" align="center">
+        <Text fontSize="60px" mb={10}>
+          Take My Notes
+        </Text>
+        {userInfo ? (
+          <Text fontSize="30px">
+            👋
+            {' '}
+            {' '}
+            {userInfo.name}
+          </Text>
+        ) : (
+          <Link href="/register"><Button>Sign Up</Button></Link>
+        )}
+      </Flex>
+    </>
+  );
+};
 export default HomeScreen;

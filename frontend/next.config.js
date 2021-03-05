@@ -9,7 +9,9 @@ module.exports = {
     if (ANALYZE) {
       config.plugins.push(new WebpackBundleSizeAnalyzerPlugin('stats.txt'));
     }
-
     return config;
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };

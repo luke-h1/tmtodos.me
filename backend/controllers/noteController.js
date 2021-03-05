@@ -17,8 +17,10 @@ TODO:
 // needs jest test
 
 const addNote = asyncHandler(async (req, res) => {
-  const { title, body, date } = req.body;
-  if (title && title.length === 0) {
+  const {
+    title, body, date, id,
+  } = req.body;
+  if (body.length === 0 || title.length === 0) {
     res.status(400);
     throw new Error('Enter a Title');
   } else if (body && body.length === 0) {
@@ -26,10 +28,10 @@ const addNote = asyncHandler(async (req, res) => {
     throw new Error('Enter a body');
   } else {
     const note = new Note({
-      title,
       date,
       body,
       user: req.user._id,
+      id: req.body.id,
     });
     const createdNote = await note.save();
     res.status(201).json(createdNote);
@@ -95,6 +97,21 @@ const deleteNote = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    get all notes associated with a given user
+// @route   GET /api/notes/me/:id
+// @access  Private / Admin only
+// done manual testing
+// needs jest unit test
+const getAllNotes = asyncHandler(async (req, res) => {
+  const allNotes = await Note.find(req.params._id);
+  if (allNotes) {
+    res.json(allNotes);
+  } else {
+    res.status(404);
+    throw new Error('note not found');
+  }
+});
+
 export {
-  addNote, getNoteById, updateNote, deleteNote,
+  addNote, getNoteById, updateNote, deleteNote, getAllNotes,
 };

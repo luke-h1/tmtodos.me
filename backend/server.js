@@ -2,6 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
+import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import connectDB from './config/db.js';
@@ -19,13 +20,14 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(morgan('dev'));
 
 app.use('/api/users', userRoutes);
 
 app.use('/api/notes', noteRoutes);
 
 app.get('/', (req, res) => {
-  res.send('API is running');
+  res.status(200).json({ message: 'API is running' });
 });
 
 app.use(notFound);
