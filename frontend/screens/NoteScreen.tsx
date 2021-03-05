@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Box, Center, Text, Heading, Input } from '@chakra-ui/react';
+import {
+  Flex, Box, Center, Text, Heading, Input,
+} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
 import Loader from 'components/Loader';
@@ -73,33 +75,34 @@ const NoteScreen = () => {
           {noteLoading && <Loader />}
           {noteErrors && <Error>{noteErrors}</Error>}
           {console.log(notes)}
-          {notes.length !== 0 &&
-            notes.map((note) => (
-              <>
-                <Box
-                  shadow="sm"
-                  rounded="md"
-                  data-testid="card"
-                  maxW="md"
-                  minW="lg"
-                  mt={4}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  overflow="hidden"
-                  _hover={{ color: '#2EC0F9' }}
-                >
-                  <Heading m="5" mb="2" as="h1" size="lg">
-                    {note.title}
-                  </Heading>
-                  <Text m="5" mt="2" mb="4">
-                    {note.body}
-                  </Text>
-                  <Text m="5" mt="2" mb="4">
-                    {format(parseISO(note.updatedAt), 'MMMM dd, yyyy')}
-                  </Text>
-                </Box>
-              </>
-            ))}{' '}
+          {notes && notes.map((n) => (
+            <>
+              <Box
+                shadow="sm"
+                rounded="md"
+                data-testid="card"
+                maxW="md"
+                minW="lg"
+                mt={4}
+                borderWidth="1px"
+                borderRadius="md"
+                overflow="hidden"
+                _hover={{ color: '#2EC0F9' }}
+              >
+                <Heading m="5" mb="2" as="h1" size="lg">
+                  {n.title}
+                </Heading>
+                <Text m="5" mt="2" mb="4">
+                  {n.body}
+                </Text>
+                <Text m="5" mt="2" mb="4">
+                  {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+                </Text>
+              </Box>
+            </>
+          ))}
+
+          {' '}
         </Flex>
       </Flex>
     </Center>
