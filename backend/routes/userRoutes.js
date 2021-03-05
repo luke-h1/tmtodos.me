@@ -30,6 +30,7 @@ router
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
 
-router.route('/me/:id').delete(protect, deleteMyUser).get(protect, getMyUserById);
+router.route('/me/:id').delete(protect, deleteMyUser);
 
 export default router;
+

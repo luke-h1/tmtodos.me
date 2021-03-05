@@ -30,11 +30,8 @@ const reducer = combineReducers({
 
 const userInfoFromStorage = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('userInfo') || '{}');
 
-const initialNotes = '{}';
-
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
-  notes: initialNotes,
 };
 
 const middleware = [thunk];
