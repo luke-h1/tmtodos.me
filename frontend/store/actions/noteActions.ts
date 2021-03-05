@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Error, Note } from 'store/types/types';
 import {
   CREATE_NOTE_FAIL,
   CREATE_NOTE_REQUEST,
@@ -14,7 +15,12 @@ import {
   LIST_NOTES_SUCCESS,
 } from '../constants/noteConstants';
 
-export const createNote = (id, title, body) => async (dispatch, getState) => {
+export type NoteActionTypes =
+| { type: typeof CREATE_NOTE_SUCCESS; payload: Note}
+| { type: typeof CREATE_NOTE_FAIL; payload: Error[] }
+| { type: typeof CREATE_NOTE_REQUEST; }
+
+export const createNote = (id, title, body): NoteActionTypes => async (dispatch, getState) => {
   try {
     dispatch({
       type: CREATE_NOTE_REQUEST,

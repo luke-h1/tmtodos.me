@@ -74,10 +74,10 @@ const NoteScreen = () => {
         <Flex direction="column" justify="center" align="center">
           {noteLoading && <Loader />}
           {noteErrors && <Error>{noteErrors}</Error>}
-          {console.log(notes)}
           {notes && notes.map((n) => (
             <>
               <Box
+                key={n.id}
                 shadow="sm"
                 rounded="md"
                 data-testid="card"
