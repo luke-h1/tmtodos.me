@@ -7,7 +7,6 @@ Take My notes. A full stack, open source note taking app
 
 ### Frontend 
 
-- Next JS CNA with the following tech stack: 
 - [React](https://github.com/facebook/react)
 - [Redux](https://github.com/reduxjs/redux)
 - [Next](https://github.com/vercel/next.js)
@@ -26,7 +25,6 @@ Take My notes. A full stack, open source note taking app
 - [jsonwebtoken](https://jwt.io/)
 - [mongoose](https://mongoosejs.com/)
 - [bcrypt](https://www.npmjs.com/package/bcryptjs)
-- [nodemailer](https://nodemailer.com/about/)
 - [express](http://expressjs.com/)
 - [nodeJS](https://nodejs.org/en/)
 - [Heroku](https://www.heroku.com/)
