@@ -11,8 +11,6 @@ import {
   LIST_NOTES_FAIL,
   LIST_NOTES_REQUEST,
   LIST_NOTES_SUCCESS,
-  REMOVE_NOTES_FROM_STATE,
-  LIST_NOTES_RESET,
 } from '../constants/noteConstants';
 
 export const noteCreationReducer = (state = { note: {} }, action) => {
@@ -81,12 +79,3 @@ export const noteListReducer = (state = { notes: [] }, action) => {
   }
 };
 
-export const removeNotesFromStateReducer = (state = { notes: [], note: {} }, action) => {
-  switch (action.type) {
-    case REMOVE_NOTES_FROM_STATE:
-      return { loading: false, notes: [], note: {} };
-
-    default:
-      return state;
-  }
-};

@@ -24,10 +24,6 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
-  MY_USER_UPDATE_REQUEST,
-  MY_USER_UPDATE_SUCCESS,
-  MY_USER_UPDATE_FAIL,
-  MY_USER_UPDATE_RESET,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -156,23 +152,3 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
   }
 };
 
-export const myUserUpdateReducer = (state = { user: {} }, action) => {
-  switch (action.type) {
-    case MY_USER_UPDATE_REQUEST:
-      return { loading: true };
-
-    case MY_USER_UPDATE_SUCCESS:
-      return { loading: false, success: true };
-
-    case MY_USER_UPDATE_FAIL:
-      return { loading: false, error: action.payload };
-
-    case MY_USER_UPDATE_RESET:
-      return {
-        user: {},
-      };
-
-    default:
-      return state;
-  }
-};

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { LIST_NOTES_RESET, REMOVE_NOTES_FROM_STATE } from 'store/constants/noteConstants';
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
