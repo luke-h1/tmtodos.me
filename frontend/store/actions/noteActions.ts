@@ -70,7 +70,7 @@ export const updateNote = (id, title, body) => async (
       },
     };
     const { data } = await axios.put(
-      `https://take-my-notes-dev.herokuapp.com/${id}`,
+      `https://take-my-notes-dev.herokuapp.com/api/notes/${id}`,
       config,
     );
     console.log(id);
@@ -99,7 +99,7 @@ export const deleteNote = (id): NoteActionTypes => async (dispatch, getState) =>
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`https://take-my-notes-dev.herokuapp.com/${id}`, config);
+    const { data } = await axios.delete(`https://take-my-notes-dev.herokuapp.com/api/notes/${id}`, config);
     dispatch({ type: DELETE_NOTE_SUCCESS, payload: data });
     dispatch(listNotes());
   } catch (e) {
@@ -128,7 +128,7 @@ export const listNotes = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `https://take-my-notes-dev.herokuapp.com/${userInfo._id}`,
+      `https://take-my-notes-dev.herokuapp.com/api/notes/${userInfo._id}`,
       config,
     );
     dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
