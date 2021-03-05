@@ -35,7 +35,7 @@ export const createNote = (id, title, body): NoteActionTypes => async (dispatch,
       },
     };
     const { data } = await axios.post(
-      'http://localhost:5000/api/notes',
+      'https://take-my-notes-dev.herokuapp.com/api/notes',
       { id, title, body },
       config,
     );
@@ -70,7 +70,7 @@ export const updateNote = (id, title, body) => async (
       },
     };
     const { data } = await axios.put(
-      `http://localhost:5000/api/notes/${id}`,
+      `https://take-my-notes-dev.herokuapp.com/${id}`,
       config,
     );
     console.log(id);
@@ -99,7 +99,7 @@ export const deleteNote = (id): NoteActionTypes => async (dispatch, getState) =>
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
+    const { data } = await axios.delete(`https://take-my-notes-dev.herokuapp.com/${id}`, config);
     dispatch({ type: DELETE_NOTE_SUCCESS, payload: data });
     dispatch(listNotes());
   } catch (e) {
@@ -128,7 +128,7 @@ export const listNotes = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/notes/me/${userInfo._id}`,
+      `https://take-my-notes-dev.herokuapp.com/${userInfo._id}`,
       config,
     );
     dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
