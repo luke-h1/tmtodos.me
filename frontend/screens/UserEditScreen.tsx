@@ -1,33 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Loader from 'components/Loader';
-import Error from 'components/Error';
-import Message from 'components/Message';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Center,
-  Checkbox,
   Flex,
   FormLabel,
   Input,
   Button,
-  CheckboxGroup,
-  HStack,
 } from '@chakra-ui/react';
-import * as yup from 'yup';
-import { updateSchema } from 'validations/userValidation';
-import { userInfo } from 'node:os';
+import Loader from 'components/Loader';
+import Error from 'components/Error';
 import { getUserDetails, updateUser } from '../store/actions/userActions';
 import { USER_UPDATE_RESET } from '../store/constants/userConstants';
 
 const UserEditScreen = () => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
@@ -64,6 +57,11 @@ const UserEditScreen = () => {
   return (
     <>
       <Center>
+        {loadingUpdate && <Loader />}
+        {loading && <Loader />}
+        {errorUpdate && <Error>{errorUpdate}</Error>}
+        {error && <Error>{error}</Error>}
+
         <Flex direction="column" justify="center" align="center">
           <form onSubmit={submitHandler}>
             <Input

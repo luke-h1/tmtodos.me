@@ -6,11 +6,7 @@ import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Box,
-  Flex,
-  Heading,
-  FormLabel,
-  Input,
+  Box, Flex, Heading, FormLabel, Input, Center,
 } from '@chakra-ui/react';
 
 import { Button } from 'components/Button';
@@ -92,38 +88,46 @@ const RegisterScreen: React.FC = () => {
               <Form>
                 {error && <Error>{error}</Error>}
                 {loading && <Loader />}
-                <CustomInput
+                <Input
                   placeholder="name"
                   name="name"
                   type="input"
                   as={Input}
+                  maxW="550px"
                 />
-                <CustomInput
-                  placeholder="email"
-                  name="email"
-                  type="input"
-                  as={Input}
-                />
-                <CustomInput
-                  placeholder="password"
-                  name="password"
-                  type="password"
-                  as={Input}
-                />
-                <CustomInput
-                  placeholder="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  as={Input}
-                />
-                <FormLabel as="p" color="red">
-                  {' '}
-                  {errors.confirmPassword && 'Passwords Should Match!'}
-                </FormLabel>
+                <Flex direction="column" justify="center" align="center">
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Email"
+                    name="email"
+                    type="input"
+                    as={Input}
+                  />
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    as={Input}
+                  />
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                  />
+                  <FormLabel as="p" color="red">
+                    {' '}
+                    {errors.confirmPassword && 'Passwords Should Match!'}
+                  </FormLabel>
 
-                <Button as="button" disabled={isSubmitting} type="submit">
-                  Register
-                </Button>
+                  <Button as="button" disabled={isSubmitting} type="submit">
+                    Register
+                  </Button>
+                </Flex>
               </Form>
             </>
           )}

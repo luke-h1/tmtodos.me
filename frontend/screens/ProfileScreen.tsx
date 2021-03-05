@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Formik, Form, useField, FieldAttributes,
 } from 'formik';
@@ -6,19 +6,14 @@ import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Box,
-  Flex,
-  Heading,
-  FormLabel,
-  Input,
+  Box, Flex, Heading, FormLabel, Input, Center,
 } from '@chakra-ui/react';
 
 import { Button } from 'components/Button';
 import { RegisterSchema } from 'validations/userValidation';
 import Error from 'components/Error';
 import Loader from 'components/Loader';
-import { USER_UPDATE_RESET } from 'store/constants/userConstants';
-import { register, updateUser } from '../store/actions/userActions';
+import { register } from '../store/actions/userActions';
 
 const CustomInput: React.FC<FieldAttributes<{}>> = ({
   placeholder,
@@ -41,31 +36,13 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
 };
 const RegisterScreen: React.FC = () => {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const userDetails = useSelector((state) => state.userDetails);
-  const {
-    loading, error, userInfo, user,
-  } = userDetails;
-  const userUpdate = useSelector((state) => state.userUpdate);
-
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
   const dispatch = useDispatch();
 
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = userUpdate;
-
   useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: USER_UPDATE_RESET });
-      console.log('good :)');
-    } else {
-        console.log(user)
-      setName(user.name);
-      setEmail(user.email);
+    if (userInfo) {
+      router.push('/notes');
     }
   }, [router, userInfo]);
 
@@ -80,7 +57,7 @@ const RegisterScreen: React.FC = () => {
       >
         <Box>
           <Heading as="h1" fontSize="40px" mb={4}>
-            Update your details
+            Register
           </Heading>
         </Box>
       </Flex>
@@ -93,19 +70,16 @@ const RegisterScreen: React.FC = () => {
       >
         <Formik
           initialValues={{
-            name,
-            email,
-            password,
+            name: '',
+            email: '',
+            password: '',
             confirmPassword: '',
           }}
           validationSchema={RegisterSchema}
           onSubmit={(data, { setSubmitting }) => {
             const { name, email, password } = data;
             setSubmitting(true);
-            const { _id } = userInfo;
-            dispatch(updateUser({
-              _id, name, email, password,
-            }));
+            dispatch(register(name, email, password));
             setSubmitting(false);
           }}
         >
@@ -114,39 +88,46 @@ const RegisterScreen: React.FC = () => {
               <Form>
                 {error && <Error>{error}</Error>}
                 {loading && <Loader />}
-                <CustomInput
-                  placeholder="Name"
+                <Input
+                  placeholder="name"
                   name="name"
                   type="input"
                   as={Input}
-                  value={name}
+                  maxW="550px"
                 />
-                <CustomInput
-                  placeholder="Email"
-                  name="email"
-                  type="input"
-                  as={Input}
-                />
-                <CustomInput
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  as={Input}
-                />
-                <CustomInput
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                  as={Input}
-                />
-                <FormLabel as="p" color="red">
-                  {' '}
-                  {errors.confirmPassword && 'Passwords Should Match!'}
-                </FormLabel>
+                <Flex direction="column" justify="center" align="center">
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Email"
+                    name="email"
+                    type="input"
+                    as={Input}
+                  />
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    as={Input}
+                  />
+                  <Input
+                    mt={4}
+                    mb={4}
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                  />
+                  <FormLabel as="p" color="red">
+                    {' '}
+                    {errors.confirmPassword && 'Passwords Should Match!'}
+                  </FormLabel>
 
-                <Button as="button" disabled={isSubmitting} type="submit">
-                  Register
-                </Button>
+                  <Button as="button" disabled={isSubmitting} type="submit">
+                    Register
+                  </Button>
+                </Flex>
               </Form>
             </>
           )}
