@@ -11,6 +11,8 @@ import {
   LIST_NOTES_FAIL,
   LIST_NOTES_REQUEST,
   LIST_NOTES_SUCCESS,
+  REMOVE_NOTES_FROM_STATE,
+  LIST_NOTES_RESET,
 } from '../constants/noteConstants';
 
 export const noteCreationReducer = (state = { note: {} }, action) => {
@@ -71,6 +73,18 @@ export const noteListReducer = (state = { notes: [] }, action) => {
 
     case LIST_NOTES_FAIL:
       return { loading: false, error: action.payload };
+
+    case LIST_NOTES_RESET:
+      return { notes: {} };
+    default:
+      return state;
+  }
+};
+
+export const removeNotesFromStateReducer = (state = { notes: [], note: {} }, action) => {
+  switch (action.type) {
+    case REMOVE_NOTES_FROM_STATE:
+      return { loading: false, notes: [], note: {} };
 
     default:
       return state;

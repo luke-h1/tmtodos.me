@@ -23,6 +23,7 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
   placeholder,
   ...props
 }) => {
+  const { type } = props;
   const [field, meta] = useField<{}>(props);
   const errorText = meta.error && meta.touched ? meta.error : '';
   return (
@@ -33,6 +34,7 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
         placeholder={placeholder}
         error={!!errorText}
         FormErrorMessage={errorText}
+        type={type}
         mb={6}
       />
     </>
@@ -92,7 +94,6 @@ const RegisterScreen: React.FC = () => {
               <Form>
                 {error && <Error>{error}</Error>}
                 {loading && <Loader />}
-
                 <CustomInput
                   placeholder="email"
                   name="email"
@@ -103,7 +104,6 @@ const RegisterScreen: React.FC = () => {
                   placeholder="password"
                   name="password"
                   type="password"
-                  as={Input}
                 />
 
                 <FormLabel as="p" color="red">
