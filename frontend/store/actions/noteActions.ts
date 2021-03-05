@@ -52,7 +52,7 @@ export const createNote = (id, title, body): NoteActionTypes => async (dispatch,
   }
 };
 
-export const updateNote = (user, id, title, body) => async (
+export const updateNote = (id, title, body) => async (
   dispatch,
   getState,
 ) => {
@@ -73,6 +73,7 @@ export const updateNote = (user, id, title, body) => async (
       `http://localhost:5000/api/notes/${id}`,
       config,
     );
+    console.log(id);
     dispatch({ type: UPDATE_NOTE_SUCCESS, payload: data });
   } catch (e) {
     console.error(e);
@@ -86,35 +87,27 @@ export const updateNote = (user, id, title, body) => async (
   }
 };
 
-export const deleteNote = (user, id, title, body) => async (
-  dispatch,
-  getState,
-) => {
+export const deleteNote = (id): NoteActionTypes => async (dispatch, getState) => {
   try {
     dispatch({
       type: DELETE_NOTE_REQUEST,
     });
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const { userLogin: { userInfo } } = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(
-      `http://localhost:5000/api/notes/${id}`,
-      config,
-    );
+    const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
     dispatch({ type: DELETE_NOTE_SUCCESS, payload: data });
   } catch (e) {
     dispatch({
       type: DELETE_NOTE_FAIL,
       payload:
-        e.response && e.response.data.message
-          ? e.response.data.message
-          : e.message,
+      e.response && e.response.data.message
+        ? e.response.data.message
+        : e.message,
     });
   }
 };

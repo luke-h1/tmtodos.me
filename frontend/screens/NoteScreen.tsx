@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Flex, Box, Center, Text, Heading, Input,
+  Flex,
+  Box,
+  Center,
+  Text,
+  Heading,
+  Input,
+  Button,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
-import { Button } from 'components/Button';
 import { parseISO, format } from 'date-fns';
 import { uuid } from 'uuidv4';
+import { ImCross } from 'react-icons/im';
+import { FiEdit3 } from 'react-icons/fi';
+import styled from '@emotion/styled';
 
 import {
   createNote,
@@ -31,11 +39,44 @@ const NoteScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createNote(uuid(), title, body));
+    setTitle('');
+    setBody('');
+  };
+
+  const Cross = styled(ImCross)`
+    margin: 20px 0 0 20px;
+    &:hover {
+      cursor: pointer;
+      color: red;
+    }
+  `;
+
+  const Edit = styled(FiEdit3)`
+    margin: 20px 0 0 20px;
+    &:hover {
+      cursor: pointer;
+      color: blue;
+    }
+  `;
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    dispatch(deleteNote(id));
+    setTimeout(() => {
+      dispatch(listNotes());
+    }, [500]);
+  };
+
+  const handleEdit = (e, n) => {
+    e.preventDefault();
+    setIsEditing(true);
+    setTitle(n.title);
+    setBody(n.body);
   };
 
   useEffect(() => {
     dispatch(listNotes());
-  }, [loading, noteCreate]);
+  }, [noteCreate]);
 
   return (
     <Center>
@@ -73,56 +114,40 @@ const NoteScreen = () => {
         <Flex direction="column" justify="center" align="center">
           {noteLoading && <Loader />}
           {noteErrors && <Error>{noteErrors}</Error>}
-          {!noteLoading || !noteErrors ? notes && notes.map((n) => (
-            <Box
-              key={n._id}
-              shadow="sm"
-              rounded="md"
-              data-testid="card"
-              maxW="lg"
-              minW="sm"
-              mt={4}
-              borderWidth="1px"
-              borderRadius="md"
-              overflow="hidden"
-              _hover={{ color: '#2EC0F9' }}
-            >
-              <Heading m="5" mb="2" as="h1" size="lg">
-                {n.title}
-              </Heading>
-              <Text m="5" mt="2" mb="4">
-                {n.body}
-              </Text>
-              <Text m="5" mt="2" mb="4">
-                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-              </Text>
-            </Box>
-          )) : ''}
-          {/* {notes && notes.map((n) => (
-            <Box
-              key={n._id}
-              shadow="sm"
-              rounded="md"
-              data-testid="card"
-              maxW="lg"
-              minW="sm"
-              mt={4}
-              borderWidth="1px"
-              borderRadius="md"
-              overflow="hidden"
-              _hover={{ color: '#2EC0F9' }}
-            >
-              <Heading m="5" mb="2" as="h1" size="lg">
-                {n.title}
-              </Heading>
-              <Text m="5" mt="2" mb="4">
-                {n.body}
-              </Text>
-              <Text m="5" mt="2" mb="4">
-                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-              </Text>
-            </Box>
-          ))} */}
+          {!noteLoading || !noteErrors
+            ? notes
+              && notes.map((n) => (
+                <>
+                  <Box
+                    key={n._id}
+                    shadow="sm"
+                    rounded="md"
+                    data-testid="card"
+                    maxW="lg"
+                    minW="sm"
+                    mt={4}
+                    borderWidth="1px"
+                    borderRadius="md"
+                    overflow="hidden"
+                    _hover={{ color: '#2EC0F9' }}
+                  >
+                    <Flex direction="column">
+                      <Cross onClick={(e) => handleDelete(e, n._id)} />
+                    </Flex>
+
+                    <Heading m="5" mb="2" as="h1" size="lg">
+                      {n.title}
+                    </Heading>
+                    <Text m="5" mt="2" mb="4">
+                      {n.body}
+                    </Text>
+                    <Text m="5" mt="2" mb="4">
+                      {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+                    </Text>
+                  </Box>
+                </>
+              ))
+            : ''}
         </Flex>
       </Flex>
     </Center>
