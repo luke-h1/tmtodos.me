@@ -155,7 +155,21 @@ const deleteMyUser = asyncHandler(async (req, res) => {
 // needs jest unit test
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
 
+// @desc    GET user by ID
+// @route   GET /api/users/me/:id
+// @access  Private
+// done manual testing
+// needs jest unit test
+const getMyUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
   if (user) {
     res.json(user);
   } else {
@@ -199,4 +213,5 @@ export {
   getUserById,
   updateUser,
   deleteMyUser,
+  getMyUserById,
 };

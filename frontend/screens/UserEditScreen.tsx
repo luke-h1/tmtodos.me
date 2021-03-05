@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { updateSchema } from 'validations/userValidation';
+import { userInfo } from 'node:os';
 import { getUserDetails, updateUser } from '../store/actions/userActions';
 import { USER_UPDATE_RESET } from '../store/constants/userConstants';
 
@@ -38,6 +39,9 @@ const UserEditScreen = () => {
   } = userUpdate;
 
   useEffect(() => {
+    if (!userInfo.isAdmin) {
+      router.push('/');
+    }
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       router.push('/admin/userlist');
