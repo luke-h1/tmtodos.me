@@ -132,6 +132,7 @@ export const listNotes = () => async (dispatch, getState) => {
       config,
     );
     dispatch({ type: LIST_NOTES_SUCCESS, payload: data });
+    console.log(data);
   } catch (e) {
     dispatch({
       type: LIST_NOTES_FAIL,
