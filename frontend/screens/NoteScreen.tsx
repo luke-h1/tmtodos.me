@@ -31,12 +31,11 @@ const NoteScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createNote(uuid(), title, body));
-    dispatch(listNotes());
   };
 
   useEffect(() => {
     dispatch(listNotes());
-  }, []);
+  }, [loading, noteCreate]);
 
   return (
     <Center>
@@ -74,35 +73,56 @@ const NoteScreen = () => {
         <Flex direction="column" justify="center" align="center">
           {noteLoading && <Loader />}
           {noteErrors && <Error>{noteErrors}</Error>}
-          {notes && notes.map((n) => (
-            <>
-              <Box
-                key={n.id}
-                shadow="sm"
-                rounded="md"
-                data-testid="card"
-                maxW="md"
-                minW="lg"
-                mt={4}
-                borderWidth="1px"
-                borderRadius="md"
-                overflow="hidden"
-                _hover={{ color: '#2EC0F9' }}
-              >
-                <Heading m="5" mb="2" as="h1" size="lg">
-                  {n.title}
-                </Heading>
-                <Text m="5" mt="2" mb="4">
-                  {n.body}
-                </Text>
-                <Text m="5" mt="2" mb="4">
-                  {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-                </Text>
-              </Box>
-            </>
-          ))}
-
-          {' '}
+          {!noteLoading || !noteErrors ? notes && notes.map((n) => (
+            <Box
+              key={n._id}
+              shadow="sm"
+              rounded="md"
+              data-testid="card"
+              maxW="lg"
+              minW="sm"
+              mt={4}
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
+              _hover={{ color: '#2EC0F9' }}
+            >
+              <Heading m="5" mb="2" as="h1" size="lg">
+                {n.title}
+              </Heading>
+              <Text m="5" mt="2" mb="4">
+                {n.body}
+              </Text>
+              <Text m="5" mt="2" mb="4">
+                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+              </Text>
+            </Box>
+          )) : ''}
+          {/* {notes && notes.map((n) => (
+            <Box
+              key={n._id}
+              shadow="sm"
+              rounded="md"
+              data-testid="card"
+              maxW="lg"
+              minW="sm"
+              mt={4}
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
+              _hover={{ color: '#2EC0F9' }}
+            >
+              <Heading m="5" mb="2" as="h1" size="lg">
+                {n.title}
+              </Heading>
+              <Text m="5" mt="2" mb="4">
+                {n.body}
+              </Text>
+              <Text m="5" mt="2" mb="4">
+                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+              </Text>
+            </Box>
+          ))} */}
         </Flex>
       </Flex>
     </Center>
