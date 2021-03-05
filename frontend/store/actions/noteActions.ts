@@ -101,6 +101,7 @@ export const deleteNote = (id): NoteActionTypes => async (dispatch, getState) =>
     };
     const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
     dispatch({ type: DELETE_NOTE_SUCCESS, payload: data });
+    dispatch(listNotes());
   } catch (e) {
     dispatch({
       type: DELETE_NOTE_FAIL,

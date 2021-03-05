@@ -9,9 +9,10 @@ import {
   userListReducer,
   userDeleteReducer,
   userUpdateReducer,
+  myUserUpdateReducer,
 } from './reducers/userReducers';
 import {
-  noteCreationReducer, noteDeleteReducer, noteListReducer, noteUpdateReducer,
+  noteCreationReducer, noteDeleteReducer, noteListReducer, noteUpdateReducer, removeNotesFromStateReducer,
 } from './reducers/noteReducer';
 
 const reducer = combineReducers({
@@ -22,10 +23,12 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  myUserUpdate: myUserUpdateReducer,
   noteCreate: noteCreationReducer,
   noteUpdate: noteUpdateReducer,
   noteDelete: noteDeleteReducer,
   noteList: noteListReducer,
+  noteRemoveFromState: removeNotesFromStateReducer,
 });
 
 const userInfoFromStorage = typeof window !== 'undefined' && JSON.parse(localStorage.getItem('userInfo') || '{}');
