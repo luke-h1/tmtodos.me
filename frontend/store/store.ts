@@ -9,6 +9,7 @@ import {
   userListReducer,
   userDeleteReducer,
   userUpdateReducer,
+  myUserUpdateReducer,
 } from './reducers/userReducers';
 import {
   noteCreationReducer, noteDeleteReducer, noteListReducer, noteUpdateReducer,
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  myUserUpdate: myUserUpdateReducer,
   noteCreate: noteCreationReducer,
   noteUpdate: noteUpdateReducer,
   noteDelete: noteDeleteReducer,

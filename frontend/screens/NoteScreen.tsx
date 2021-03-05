@@ -15,7 +15,6 @@ import Error from 'components/Error';
 import { parseISO, format } from 'date-fns';
 import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
-import { FiEdit3 } from 'react-icons/fi';
 import styled from '@emotion/styled';
 
 import {
@@ -51,27 +50,9 @@ const NoteScreen = () => {
     }
   `;
 
-  const Edit = styled(FiEdit3)`
-    margin: 20px 0 0 20px;
-    &:hover {
-      cursor: pointer;
-      color: blue;
-    }
-  `;
-
   const handleDelete = (e, id) => {
     e.preventDefault();
     dispatch(deleteNote(id));
-    setTimeout(() => {
-      dispatch(listNotes());
-    }, [500]);
-  };
-
-  const handleEdit = (e, n) => {
-    e.preventDefault();
-    setIsEditing(true);
-    setTitle(n.title);
-    setBody(n.body);
   };
 
   useEffect(() => {
