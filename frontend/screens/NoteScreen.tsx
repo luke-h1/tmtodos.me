@@ -29,7 +29,7 @@ const NoteScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(title, body));
+    dispatch(createNote(title, body, ));
   };
 
   useEffect(() => {

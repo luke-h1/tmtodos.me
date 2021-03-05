@@ -14,7 +14,7 @@ import {
   LIST_NOTES_SUCCESS,
 } from '../constants/noteConstants';
 
-export const createNote = (title, body) => async (dispatch, getState) => {
+export const createNote = (id, title, body) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CREATE_NOTE_REQUEST,
@@ -30,7 +30,7 @@ export const createNote = (title, body) => async (dispatch, getState) => {
     };
     const { data } = await axios.post(
       'http://localhost:5000/api/notes',
-      { title, body },
+      { id, title, body },
       config,
     );
     dispatch({ type: CREATE_NOTE_SUCCESS, payload: data });
