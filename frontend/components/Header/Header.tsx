@@ -31,11 +31,7 @@ const MenuItems: React.FC<MenuProps> = (props) => {
   );
 };
 
-interface HeaderProps {
-  props: void;
-}
-
-const Header: React.FC<HeaderProps> = (props) => {
+const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -57,7 +53,6 @@ const Header: React.FC<HeaderProps> = (props) => {
       mb={8}
       p={8}
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
-      {...props}
     >
       <Flex align="center">
         <Link href="/"><a><Logo /></a></Link>
