@@ -17,6 +17,8 @@ import { parseISO, format } from 'date-fns';
 import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
 import styled from '@emotion/styled';
+import noteReducer from 'context/note/noteReducer';
+import { NOTE_LIST_REQUEST } from 'context/constants/NoteConstants';
 
 const NoteScreen = () => {
   const noteContext = useContext(NoteContext);
@@ -46,7 +48,7 @@ const NoteScreen = () => {
     }
   `;
 
-  const handleDelete = (e, id) => {
+  const handleDelete = async (e, id) => {
     e.preventDefault();
     deleteNote(id);
   };
@@ -84,41 +86,41 @@ const NoteScreen = () => {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={(e) => handleSubmit(e)}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
           {error && <Error>{error}</Error>}
           {loading && <Loader />}
-          {notes
-            && notes.map((n) => (
+          {notes && notes.map((n) => ( 
               <Box
-                key={n._id}
-                shadow="sm"
-                rounded="md"
-                data-testid="card"
-                maxW="lg"
-                minW="sm"
-                mt={4}
-                borderWidth="1px"
-                borderRadius="md"
-                overflow="hidden"
-                _hover={{ color: '#2EC0F9' }}
-              >
-                <Flex direction="column">
-                  <Cross onClick={(e) => handleDelete(e, n._id)} />
-                </Flex>
+              key={n._id}
+              shadow="sm"
+              rounded="md"
+              data-testid="card"
+              maxW="lg"
+              minW="sm"
+              mt={4}
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
+              _hover={{ color: '#2EC0F9' }}
+            >
+              <Flex direction="column">
+                <Cross onClick={(e) => handleDelete(e, n._id)} />
+              </Flex>
+              <Heading m="5" mb="2" as="h1" size="lg">
+                {n.title}
+              </Heading>
+              <Text m="5" mt="2" mb="4">
+                {n.body}
+              </Text>
+              <Text m="5" mt="2" mb="4">
+                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+              </Text>
+            </Box>
+          ))}
+         
 
-                <Heading m="5" mb="2" as="h1" size="lg">
-                  {n.title}
-                </Heading>
-                <Text m="5" mt="2" mb="4">
-                  {n.body}
-                </Text>
-                <Text m="5" mt="2" mb="4">
-                  {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-                </Text>
-              </Box>
-            ))}
         </Flex>
       </Flex>
     </Center>

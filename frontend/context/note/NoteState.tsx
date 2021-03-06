@@ -24,7 +24,7 @@ const NoteState = (props) => {
   const initialState = {
     note: {},
     notes: [],
-    loading: false,
+    loading: true,
   };
   const [state, dispatch] = useReducer(noteReducer, initialState);
 
@@ -87,7 +87,6 @@ const NoteState = (props) => {
       dispatch({ type: NOTE_DELETE_REQUEST });
       const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
       dispatch({ type: NOTE_DELETE_SUCCESS, payload: data });
-      listNotes();
     } catch (e) {
       dispatch({
         type: NOTE_DELETE_FAIL,
