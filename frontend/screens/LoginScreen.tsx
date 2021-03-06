@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Formik, Form, useField, FieldAttributes,
 } from 'formik';
 import * as yup from 'yup';
+import AuthContext from 'context/auth/authContext';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Flex,
@@ -17,7 +17,6 @@ import { Button } from 'components/Button';
 import { LoginSchema } from 'validations/userValidation';
 import Error from 'components/Error';
 import Loader from 'components/Loader';
-import { login } from '../store/actions/userActions';
 
 const CustomInput: React.FC<FieldAttributes<{}>> = ({
   placeholder,
@@ -42,16 +41,20 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
 };
 
 const RegisterScreen: React.FC = () => {
+  const authContext = useContext(AuthContext);
   const router = useRouter();
-  const userRegister = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userRegister;
-  const dispatch = useDispatch();
+  const {
+    login, error, clearErrors, isAuthenticated,
+  } = authContext;
 
   useEffect(() => {
-    if (userInfo) {
-      router.push('/notes');
+    if (isAuthenticated) {
+      router.push('/');
     }
-  }, [router, userInfo]);
+    if (error) {
+      clearErrors();
+    }
+  }, [router, isAuthenticated, error]);
 
   return (
     <>
@@ -85,15 +88,15 @@ const RegisterScreen: React.FC = () => {
           onSubmit={(data, { setSubmitting }) => {
             const { email, password } = data;
             setSubmitting(true);
-            dispatch(login(email, password));
+            login(email, password);
             setSubmitting(false);
           }}
         >
           {({ isSubmitting, errors }) => (
             <>
               <Form>
-                {error && <Error>{error}</Error>}
-                {loading && <Loader />}
+                {/* {error && <Error>{error}</Error>}
+                {loading && <Loader />} */}
                 <CustomInput
                   placeholder="email"
                   name="email"
