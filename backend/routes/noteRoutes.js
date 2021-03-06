@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.route('/').post(protect, addNote);
 
-router.route('/:id').get(protect, getNoteById).put(protect, updateNote).delete(protect, deleteNote);
+router.route('/:id').get(protect, getNoteById).put(updateNote).delete(protect, deleteNote);
 
 router.route('/me/:id').get(protect, getAllNotes);
 

@@ -73,7 +73,6 @@ export const updateNote = (id, title, body) => async (
       `http://localhost:5000/api/notes/${id}`,
       config,
     );
-    console.log(id);
     dispatch({ type: UPDATE_NOTE_SUCCESS, payload: data });
   } catch (e) {
     console.error(e);

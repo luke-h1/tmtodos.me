@@ -72,8 +72,6 @@ export const noteListReducer = (state = { notes: [] }, action) => {
     case LIST_NOTES_FAIL:
       return { loading: false, error: action.payload };
 
-    case LIST_NOTES_RESET:
-      return { notes: {} };
     default:
       return state;
   }
