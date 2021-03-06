@@ -56,6 +56,7 @@ const UserListScreen = () => {
           can update their details (name + email) or delete them
         </Text>
         {error && <Error>{error}</Error>}
+        {UserLoading && <Loader />}
         {loading ? (
           <Loader />
         ) : (
