@@ -16,17 +16,11 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    user: {
-      token:
+    token:
         typeof localStorage !== 'undefined'
           ? localStorage.getItem('token')
           : '{}',
-      isAuthenticated: null,
-      loading: true,
-      error: null,
-      user: null,
-      isAdmin: null,
-    },
+    user: typeof localStorage !== 'undefined' && JSON.parse(localStorage.getItem('user')),
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -70,6 +64,7 @@ const AuthState = (props) => {
         config,
       );
       dispatch({ type: LOGIN_SUCCESS, payload: data });
+      localStorage.setItem('user', JSON.stringify(data));
     } catch (e) {
       dispatch({
         type: LOGIN_FAIL,
@@ -82,7 +77,10 @@ const AuthState = (props) => {
   };
 
   //   logout a user & destroy their token
-  const logout = () => dispatch({ type: LOGOUT });
+  const logout = () => {
+    localStorage.removeItem('user');
+    dispatch({ type: LOGOUT });
+  };
 
   //   clear errors (clear any errors in state)
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
@@ -90,7 +88,15 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
+        token:
+        typeof localStorage !== 'undefined'
+          ? localStorage.getItem('token')
+          : '{}',
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
+        error: state.error,
         user: state.user,
+        isAdmin: state.isAdmin,
         register,
         login,
         logout,

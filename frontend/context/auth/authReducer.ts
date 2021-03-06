@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -13,23 +14,19 @@ export default (state, action) => {
   switch (action.type) {
     case USER_LOADED:
       return {
-        user: {
-          ...state,
-          isAuthenticated: true,
-          loading: false,
-          user: action.payload,
-        },
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS: {
       localStorage.setItem('token', action.payload.token);
       return {
-        user: {
-          ...state,
-          ...action.payload,
-          isAuthenticated: true,
-          loading: false,
-        },
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        loading: false,
       };
     }
     case CLEAR_ERRORS: {
@@ -44,14 +41,15 @@ export default (state, action) => {
     case LOGOUT:
       localStorage.removeItem('token');
       return {
-        user: {
-          isAuthenticated: false,
-          loading: false,
-          user: null,
-          error: action.payload,
-          ...state,
-          token: null,
-        },
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        name: null,
+        email: null,
+        _id: null,
+        error: action.payload,
+        ...state,
+        token: null,
 
       };
     default: {

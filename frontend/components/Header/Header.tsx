@@ -33,14 +33,15 @@ const MenuItems: React.FC<MenuProps> = (props) => {
 const Header = () => {
   const authcontext = useContext(AuthContext);
   const {
-    user, logout
+    user, logout, isAuthenticated, isAdmin, name,
   } = authcontext;
 
   const router = useRouter();
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
+
   const logoutHandler = () => {
-    // logout user
+    logout();
     router.push('/');
   };
 
@@ -74,12 +75,12 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {user.isAuthenticated ? (
+          {isAuthenticated ? (
             <>
               <Text mr={30}>
                 Welcome
                 {' '}
-                <strong>{user.name}</strong>
+                <strong>{name}</strong>
               </Text>
               <MenuItems href="/notes">Notes</MenuItems>
               <MenuItems href="/profile">Profile</MenuItems>
@@ -99,7 +100,7 @@ const Header = () => {
               </Button>
             </>
           )}
-          {user && user.isAdmin && (
+          {user && isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>
