@@ -21,6 +21,7 @@ const NoteState = (props) => {
   const initialState = {
     note: {},
     notes: [],
+    loading: true,
   };
   const [state, dispatch] = useReducer(noteReducer, initialState);
 
@@ -35,9 +36,15 @@ const NoteState = (props) => {
     try {
       // console.log(user.token)
       const { data } = await axios.post('http://localhost:5000/api/notes', { id, title, body }, config);
-      dispatch({ type: NOTE_CREATE_SUCCESS });
+      dispatch({ type: NOTE_CREATE_SUCCESS, payload: data });
     } catch (e) {
-      dispatch({ type: NOTE_CREATE_FAIL });
+      dispatch({
+        type: NOTE_CREATE_FAIL,
+        payload:
+        e.response && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+      });
     }
   };
 
@@ -53,7 +60,35 @@ const NoteState = (props) => {
       const { data } = await axios.get(`http://localhost:5000/api/notes/me/${user._id}`, config);
       dispatch({ type: NOTE_LIST_SUCCESS, payload: data });
     } catch (e) {
-      dispatch({ type: NOTE_LIST_FAIL });
+      dispatch({
+        type: NOTE_LIST_FAIL,
+        payload:
+        e.response && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+      });
+    }
+  };
+
+  // delete a single note
+  const deleteNote = async (id) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    try {
+      const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
+      dispatch({ type: NOTE_DELETE_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({
+        type: NOTE_DELETE_FAIL,
+        payload:
+        e.response && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+      });
     }
   };
 
@@ -62,8 +97,10 @@ const NoteState = (props) => {
       value={{
         note: state.note,
         notes: state.notes,
+        loading: state.loading,
         createNote,
         listNotes,
+        deleteNote,
       }}
     >
       {props.children}

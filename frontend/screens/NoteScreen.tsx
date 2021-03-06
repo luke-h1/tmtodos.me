@@ -20,7 +20,7 @@ import styled from '@emotion/styled';
 const NoteScreen = () => {
   const noteContext = useContext(NoteContext);
   const {
-    notes, createNote, listNotes, loading, error,
+    notes, createNote, listNotes, deleteNote, error: noteError, loading: noteLoading,
   } = noteContext;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -42,7 +42,7 @@ const NoteScreen = () => {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    // delete a note
+    deleteNote(id);
   };
 
   useEffect(() => {
@@ -55,8 +55,8 @@ const NoteScreen = () => {
         <Text as="h1" fontSize="40px">
           Notes
         </Text>
-        {error && <Error>{error}</Error>}
-        {loading && <Loader />}
+        {/* {error && <Error>{error}</Error>}
+        {loading && <Loader />} */}
 
         <Flex
           direction="column"
@@ -83,38 +83,38 @@ const NoteScreen = () => {
           <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
-          {/* {noteLoading && <Loader />}
-          {noteErrors && <Error>{noteErrors}</Error>} */}
-          {notes
-              && notes.map((n) => (
-                <Box
-                  key={n._id}
-                  shadow="sm"
-                  rounded="md"
-                  data-testid="card"
-                  maxW="lg"
-                  minW="sm"
-                  mt={4}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  overflow="hidden"
-                  _hover={{ color: '#2EC0F9' }}
-                >
-                  <Flex direction="column">
-                    <Cross onClick={(e) => handleDelete(e, n._id)} />
-                  </Flex>
+          {noteLoading && <Loader />}
+          {noteError && <Error>{noteError}</Error>}
+          {!noteLoading || !noteError ? notes.map((n) => (
+            <Box
+              key={n._id}
+              shadow="sm"
+              rounded="md"
+              data-testid="card"
+              maxW="lg"
+              minW="sm"
+              mt={4}
+              borderWidth="1px"
+              borderRadius="md"
+              overflow="hidden"
+              _hover={{ color: '#2EC0F9' }}
+            >
+              <Flex direction="column">
+                <Cross onClick={(e) => handleDelete(e, n._id)} />
+              </Flex>
 
-                  <Heading m="5" mb="2" as="h1" size="lg">
-                    {n.title}
-                  </Heading>
-                  <Text m="5" mt="2" mb="4">
-                    {n.body}
-                  </Text>
-                  <Text m="5" mt="2" mb="4">
-                    {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-                  </Text>
-                </Box>
-              ))}
+              <Heading m="5" mb="2" as="h1" size="lg">
+                {n.title}
+              </Heading>
+              <Text m="5" mt="2" mb="4">
+                {n.body}
+              </Text>
+              <Text m="5" mt="2" mb="4">
+                {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+              </Text>
+            </Box>
+          )) : ''}
+
         </Flex>
       </Flex>
     </Center>
