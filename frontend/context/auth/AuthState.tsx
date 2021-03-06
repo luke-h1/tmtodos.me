@@ -16,10 +16,7 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    token:
-        typeof localStorage !== 'undefined'
-          ? localStorage.getItem('token')
-          : '{}',
+
     user: typeof localStorage !== 'undefined' && JSON.parse(localStorage.getItem('user')),
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -76,9 +73,8 @@ const AuthState = (props) => {
     }
   };
 
-  //   logout a user & destroy their token
+  //   logout a user & destroy their token / info from local storage
   const logout = () => {
-    localStorage.removeItem('user');
     dispatch({ type: LOGOUT });
   };
 
@@ -88,15 +84,9 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        token:
-        typeof localStorage !== 'undefined'
-          ? localStorage.getItem('token')
-          : '{}',
-        isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         error: state.error,
         user: state.user,
-        isAdmin: state.isAdmin,
         register,
         login,
         logout,
