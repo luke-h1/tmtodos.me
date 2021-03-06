@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import UserContext from 'context/user/userContext';
+import AuthContext from 'context/auth/authContext';
 import { FiCheck, FiX } from 'react-icons/fi';
 import { MdBuild } from 'react-icons/md';
 import {
@@ -16,46 +17,49 @@ import {
   Tbody,
   Td,
   Button,
-
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
-import { listUsers, deleteUser } from '../store/actions/userActions';
 
 const UserListScreen = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userDelete = useSelector((state) => state.userDelete);
-  const { success: successDelete } = userDelete;
-
-  useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers());
-    } else {
-      router.push('/');
-    }
-  }, [dispatch, successDelete, userInfo]);
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+  const { user: AuthUser, loading } = authContext;
+  const {
+    users,
+    userInfo,
+    updateUser,
+    listUsers,
+    error,
+    loading: UserLoading,
+  } = userContext;
 
   const deleteHandler = (id) => {
-    dispatch(deleteUser(id));
+    console.log(`Deleted user: ${id}`);
   };
 
+  useEffect(() => {
+    if (AuthUser && AuthUser.isAdmin) {
+      listUsers();
+    }
+  }, []);
   return (
     <>
       <Container>
-        <Heading fontSize="40px" mb={10}>Users</Heading>
+        <Heading fontSize="40px" mb={10}>
+          Users
+        </Heading>
         <Text fontSize="20px" mb={10}>
-          This page lists users who are currently using this service. Here you can update their details (name + email) or delete them
+          This page lists users who are currently using this service. Here you
+          can update their details (name + email) or delete them
         </Text>
         {error && <Error>{error}</Error>}
-        {loading ? <Loader /> : (
+        {UserLoading && <Loader />}
+        {loading ? (
+          <Loader />
+        ) : (
           <Flex direction="column" justify="center" align="center">
             <Table variant="simple">
               <TableCaption>Users</TableCaption>
@@ -76,13 +80,22 @@ const UserListScreen = () => {
                     <Td isNumeric>{user.isAdmin ? <FiCheck /> : <FiX />}</Td>
                     <Td>
                       <Link href={`/admin/user/${user._id}`}>
-                        <Button leftIcon={<MdBuild />} colorScheme="pink" variant="solid">
+                        <Button
+                          leftIcon={<MdBuild />}
+                          colorScheme="pink"
+                          variant="solid"
+                        >
                           Edit user
                         </Button>
                       </Link>
                     </Td>
                     <Td>
-                      <Button leftIcon={<FiX />} colorScheme="red" variant="solid" onClick={() => deleteHandler(user._id)}>
+                      <Button
+                        leftIcon={<FiX />}
+                        colorScheme="red"
+                        variant="solid"
+                        onClick={() => deleteHandler(user._id)}
+                      >
                         Delete user
                       </Button>
                     </Td>
@@ -92,7 +105,6 @@ const UserListScreen = () => {
             </Table>
           </Flex>
         )}
-
       </Container>
     </>
   );

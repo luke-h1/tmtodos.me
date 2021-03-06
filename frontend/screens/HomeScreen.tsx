@@ -1,35 +1,24 @@
-import React from 'react';
-import Link from 'next/link';
-import { useSelector } from 'react-redux';
-
-import {
-  Text,
-  Flex,
-} from '@chakra-ui/react';
+import { Text, Flex, Box } from '@chakra-ui/react';
 import { Button } from 'components/Button';
+import Link from 'next/link';
 
 const HomeScreen = () => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
   return (
-    <>
-      <Flex direction="column" align="center">
-        <Text fontSize="60px" mb={10}>
-          Take My Notes
-        </Text>
-        {userInfo ? (
-          <Text fontSize="30px">
-            👋
-            {' '}
-            {' '}
-            {userInfo.name}
-          </Text>
-        ) : (
-          <Link href="/register"><Button>Sign Up</Button></Link>
-        )}
-      </Flex>
-    </>
+    <Flex direction="column" justify="center" align="center">
+      <Text as="h1" fontSize="60px">
+        Take My Notes
+      </Text>
+      <Box mt={10}>
+        <Button>
+          <Link href="/register">Sign Up</Link>
+        </Button>
+        <div>
+          <Button>
+            <Link href="/login">Login</Link>
+          </Button>
+        </div>
+      </Box>
+    </Flex>
   );
 };
 export default HomeScreen;

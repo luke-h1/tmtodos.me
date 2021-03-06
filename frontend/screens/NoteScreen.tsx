@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { useState, useEffect, useContext } from 'react';
+import NoteContext from 'context/note/noteContext';
 import {
   Flex,
   Box,
@@ -8,7 +10,6 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
@@ -17,28 +18,22 @@ import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
 import styled from '@emotion/styled';
 
-import { userInfo } from 'node:os';
-import {
-  createNote,
-  updateNote,
-  deleteNote,
-  listNotes,
-} from '../store/actions/noteActions';
-
 const NoteScreen = () => {
-  const dispatch = useDispatch();
+  const noteContext = useContext(NoteContext);
+  const {
+    notes,
+    createNote,
+    listNotes,
+    deleteNote,
+    error,
+    loading,
+  } = noteContext;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const noteList = useSelector((state) => state.noteList);
-
-  const { loading: noteLoading, errors: noteErrors, notes } = noteList;
-
-  const { loading, error } = noteCreate;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(uuid(), title, body));
+    createNote(uuid(), title, body);
     setTitle('');
     setBody('');
   };
@@ -53,12 +48,12 @@ const NoteScreen = () => {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    dispatch(deleteNote(id));
+    deleteNote(id);
   };
 
   useEffect(() => {
-    dispatch(listNotes());
-  }, [noteCreate]);
+    listNotes();
+  }, []);
 
   return (
     <Center>
@@ -66,8 +61,6 @@ const NoteScreen = () => {
         <Text as="h1" fontSize="40px">
           Notes
         </Text>
-        {error && <Error>{error}</Error>}
-        {loading && <Loader />}
 
         <Flex
           direction="column"
@@ -94,42 +87,38 @@ const NoteScreen = () => {
           <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
-          {noteLoading && <Loader />}
-          {noteErrors && <Error>{noteErrors}</Error>}
-          {!noteLoading || !noteErrors
-            ? notes
-              && notes.map((n) => (
-                <>
-                  <Box
-                    key={n._id}
-                    shadow="sm"
-                    rounded="md"
-                    data-testid="card"
-                    maxW="lg"
-                    minW="sm"
-                    mt={4}
-                    borderWidth="1px"
-                    borderRadius="md"
-                    overflow="hidden"
-                    _hover={{ color: '#2EC0F9' }}
-                  >
-                    <Flex direction="column">
-                      <Cross onClick={(e) => handleDelete(e, n._id)} />
-                    </Flex>
+          {error && <Error>{error}</Error>}
+          {loading && <Loader />}
+          {notes
+            && notes.map((n) => (
+              <Box
+                key={n._id}
+                shadow="sm"
+                rounded="md"
+                data-testid="card"
+                maxW="lg"
+                minW="sm"
+                mt={4}
+                borderWidth="1px"
+                borderRadius="md"
+                overflow="hidden"
+                _hover={{ color: '#2EC0F9' }}
+              >
+                <Flex direction="column">
+                  <Cross onClick={(e) => handleDelete(e, n._id)} />
+                </Flex>
 
-                    <Heading m="5" mb="2" as="h1" size="lg">
-                      {n.title}
-                    </Heading>
-                    <Text m="5" mt="2" mb="4">
-                      {n.body}
-                    </Text>
-                    <Text m="5" mt="2" mb="4">
-                      {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
-                    </Text>
-                  </Box>
-                </>
-              ))
-            : ''}
+                <Heading m="5" mb="2" as="h1" size="lg">
+                  {n.title}
+                </Heading>
+                <Text m="5" mt="2" mb="4">
+                  {n.body}
+                </Text>
+                <Text m="5" mt="2" mb="4">
+                  {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
+                </Text>
+              </Box>
+            ))}
         </Flex>
       </Flex>
     </Center>

@@ -1,66 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-  Center,
-  Flex,
-  FormLabel,
-  Input,
-  Button,
+  Center, Flex, FormLabel, Input, Button,
 } from '@chakra-ui/react';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
-import { getUserDetails, updateUser } from '../store/actions/userActions';
-import { USER_UPDATE_RESET } from '../store/constants/userConstants';
+import UserContext from 'context/user/userContext';
+import AuthContext from 'context/auth/authContext';
 
 const UserEditScreen = () => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+  const { user: AuthUser, loading } = authContext;
+  const {
+    users, user, userInfo, updateUser, getUserDetails,
+  } = userContext;
   const router = useRouter();
-  const dispatch = useDispatch();
   const { id } = router.query;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
-  const userUpdate = useSelector((state) => state.userUpdate);
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = userUpdate;
 
   useEffect(() => {
-    if (!userInfo.isAdmin) {
-      router.push('/');
-    }
-    if (successUpdate) {
-      dispatch({ type: USER_UPDATE_RESET });
-      router.push('/admin/userlist');
-    } else if (user._id !== id) {
-      dispatch(getUserDetails(id));
+    getUserDetails(id);
+    if (id !== user._id) {
+      getUserDetails(id);
     } else {
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-  }, [user, dispatch, id, successUpdate, router.query]);
+    if (!AuthUser.isAdmin) {
+      router.push('/');
+    }
+    if (updateUser.success) {
+      router.push('/admin/userlist');
+    }
+  }, [AuthUser, router.query]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({
+    console.log(`ID: ${id}  NAME: ${name} EMAIL: ${email} ISADMIN: ${isAdmin}`);
+    updateUser({
       _id: id, name, email, isAdmin,
-    }));
+    });
   };
 
   return (
     <>
       <Center>
-        {loadingUpdate && <Loader />}
+        {/* {loadingUpdate && <Loader />}
         {loading && <Loader />}
         {errorUpdate && <Error>{errorUpdate}</Error>}
-        {error && <Error>{error}</Error>}
+        {error && <Error>{error}</Error>} */}
 
         <Flex direction="column" justify="center" align="center">
           <form onSubmit={submitHandler}>
@@ -87,7 +79,9 @@ const UserEditScreen = () => {
               onChange={(e) => setIsAdmin(e.target.checked)}
             />
             <div>
-              <Button mt={5} type="submit">Update user</Button>
+              <Button mt={5} type="submit">
+                Update user
+              </Button>
             </div>
           </form>
         </Flex>
