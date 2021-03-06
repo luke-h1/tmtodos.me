@@ -75,12 +75,12 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {isAuthenticated ? (
+          {user.token ? (
             <>
               <Text mr={30}>
                 Welcome
                 {' '}
-                <strong>{name}</strong>
+                <strong>{user.name}</strong>
               </Text>
               <MenuItems href="/notes">Notes</MenuItems>
               <MenuItems href="/profile">Profile</MenuItems>
@@ -100,7 +100,7 @@ const Header = () => {
               </Button>
             </>
           )}
-          {user && isAdmin && (
+          {user.token && user.isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>

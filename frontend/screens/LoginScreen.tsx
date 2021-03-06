@@ -48,7 +48,7 @@ const RegisterScreen: React.FC = () => {
   } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user.token) {
       router.push('/');
     }
     if (error) {
