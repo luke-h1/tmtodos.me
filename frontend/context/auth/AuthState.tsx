@@ -75,6 +75,7 @@ const AuthState = (props) => {
   //   logout a user & destroy their token / info from local storage
   const logout = () => {
     dispatch({ type: LOGOUT });
+    // need to destroy any notes before logout
   };
 
   //   clear errors (clear any errors in state)
