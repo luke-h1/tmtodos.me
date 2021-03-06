@@ -7,7 +7,6 @@ import {
   Heading,
   Input,
   Button,
-  ButtonGroup,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
@@ -18,6 +17,7 @@ import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
 import styled from '@emotion/styled';
 
+import { userInfo } from 'node:os';
 import {
   createNote,
   updateNote,
@@ -29,8 +29,6 @@ const NoteScreen = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [id, setId] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
   const noteCreate = useSelector((state) => state.noteCreate);
   const noteList = useSelector((state) => state.noteList);
 
@@ -56,23 +54,6 @@ const NoteScreen = () => {
   const handleDelete = (e, id) => {
     e.preventDefault();
     dispatch(deleteNote(id));
-  };
-
-  const handleEdit = (e, id, n) => {
-    e.preventDefault();
-    setTitle(n.title);
-    setBody(n.body);
-    setId(n._id);
-    setIsEditing(true);
-  };
-
-  const handleSubmitEdit = (e) => {
-    e.preventDefault();
-    dispatch(updateNote(id, title, body));
-    dispatch(listNotes());
-    setBody('');
-    setTitle('');
-    setId('');
   };
 
   useEffect(() => {
@@ -110,12 +91,7 @@ const NoteScreen = () => {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
-          {isEditing ? (
-            <Button onClick={handleSubmitEdit}>Edit Submit</Button>
-          ) : (
-            <Button onClick={handleSubmit}>Submit</Button>
-
-          )}
+          <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
           {noteLoading && <Loader />}
@@ -139,7 +115,6 @@ const NoteScreen = () => {
                   >
                     <Flex direction="column">
                       <Cross onClick={(e) => handleDelete(e, n._id)} />
-                      <Button onClick={(e) => handleEdit(e, n._id, n)}>Edit</Button>
                     </Flex>
 
                     <Heading m="5" mb="2" as="h1" size="lg">
