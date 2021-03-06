@@ -19,7 +19,7 @@ import {
 
 const UserState = (props) => {
   const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const { user: AuthenticatedUser } = authContext;
   const initialState = {
     users: [],
     user: {},
@@ -32,7 +32,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {
@@ -56,7 +56,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {
@@ -64,7 +64,7 @@ const UserState = (props) => {
         `http://localhost:5000/api/users/me/${id}`,
         config,
       );
-      dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+      // dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
     } catch (e) {
       dispatch({
         type: USER_DETAILS_FAIL,
@@ -80,7 +80,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {
@@ -105,7 +105,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {
@@ -129,7 +129,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {
@@ -150,7 +150,7 @@ const UserState = (props) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${AuthenticatedUser.token}`,
       },
     };
     try {

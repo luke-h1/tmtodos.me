@@ -11,9 +11,9 @@ import AuthContext from 'context/auth/authContext';
 const UserEditScreen = () => {
   const userContext = useContext(UserContext);
   const authContext = useContext(AuthContext);
-  const { user, loading } = authContext;
+  const { user: AuthUser, loading } = authContext;
   const {
-    users, user, userInfo, updateUser,
+    users, user, userInfo, updateUser, getUserDetails,
   } = userContext;
   const router = useRouter();
   const { id } = router.query;
@@ -22,17 +22,29 @@ const UserEditScreen = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (!user.isAdmin) {
+    getUserDetails(id);
+    if (id !== user._id) {
+      getUserDetails(id);
+    } else {
+      setName(user.name);
+      setEmail(user.email);
+      setIsAdmin(user.isAdmin);
+    }
+    // need to get user details as they are undefined...
+    if (!AuthUser.isAdmin) {
       router.push('/');
     }
     if (updateUser.success) {
       router.push('/admin/userlist');
     }
-  }, [user, router.query]);
+  }, [AuthUser, router.query]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    updateUser(name, email, isAdmin);
+    console.log(`ID: ${id}  NAME: ${name} EMAIL: ${email} ISADMIN: ${isAdmin}`);
+    updateUser({
+      _id: id, name, email, isAdmin,
+    });
   };
 
   return (
