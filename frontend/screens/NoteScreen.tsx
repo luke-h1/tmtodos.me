@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import NoteContext from 'context/note/noteContext';
 import {
   Flex,
   Box,
@@ -8,7 +9,6 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import TextArea from 'components/TextArea';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
@@ -17,28 +17,15 @@ import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
 import styled from '@emotion/styled';
 
-import { userInfo } from 'node:os';
-import {
-  createNote,
-  updateNote,
-  deleteNote,
-  listNotes,
-} from '../store/actions/noteActions';
-
 const NoteScreen = () => {
-  const dispatch = useDispatch();
+  const noteContext = useContext(NoteContext);
+  const { notes, createNote } = noteContext;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const noteList = useSelector((state) => state.noteList);
-
-  const { loading: noteLoading, errors: noteErrors, notes } = noteList;
-
-  const { loading, error } = noteCreate;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(uuid(), title, body));
+    createNote(uuid(), title, body);
     setTitle('');
     setBody('');
   };
@@ -53,12 +40,12 @@ const NoteScreen = () => {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    dispatch(deleteNote(id));
+    // delete a note
   };
 
   useEffect(() => {
-    dispatch(listNotes());
-  }, [noteCreate]);
+    // list notes
+  }, []);
 
   return (
     <Center>
@@ -66,8 +53,8 @@ const NoteScreen = () => {
         <Text as="h1" fontSize="40px">
           Notes
         </Text>
-        {error && <Error>{error}</Error>}
-        {loading && <Loader />}
+        {/* {error && <Error>{error}</Error>}
+        {loading && <Loader />} */}
 
         <Flex
           direction="column"
@@ -94,10 +81,9 @@ const NoteScreen = () => {
           <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
-          {noteLoading && <Loader />}
-          {noteErrors && <Error>{noteErrors}</Error>}
-          {!noteLoading || !noteErrors
-            ? notes
+          {/* {noteLoading && <Loader />}
+          {noteErrors && <Error>{noteErrors}</Error>} */}
+          {/* {notes
               && notes.map((n) => (
                 <>
                   <Box
@@ -128,8 +114,7 @@ const NoteScreen = () => {
                     </Text>
                   </Box>
                 </>
-              ))
-            : ''}
+              ))} */}
         </Flex>
       </Flex>
     </Center>

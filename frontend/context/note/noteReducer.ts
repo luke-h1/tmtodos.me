@@ -49,6 +49,18 @@ export default (state, action) => {
         error: action.payload,
       };
 
+    case NOTE_DELETE_SUCCESS:
+      return {
+        loading: false,
+        notes: action.payload,
+      };
+
+    case NOTE_DELETE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
     default: {
       return state;
     }

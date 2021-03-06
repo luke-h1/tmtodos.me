@@ -9,4 +9,3 @@ export const NOTE_DELETE_FAIL = 'NOTE_DELETE_FAIL';
 
 export const NOTE_LIST_SUCCESS = 'NOTE_LIST_SUCCESS';
 export const NOTE_LIST_FAIL = 'NOTE_LIST_FAIL';
-
