@@ -6,3 +6,4 @@ export const LOGOUT = 'LOGOUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const USER_LOADED = 'USER_LOADED';
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';

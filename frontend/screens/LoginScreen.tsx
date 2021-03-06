@@ -44,7 +44,7 @@ const RegisterScreen: React.FC = () => {
   const authContext = useContext(AuthContext);
   const router = useRouter();
   const {
-    login, user, isAuthenticated, error, token
+    login, user, isAuthenticated, error, token, loading,
   } = authContext;
 
   useEffect(() => {
@@ -94,9 +94,10 @@ const RegisterScreen: React.FC = () => {
         >
           {({ isSubmitting, errors }) => (
             <>
+              {isSubmitting && <Loader />}
               <Form>
-                {/* {error && <Error>{error}</Error>}
-                {loading && <Loader />} */}
+                {error && <Error>{error}</Error>}
+                {loading && <Loader />}
                 <CustomInput
                   placeholder="email"
                   name="email"

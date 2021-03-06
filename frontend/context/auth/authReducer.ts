@@ -8,6 +8,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   CLEAR_ERRORS,
+  REGISTER_REQUEST,
 } from '../constants/AuthContstants';
 
 export default (state, action) => {
@@ -19,6 +20,7 @@ export default (state, action) => {
         user: action.payload,
         token: action.payload.token,
       };
+
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS: {
       localStorage.setItem('user', JSON.stringify(action.payload));

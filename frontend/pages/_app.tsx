@@ -4,17 +4,20 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer';
 import AuthState from 'context/auth/AuthState';
 import NoteState from 'context/note/NoteState';
+import UserState from 'context/user/UserState';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <AuthState>
         <NoteState>
-          <ChakraProvider>
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
-          </ChakraProvider>
+          <UserState>
+            <ChakraProvider>
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </ChakraProvider>
+          </UserState>
         </NoteState>
       </AuthState>
     </>

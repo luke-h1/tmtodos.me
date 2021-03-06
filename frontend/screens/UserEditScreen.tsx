@@ -1,10 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { Center, Flex, FormLabel, Input, Button } from '@chakra-ui/react';
+import {
+  Center, Flex, FormLabel, Input, Button,
+} from '@chakra-ui/react';
 import Loader from 'components/Loader';
 import Error from 'components/Error';
+import UserContext from 'context/user/userContext';
+import AuthContext from 'context/auth/authContext';
 
 const UserEditScreen = () => {
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+  const { user, loading } = authContext;
+  const {
+    users, user, userInfo, updateUser,
+  } = userContext;
   const router = useRouter();
   const { id } = router.query;
   const [name, setName] = useState('');
@@ -15,11 +25,14 @@ const UserEditScreen = () => {
     if (!user.isAdmin) {
       router.push('/');
     }
+    if (updateUser.success) {
+      router.push('/admin/userlist');
+    }
   }, [user, router.query]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // update the user...
+    updateUser(name, email, isAdmin);
   };
 
   return (
