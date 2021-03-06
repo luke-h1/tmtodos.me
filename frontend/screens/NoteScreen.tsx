@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext } from 'react';
 import NoteContext from 'context/note/noteContext';
 import {
@@ -20,7 +21,7 @@ import styled from '@emotion/styled';
 const NoteScreen = () => {
   const noteContext = useContext(NoteContext);
   const {
-    notes, createNote, listNotes, deleteNote, error: noteError, loading: noteLoading,
+    notes, createNote, listNotes, deleteNote, error, loading,
   } = noteContext;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -55,8 +56,6 @@ const NoteScreen = () => {
         <Text as="h1" fontSize="40px">
           Notes
         </Text>
-        {/* {error && <Error>{error}</Error>}
-        {loading && <Loader />} */}
 
         <Flex
           direction="column"
@@ -83,9 +82,9 @@ const NoteScreen = () => {
           <Button onClick={handleSubmit}>Submit</Button>
         </Flex>
         <Flex direction="column" justify="center" align="center">
-          {noteLoading && <Loader />}
-          {noteError && <Error>{noteError}</Error>}
-          {!noteLoading || !noteError ? notes.map((n) => (
+          {error && <Error>{error}</Error>}
+          {loading && <Loader />}
+          {notes && notes.map((n) => (
             <Box
               key={n._id}
               shadow="sm"
@@ -113,8 +112,7 @@ const NoteScreen = () => {
                 {format(parseISO(n.updatedAt), 'MMMM dd, yyyy')}
               </Text>
             </Box>
-          )) : ''}
-
+          ))}
         </Flex>
       </Flex>
     </Center>
