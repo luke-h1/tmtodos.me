@@ -19,7 +19,7 @@ import styled from '@emotion/styled';
 
 const NoteScreen = () => {
   const noteContext = useContext(NoteContext);
-  const { notes, createNote } = noteContext;
+  const { notes, createNote, listNotes } = noteContext;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
@@ -44,7 +44,7 @@ const NoteScreen = () => {
   };
 
   useEffect(() => {
-    // list notes
+    listNotes()
   }, []);
 
   return (
@@ -83,7 +83,7 @@ const NoteScreen = () => {
         <Flex direction="column" justify="center" align="center">
           {/* {noteLoading && <Loader />}
           {noteErrors && <Error>{noteErrors}</Error>} */}
-          {/* {notes
+          {notes
               && notes.map((n) => (
                 <>
                   <Box
@@ -114,7 +114,7 @@ const NoteScreen = () => {
                     </Text>
                   </Box>
                 </>
-              ))} */}
+              ))}
         </Flex>
       </Flex>
     </Center>

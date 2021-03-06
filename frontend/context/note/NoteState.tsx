@@ -26,7 +26,6 @@ const NoteState = (props) => {
 
   //   create a single note
   const createNote = async (id, title, body) => {
-    const token = localStorage.getItem('user');
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -41,12 +40,30 @@ const NoteState = (props) => {
       dispatch({ type: NOTE_CREATE_FAIL });
     }
   };
+
+  // list a user's notes
+  const listNotes = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(`http://localhost:5000/api/notes/me/${user._id}`, config);
+      dispatch({ type: NOTE_LIST_SUCCESS, payload: data });
+    } catch (e) {
+      dispatch({ type: NOTE_LIST_FAIL });
+    }
+  };
+
   return (
     <NoteContext.Provider
       value={{
         note: state.note,
         notes: state.notes,
         createNote,
+        listNotes,
       }}
     >
       {props.children}
