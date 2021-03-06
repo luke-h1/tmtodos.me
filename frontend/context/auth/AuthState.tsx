@@ -15,7 +15,7 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-
+    token: typeof localStorage !== 'undefined' ? localStorage.getItem('token') : '{}',
     user: typeof localStorage !== 'undefined' && JSON.parse(localStorage.getItem('user')),
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -86,6 +86,7 @@ const AuthState = (props) => {
         loading: state.loading,
         error: state.error,
         user: state.user,
+        token: state.token,
         register,
         login,
         logout,

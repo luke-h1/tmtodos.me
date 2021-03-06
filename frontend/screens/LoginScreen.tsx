@@ -44,11 +44,11 @@ const RegisterScreen: React.FC = () => {
   const authContext = useContext(AuthContext);
   const router = useRouter();
   const {
-    login, user, isAuthenticated, error,
+    login, user, isAuthenticated, error, token
   } = authContext;
 
   useEffect(() => {
-    if (user.token) {
+    if (user) {
       router.push('/');
     }
     if (error) {

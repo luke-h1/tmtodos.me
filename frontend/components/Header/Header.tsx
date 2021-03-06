@@ -33,7 +33,7 @@ const MenuItems: React.FC<MenuProps> = (props) => {
 const Header = () => {
   const authcontext = useContext(AuthContext);
   const {
-    user, logout, isAuthenticated, isAdmin, name,
+    user, logout, isAuthenticated, isAdmin, name, token,
   } = authcontext;
 
   const router = useRouter();
@@ -75,7 +75,7 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {user.token ? (
+          {token && (
             <>
               <Text mr={30}>
                 Welcome
@@ -90,17 +90,19 @@ const Header = () => {
               </Button>
 
             </>
-          ) : (
-            <>
-              <MenuItems href="/">Home</MenuItems>
-              <MenuItems href="/about">About</MenuItems>
-              <MenuItems href="/register">Register</MenuItems>
-              <Button colorScheme="teal" size="md">
-                <Link href="/login">login</Link>
-              </Button>
-            </>
           )}
-          {user.token && user.isAdmin && (
+          {!user && ( 
+             <>
+             <MenuItems href="/">Home</MenuItems>
+             <MenuItems href="/about">About</MenuItems>
+             <MenuItems href="/register">Register</MenuItems>
+             <Button colorScheme="teal" size="md">
+               <Link href="/login">login</Link>
+             </Button>
+           </>
+ 
+          )}
+          {user && user.isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>
