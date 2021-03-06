@@ -34,7 +34,7 @@ const AuthState = (props) => {
         config,
       );
       dispatch({ type: REGISTER_SUCCESS, payload: data });
-      dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: LOGIN_SUCCESS, payload: data });
     } catch (e) {
       dispatch({
         type: REGISTER_FAIL,

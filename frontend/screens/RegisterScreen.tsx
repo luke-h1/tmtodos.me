@@ -40,13 +40,13 @@ const CustomInput: React.FC<FieldAttributes<{}>> = ({
 const RegisterScreen: React.FC = () => {
   const authContext = useContext(AuthContext);
   const router = useRouter();
-  const { register, user, login } = authContext;
+  const { register, token } = authContext;
 
   useEffect(() => {
-    if (user.isAuthenticated) {
+    if (token) {
       router.push('/');
     }
-  }, [router, user]);
+  }, [router, token]);
 
   return (
     <>

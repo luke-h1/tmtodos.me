@@ -113,6 +113,7 @@ const NoteScreen = () => {
               </Text>
             </Box>
           ))}
+
         </Flex>
       </Flex>
     </Center>
