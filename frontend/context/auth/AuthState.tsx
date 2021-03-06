@@ -64,7 +64,7 @@ const AuthState = (props) => {
         config,
       );
       dispatch({ type: LOGIN_SUCCESS, payload: data });
-      localStorage.setItem('user', JSON.stringify(data));
+      // set item in local storage here before moved to reducer...
     } catch (e) {
       dispatch({
         type: LOGIN_FAIL,

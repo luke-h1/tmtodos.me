@@ -44,7 +44,7 @@ const RegisterScreen: React.FC = () => {
   const authContext = useContext(AuthContext);
   const router = useRouter();
   const {
-    login, user, isAuthenticated, isAdmin, error,
+    login, user, isAuthenticated, error,
   } = authContext;
 
   useEffect(() => {
