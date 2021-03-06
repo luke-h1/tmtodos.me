@@ -48,9 +48,6 @@ const RegisterScreen: React.FC = () => {
   } = authContext;
 
   useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
     if (error) {
       console.log(`errors > ${error}`);
     }
@@ -90,6 +87,7 @@ const RegisterScreen: React.FC = () => {
             setSubmitting(true);
             login(email, password);
             setSubmitting(false);
+            router.push('/');
           }}
         >
           {({ isSubmitting, errors }) => (

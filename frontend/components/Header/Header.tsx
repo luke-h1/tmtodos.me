@@ -75,7 +75,7 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {token && (
+          {user && token && user.token ? (
             <>
               <Text mr={30}>
                 Welcome
@@ -90,19 +90,18 @@ const Header = () => {
               </Button>
 
             </>
+          ) : (
+            <>
+              <MenuItems href="/">Home</MenuItems>
+              <MenuItems href="/about">About</MenuItems>
+              <MenuItems href="/register">Register</MenuItems>
+              <Button colorScheme="teal" size="md">
+                <Link href="/login">login</Link>
+              </Button>
+            </>
           )}
-          {!user && (
-          <>
-            <MenuItems href="/">Home</MenuItems>
-            <MenuItems href="/about">About</MenuItems>
-            <MenuItems href="/register">Register</MenuItems>
-            <Button colorScheme="teal" size="md">
-              <Link href="/login">login</Link>
-            </Button>
-          </>
 
-          )}
-          {user && user.isAdmin && (
+          {token && user.isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>
