@@ -33,7 +33,7 @@ const MenuItems: React.FC<MenuProps> = (props) => {
 const Header = () => {
   const authcontext = useContext(AuthContext);
   const {
-    isAuthenticated, logout, user, isAdmin,
+    user, logout
   } = authcontext;
 
   const router = useRouter();
@@ -74,7 +74,7 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {user ? (
+          {user.isAuthenticated ? (
             <>
               <Text mr={30}>
                 Welcome
