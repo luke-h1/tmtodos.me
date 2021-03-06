@@ -21,6 +21,7 @@ const AuthState = (props) => {
     loading: true,
     error: null,
     user: null,
+    isAdmin: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -45,6 +46,7 @@ const AuthState = (props) => {
     };
     try {
       const { data } = await axios.post('http://localhost:5000/api/users', { name, email, password }, config);
+      dispatch({ type: REGISTER_SUCCESS, payload: data });
       loadUser();
     } catch (e) {
       dispatch({
@@ -91,6 +93,7 @@ const AuthState = (props) => {
         loading: state.loading,
         user: state.user,
         error: state.error,
+        isAdmin: state.isAdmin,
         register,
         loadUser,
         login,

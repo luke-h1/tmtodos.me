@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'next/link';
 import {
   Box, Flex, Text, Button,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import AuthContext from 'context/auth/authContext';
 import Logo from '../../Icons/Logo';
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
-import { logout } from '../../store/actions/userActions';
 
 interface MenuProps {
   children: string;
@@ -32,14 +31,16 @@ const MenuItems: React.FC<MenuProps> = (props) => {
 };
 
 const Header = () => {
+  const authcontext = useContext(AuthContext);
+  const {
+    isAuthenticated, logout, user, isAdmin,
+  } = authcontext;
+
   const router = useRouter();
-  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const logoutHandler = () => {
-    dispatch(logout());
+    // logout user
     router.push('/');
   };
 
@@ -73,12 +74,12 @@ const Header = () => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {userInfo ? (
+          {user ? (
             <>
               <Text mr={30}>
                 Welcome
                 {' '}
-                <strong>{userInfo.name}</strong>
+                <strong>{user.name}</strong>
               </Text>
               <MenuItems href="/notes">Notes</MenuItems>
               <MenuItems href="/profile">Profile</MenuItems>
@@ -98,7 +99,7 @@ const Header = () => {
               </Button>
             </>
           )}
-          {userInfo && userInfo.isAdmin && (
+          {user && user.isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>

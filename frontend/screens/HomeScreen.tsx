@@ -1,32 +1,28 @@
-import React from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-
-import {
-  Text,
-  Flex,
-} from '@chakra-ui/react';
+import AuthContext from 'context/auth/authContext';
+import { Text, Flex } from '@chakra-ui/react';
 import { Button } from 'components/Button';
 
 const HomeScreen = () => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const authcontext = useContext(AuthContext);
 
+  const { isAuthenticated, user } = authcontext;
   return (
     <>
       <Flex direction="column" align="center">
         <Text fontSize="60px" mb={10}>
           Take My Notes
         </Text>
-        {userInfo ? (
+        {isAuthenticated && user ? (
           <Text fontSize="30px">
             👋
-            {' '}
-            {' '}
-            {userInfo.name}
+            {user.name}
           </Text>
         ) : (
-          <Link href="/register"><Button>Sign Up</Button></Link>
+          <Link href="/register">
+            <Button>Sign Up</Button>
+          </Link>
         )}
       </Flex>
     </>
