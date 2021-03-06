@@ -57,6 +57,7 @@ export default (state, action) => {
       return {
         loading: false,
         notes: action.payload,
+        success: true,
       };
 
     case NOTE_DELETE_FAIL:
