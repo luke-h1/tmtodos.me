@@ -13,6 +13,9 @@ import {
   NOTE_DELETE_SUCCESS,
   NOTE_LIST_FAIL,
   NOTE_LIST_SUCCESS,
+  NOTE_CREATE_REQUEST,
+  NOTE_LIST_REQUEST,
+  NOTE_DELETE_REQUEST,
 } from '../constants/NoteConstants';
 
 const NoteState = (props) => {
@@ -34,7 +37,7 @@ const NoteState = (props) => {
       },
     };
     try {
-      // console.log(user.token)
+      dispatch({ type: NOTE_CREATE_REQUEST });
       const { data } = await axios.post('http://localhost:5000/api/notes', { id, title, body }, config);
       dispatch({ type: NOTE_CREATE_SUCCESS, payload: data });
     } catch (e) {
@@ -57,6 +60,7 @@ const NoteState = (props) => {
       },
     };
     try {
+      dispatch({ type: NOTE_LIST_REQUEST });
       const { data } = await axios.get(`http://localhost:5000/api/notes/me/${user._id}`, config);
       dispatch({ type: NOTE_LIST_SUCCESS, payload: data });
     } catch (e) {
@@ -79,6 +83,7 @@ const NoteState = (props) => {
       },
     };
     try {
+      dispatch({ type: NOTE_DELETE_REQUEST });
       const { data } = await axios.delete(`http://localhost:5000/api/notes/${id}`, config);
       dispatch({ type: NOTE_DELETE_SUCCESS, payload: data });
     } catch (e) {

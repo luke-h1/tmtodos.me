@@ -12,6 +12,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   CLEAR_ERRORS,
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
 } from '../constants/AuthContstants';
 
 import { USER_DETAILS_RESET, USER_LIST_RESET } from '../constants/UserConstants';
@@ -26,13 +28,14 @@ const AuthState = (props) => {
 
   //   register user
   const register = async (name, email, password) => {
-    dispatch({ type: REGISTER_REQUEST });
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
+      dispatch({ type: REGISTER_REQUEST });
+
       const { data } = await axios.post(
         'http://localhost:5000/api/users',
         { name, email, password },
@@ -59,6 +62,7 @@ const AuthState = (props) => {
       },
     };
     try {
+      dispatch({ type: LOGIN_REQUEST });
       const { data } = await axios.post(
         'http://localhost:5000/api/users/login',
         { email, password },
@@ -79,6 +83,7 @@ const AuthState = (props) => {
 
   //   logout a user & destroy their token / info from local storage
   const logout = () => {
+    dispatch({ type: LOGOUT_REQUEST });
     dispatch({ type: LOGOUT });
     dispatch({ type: USER_DETAILS_RESET });
     dispatch({ type: USER_LIST_RESET });

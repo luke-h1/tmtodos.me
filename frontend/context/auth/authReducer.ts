@@ -9,6 +9,8 @@ import {
   LOGOUT,
   CLEAR_ERRORS,
   REGISTER_REQUEST,
+  LOGOUT_REQUEST,
+  LOGIN_REQUEST,
 } from '../constants/AuthContstants';
 
 export default (state, action) => {
@@ -51,6 +53,15 @@ export default (state, action) => {
         token: {},
 
       };
+
+    case REGISTER_REQUEST:
+    case LOGIN_REQUEST:
+    case LOGOUT_REQUEST: {
+      return {
+        loading: true,
+      };
+    }
+
     default: {
       return state;
     }

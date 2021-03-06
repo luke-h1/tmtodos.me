@@ -7,6 +7,10 @@ import {
   NOTE_DELETE_SUCCESS,
   NOTE_LIST_FAIL,
   NOTE_LIST_SUCCESS,
+  NOTE_CREATE_REQUEST,
+  NOTE_UPDATE_REQUEST,
+  NOTE_DELETE_REQUEST,
+  NOTE_LIST_REQUEST,
 } from '../constants/NoteConstants';
 
 export default (state, action) => {
@@ -59,6 +63,14 @@ export default (state, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case NOTE_CREATE_REQUEST:
+    case NOTE_UPDATE_REQUEST:
+    case NOTE_DELETE_REQUEST:
+    case NOTE_LIST_REQUEST:
+      return {
+        loading: true,
       };
 
     default: {
