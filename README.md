@@ -8,7 +8,6 @@ Take My notes. A full stack, open source note taking app
 ### Frontend 
 
 - [React](https://github.com/facebook/react)
-- [Redux](https://github.com/reduxjs/redux)
 - [Next](https://github.com/vercel/next.js)
 - [typescript](https://github.com/Microsoft/TypeScript)
 - [ChakraUI](https://chakra-ui.com/)
@@ -18,7 +17,6 @@ Take My notes. A full stack, open source note taking app
 - [vercel](https://vercel.com/)
 
 ### Backend 
-- Express / Node JS API & MongoDB with the following tech stack:
 - [MongoDB](https://www.mongodb.com/)
 - [Helmet](https://helmetjs.github.io/)
 - [colors](https://github.com/marak/colors.js/)
