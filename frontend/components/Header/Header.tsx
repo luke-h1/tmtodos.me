@@ -91,16 +91,16 @@ const Header = () => {
 
             </>
           )}
-          {!user && ( 
-             <>
-             <MenuItems href="/">Home</MenuItems>
-             <MenuItems href="/about">About</MenuItems>
-             <MenuItems href="/register">Register</MenuItems>
-             <Button colorScheme="teal" size="md">
-               <Link href="/login">login</Link>
-             </Button>
-           </>
- 
+          {!user && (
+          <>
+            <MenuItems href="/">Home</MenuItems>
+            <MenuItems href="/about">About</MenuItems>
+            <MenuItems href="/register">Register</MenuItems>
+            <Button colorScheme="teal" size="md">
+              <Link href="/login">login</Link>
+            </Button>
+          </>
+
           )}
           {user && user.isAdmin && (
           <>
