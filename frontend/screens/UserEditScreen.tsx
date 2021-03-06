@@ -30,7 +30,6 @@ const UserEditScreen = () => {
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-    // need to get user details as they are undefined...
     if (!AuthUser.isAdmin) {
       router.push('/');
     }
