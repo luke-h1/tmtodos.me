@@ -23,6 +23,7 @@ export default (state, action) => {
     case USER_DETAILS_SUCCESS:
       return {
         loading: false,
+        success: true,
         user: action.payload,
       };
 
