@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
@@ -10,7 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import noteRoutes from './routes/noteRoutes.js';
 
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-
+// testing
 dotenv.config();
 
 connectDB();
