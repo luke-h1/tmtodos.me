@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState, useEffect, useContext,
+} from 'react';
 import { useRouter } from 'next/router';
 import {
   Center, Flex, FormLabel, Input, Button,
@@ -13,7 +15,7 @@ const UserEditScreen = () => {
   const authContext = useContext(AuthContext);
   const { user: AuthUser, loading } = authContext;
   const {
-    users, user, userInfo, updateUser, getUserDetails,
+    users, user, userInfo, updateUser, getUserDetails, success, resetUpdateUser,
   } = userContext;
   const router = useRouter();
   const { id } = router.query;
@@ -22,21 +24,21 @@ const UserEditScreen = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    getUserDetails(id);
-    if (id !== user._id) {
+    if (!AuthUser.isAdmin) {
+      router.push('/');
+    }
+    if (success) {
+      resetUpdateUser();
+      router.push('/admin/userlist');
+    } else if (!user || user._id !== id) {
       getUserDetails(id);
     } else {
+      console.log(user);
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-    if (!AuthUser.isAdmin) {
-      router.push('/');
-    }
-    if (updateUser.success) {
-      router.push('/admin/userlist');
-    }
-  }, [AuthUser, router.query]);
+  }, [router]);
 
   const submitHandler = (e) => {
     e.preventDefault();
