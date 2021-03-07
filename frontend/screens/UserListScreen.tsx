@@ -1,4 +1,5 @@
 import { useEffect, useContext } from 'react';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import UserContext from 'context/user/userContext';
 import AuthContext from 'context/auth/authContext';
@@ -49,6 +50,14 @@ const UserListScreen = () => {
   }, [AuthUser, router]);
   return (
     <>
+      <NextSeo
+        title="User List | Take My Notes"
+        canonical="https://take-my-notes.com/admin/userlist"
+        openGraph={{
+          url: 'https://take-my-notes.com/admin/userlist',
+          title: 'User List | take-my-notes.com',
+        }}
+      />
       <Container>
         <Heading fontSize="40px" mb={10}>
           Users

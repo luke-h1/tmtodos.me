@@ -1,6 +1,8 @@
 import React, {
-  useState, useEffect, useContext,
+  useState, useContext,
 } from 'react';
+import { NextSeo } from 'next-seo';
+
 import { useRouter } from 'next/router';
 import {
   Center, Flex, FormLabel, Input, Button,
@@ -41,6 +43,14 @@ const UserEditScreen = () => {
 
   return (
     <>
+      <NextSeo
+        title="Edit Users | Take My Notes"
+        canonical="https://take-my-notes.com/admin/useredit"
+        openGraph={{
+          url: 'https://take-my-notes.com/admin/useredit',
+          title: 'Edit Users | take-my-notes.com',
+        }}
+      />
       <Center>
         {loading && <Loader />}
         {' '}

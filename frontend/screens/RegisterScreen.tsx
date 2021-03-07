@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from 'react';
+import { NextSeo } from 'next-seo';
+
 import {
   Formik, Form, useField, FieldAttributes,
 } from 'formik';
@@ -50,6 +52,14 @@ const RegisterScreen: React.FC = () => {
 
   return (
     <>
+      <NextSeo
+        title="Register | Take My Notes"
+        canonical="https://take-my-notes.com/register"
+        openGraph={{
+          url: 'https://take-my-notes.com/register',
+          title: 'Register | take-my-notes.com',
+        }}
+      />
       <Flex
         direction="column"
         justify="center"

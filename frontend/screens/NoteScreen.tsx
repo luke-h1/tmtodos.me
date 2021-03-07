@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext } from 'react';
+import { NextSeo } from 'next-seo';
 import NoteContext from 'context/note/noteContext';
 import {
   Flex,
@@ -57,6 +58,14 @@ const NoteScreen = () => {
 
   return (
     <Center>
+      <NextSeo
+        title="Notes | Take My Notes"
+        canonical="https://take-my-notes.com/notes"
+        openGraph={{
+          url: 'https://take-my-notes.com/notes',
+          title: 'Notes | take-my-notes.com',
+        }}
+      />
       <Flex direction="column" justify="center" align="center">
         <Text as="h1" fontSize="40px">
           Notes
