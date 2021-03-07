@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,

@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, ReactNode } from 'react';
 import axios from 'axios';
 import AuthContext from 'context/auth/authContext';
 import UserContext from './userContext';
@@ -25,10 +25,24 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/UserConstants';
 
-const UserState = (props) => {
+export type User = {
+  name: string;
+  email: string;
+  isAdmin: Boolean;
+  token: string;
+  _id: string;
+};
+export interface initalStateProps {
+  loading: boolean;
+  success: boolean;
+  user: User;
+  users: User[];
+}
+
+const UserState = ({ children }: ReactNode) => {
   const authContext = useContext(AuthContext);
   const { user: AuthenticatedUser } = authContext;
-  const initialState = {
+  const initialState: initalStateProps = {
     users: [],
     user: {},
     loading: false,
@@ -37,7 +51,7 @@ const UserState = (props) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
 
   //   get user details
-  const getUserDetails = async (id) => {
+  const getUserDetails = async (id: string) => {
     dispatch({ type: USER_DETAILS_REQUEST });
     const config = {
       headers: {
@@ -62,7 +76,7 @@ const UserState = (props) => {
     }
   };
 
-  const getMyUserDetails = async (id) => {
+  const getMyUserDetails = async (id: string) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +101,7 @@ const UserState = (props) => {
     }
   };
 
-  const updateUserProfile = async (user) => {
+  const updateUserProfile = async (user: User) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -138,7 +152,7 @@ const UserState = (props) => {
     }
   };
 
-  const deleteUser = async (id) => {
+  const deleteUser = async (id: string) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -169,7 +183,7 @@ const UserState = (props) => {
     }
   };
 
-  const updateUser = async (user) => {
+  const updateUser = async (user: User) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -209,7 +223,7 @@ const UserState = (props) => {
         resetUpdateUser,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 };

@@ -44,12 +44,6 @@ const RegisterScreen: React.FC = () => {
   const router = useRouter();
   const { register, token } = authContext;
 
-  useEffect(() => {
-    if (token) {
-      router.push('/');
-    }
-  }, [router, token]);
-
   return (
     <>
       <NextSeo

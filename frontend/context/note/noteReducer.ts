@@ -11,6 +11,7 @@ import {
   NOTE_UPDATE_REQUEST,
   NOTE_DELETE_REQUEST,
   NOTE_LIST_REQUEST,
+  CLEAR_NOTES_FROM_STATE,
 } from '../constants/NoteConstants';
 
 export default (state, action) => {
@@ -64,6 +65,13 @@ export default (state, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_NOTES_FROM_STATE:
+      return {
+        loading: false,
+        note: {},
+        notes: [],
       };
 
     case NOTE_CREATE_REQUEST:

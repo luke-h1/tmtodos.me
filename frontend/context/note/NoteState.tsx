@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { ReactNode, useContext, useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from 'context/auth/authContext';
 import NoteContext from './noteContext';
@@ -7,8 +7,6 @@ import noteReducer from './noteReducer';
 import {
   NOTE_CREATE_SUCCESS,
   NOTE_CREATE_FAIL,
-  NOTE_UPDATE_FAIL,
-  NOTE_UPDATE_SUCCESS,
   NOTE_DELETE_FAIL,
   NOTE_DELETE_SUCCESS,
   NOTE_LIST_FAIL,
@@ -16,20 +14,33 @@ import {
   NOTE_CREATE_REQUEST,
   NOTE_LIST_REQUEST,
   NOTE_DELETE_REQUEST,
+  CLEAR_NOTES_FROM_STATE,
 } from '../constants/NoteConstants';
 
-const NoteState = (props) => {
+export type Note = {
+  title: string;
+  body: string;
+  id: string;
+}
+
+export interface initNoteStateProps {
+  note: Note;
+  notes: Note[];
+  loading: boolean;
+}
+
+const NoteState = ({ children }: ReactNode) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const initialState = {
+  const initialState: initNoteStateProps = {
     note: {},
-    notes: null,
-    loading: true,
+    notes: [],
+    loading: false,
   };
   const [state, dispatch] = useReducer(noteReducer, initialState);
 
   //   create a single note
-  const createNote = async (id, title, body) => {
+  const createNote = async (id: string, title: string, body: string) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +87,7 @@ const NoteState = (props) => {
   };
 
   // delete a single note
-  const deleteNote = async (id) => {
+  const deleteNote = async (id: string) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -99,6 +110,10 @@ const NoteState = (props) => {
     }
   };
 
+  const clearNotesFromState = async () => {
+    dispatch({ type: CLEAR_NOTES_FROM_STATE });
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -108,9 +123,10 @@ const NoteState = (props) => {
         createNote,
         listNotes,
         deleteNote,
+        clearNotesFromState,
       }}
     >
-      {props.children}
+      {children}
     </NoteContext.Provider>
   );
 };
