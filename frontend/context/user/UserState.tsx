@@ -61,7 +61,7 @@ const UserState = ({ children }: ReactNode) => {
     };
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/${id}`,
+        `https://take-my-notes-dev.herokuapp.com/api/users/${id}`,
         config,
       );
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
@@ -86,7 +86,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: MY_USER_DETAILS_REQUEST });
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/me/${id}`,
+        `https://take-my-notes-dev.herokuapp.com/api/users/me/${id}`,
         config,
       );
       dispatch({ type: MY_USER_DETAILS_SUCCESS, payload: data });
@@ -111,7 +111,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
       const { data } = await axios.put(
-        'http://localhost:5000/api/users/profile',
+        'https://take-my-notes-dev.herokuapp.com/api/users/profile',
         config,
         user,
       );
@@ -137,7 +137,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_LIST_REQUEST });
       const { data } = await axios.get(
-        'http://localhost:5000/api/users',
+        'https://take-my-notes-dev.herokuapp.com/api/users',
         config,
       );
       dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -161,7 +161,7 @@ const UserState = ({ children }: ReactNode) => {
     };
     try {
       dispatch({ type: USER_DELETE_REQUEST });
-      await axios.delete(`http://localhost:5000/api/users/${id}`, config);
+      await axios.delete(`https://take-my-notes-dev.herokuapp.com/api/users/${id}`, config);
       dispatch({ type: USER_DELETE_SUCCESS });
       listUsers();
     } catch (e) {
@@ -193,7 +193,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_UPDATE_REQUEST });
       const { data } = await axios.put(
-        `http://localhost:5000/api/users/${user._id}`,
+        `https://take-my-notes-dev.herokuapp.com/api/users/${user._id}`,
         user,
         config,
       );

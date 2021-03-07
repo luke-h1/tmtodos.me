@@ -40,7 +40,7 @@ const AuthState = ({ children }: ReactNode) => {
       dispatch({ type: REGISTER_REQUEST });
 
       const { data } = await axios.post(
-        'http://localhost:5000/api/users',
+        'https://take-my-notes-dev.herokuapp.com/api/users',
         { name, email, password },
         config,
       );
@@ -67,7 +67,7 @@ const AuthState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: LOGIN_REQUEST });
       const { data } = await axios.post(
-        'http://localhost:5000/api/users/login',
+        'https://take-my-notes-dev.herokuapp.com/api/users/login',
         { email, password },
         config,
       );
