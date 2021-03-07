@@ -82,9 +82,9 @@ const Header = () => {
                 {' '}
                 <strong>{user.name}</strong>
               </Text>
+              <MenuItems href="/">Home</MenuItems>
               <MenuItems href="/notes">Notes</MenuItems>
-              <MenuItems href="/profile">Profile</MenuItems>
-
+              <MenuItems href="/about">About</MenuItems>
               <Button colorScheme="teal" size="md" onClick={logoutHandler}>
                 Logout
               </Button>
