@@ -149,6 +149,7 @@ const UserState = (props) => {
       dispatch({ type: USER_DELETE_REQUEST });
       await axios.delete(`http://localhost:5000/api/users/${id}`, config);
       dispatch({ type: USER_DELETE_SUCCESS });
+      listUsers();
     } catch (e) {
       dispatch({
         type: USER_DELETE_FAIL,

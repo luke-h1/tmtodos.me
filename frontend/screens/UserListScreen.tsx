@@ -32,12 +32,14 @@ const UserListScreen = () => {
     userInfo,
     updateUser,
     listUsers,
+    deleteUser,
     error,
     loading: UserLoading,
   } = userContext;
 
-  const deleteHandler = (id) => {
-    console.log(`Deleted user: ${id}`);
+  const deleteHandler = (e, id) => {
+    e.preventDefault();
+    deleteUser(id);
   };
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const UserListScreen = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {users.map((user) => (
+                {users && users.map((user) => (
                   <Tr key={user._id}>
                     <Td>{user._id}</Td>
                     <Td>{user.name}</Td>
@@ -94,7 +96,7 @@ const UserListScreen = () => {
                         leftIcon={<FiX />}
                         colorScheme="red"
                         variant="solid"
-                        onClick={() => deleteHandler(user._id)}
+                        onClick={(e) => deleteHandler(e, user._id)}
                       >
                         Delete user
                       </Button>

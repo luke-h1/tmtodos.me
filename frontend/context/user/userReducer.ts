@@ -69,6 +69,7 @@ export default (state, action) => {
       return {
         loading: false,
         success: true,
+        users: [],
       };
 
     case USER_DELETE_FAIL:
