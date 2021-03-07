@@ -44,7 +44,7 @@ const UserListScreen = () => {
     if (AuthUser && AuthUser.isAdmin) {
       listUsers();
     }
-  }, []);
+  }, [AuthUser, router]);
   return (
     <>
       <Container>
