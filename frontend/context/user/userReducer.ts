@@ -99,7 +99,6 @@ export default (state, action) => {
     case USER_UPDATE_REQUEST:
       return {
         loading: true,
-        success: false,
       };
 
     default: {

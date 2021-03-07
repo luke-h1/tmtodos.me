@@ -38,6 +38,7 @@ const UserState = (props) => {
 
   //   get user details
   const getUserDetails = async (id) => {
+    dispatch({ type: USER_DETAILS_REQUEST });
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +46,6 @@ const UserState = (props) => {
       },
     };
     try {
-      dispatch({ type: USER_DETAILS_REQUEST });
       const { data } = await axios.get(
         `http://localhost:5000/api/users/${id}`,
         config,
