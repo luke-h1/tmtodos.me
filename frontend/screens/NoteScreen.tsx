@@ -17,8 +17,6 @@ import { parseISO, format } from 'date-fns';
 import { uuid } from 'uuidv4';
 import { ImCross } from 'react-icons/im';
 import styled from '@emotion/styled';
-import noteReducer from 'context/note/noteReducer';
-import { NOTE_LIST_REQUEST } from 'context/constants/NoteConstants';
 
 const NoteScreen = () => {
   const noteContext = useContext(NoteContext);
@@ -49,8 +47,8 @@ const NoteScreen = () => {
   `;
 
   const handleDelete = async (e, id) => {
-    e.preventDefault();
     deleteNote(id);
+    listNotes();
   };
 
   useEffect(() => {
@@ -91,8 +89,8 @@ const NoteScreen = () => {
         <Flex direction="column" justify="center" align="center">
           {error && <Error>{error}</Error>}
           {loading && <Loader />}
-          {notes && notes.map((n) => ( 
-              <Box
+          {notes && notes.map((n) => (
+            <Box
               key={n._id}
               shadow="sm"
               rounded="md"
@@ -119,7 +117,6 @@ const NoteScreen = () => {
               </Text>
             </Box>
           ))}
-         
 
         </Flex>
       </Flex>
