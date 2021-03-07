@@ -1,8 +1,7 @@
 import React, { ReactNode, useReducer, useContext } from 'react';
 import axios from 'axios';
-import { CLEAR_NOTES_FROM_STATE } from 'context/constants/NoteConstants';
-import NoteContext from 'context/note/noteContext';
 
+import { useRouter } from 'next/router';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import {
@@ -20,8 +19,8 @@ import {
 import { USER_DETAILS_RESET, USER_LIST_RESET } from '../constants/UserConstants';
 
 const AuthState = ({ children }: ReactNode) => {
-  const noteContext = useContext(NoteContext);
-  const { clearNotesFromState } = noteContext;
+  const router = useRouter();
+
   const initialState = {
     token: typeof localStorage !== 'undefined' ? localStorage.getItem('token') : '{}',
     user: typeof localStorage !== 'undefined' && JSON.parse(localStorage.getItem('user')),
@@ -87,9 +86,9 @@ const AuthState = ({ children }: ReactNode) => {
   const logout = () => {
     dispatch({ type: LOGOUT_REQUEST });
     dispatch({ type: LOGOUT });
+    router.push('/');
     dispatch({ type: USER_DETAILS_RESET });
     dispatch({ type: USER_LIST_RESET });
-    clearNotesFromState();
     // need to destroy any notes before logout
   };
 
