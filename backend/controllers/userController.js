@@ -2,11 +2,6 @@ import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
 
-// @desc    Authenticate a user & get JWT token
-// @route   POST /api/users/login
-// @access  public
-// done manual testing
-// needs jest unit test
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -71,6 +66,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      token: generateToken(user._id),
     });
   } else {
     res.status(404);
@@ -188,30 +184,6 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update user
-// @route   PUT /api/users/me/:id
-// @access  Private
-// done manual testing
-// needs jest unit test
-const updateMyUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin;
-    const updatedUser = await user.save();
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error('User not found');
-  }
-});
-
 export {
   authUser,
   getUserProfile,
@@ -221,6 +193,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
-  updateMyUser,
   deleteMyUser,
 };

@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'next/link';
 import {
   Box, Flex, Text, Button,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import AuthContext from 'context/auth/authContext';
 import Logo from '../../Icons/Logo';
 import { CloseIcon, MenuIcon } from '../../Icons/HeaderIcons';
-import { logout } from '../../store/actions/userActions';
 
 interface MenuProps {
   children: string;
@@ -31,19 +30,18 @@ const MenuItems: React.FC<MenuProps> = (props) => {
   );
 };
 
-interface HeaderProps {
-  props: void;
-}
+const Header = () => {
+  const authcontext = useContext(AuthContext);
+  const {
+    user, logout, isAuthenticated, isAdmin, name, token,
+  } = authcontext;
 
-const Header: React.FC<HeaderProps> = (props) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+
   const logoutHandler = () => {
-    dispatch(logout());
+    logout();
     router.push('/');
   };
 
@@ -57,7 +55,6 @@ const Header: React.FC<HeaderProps> = (props) => {
       mb={8}
       p={8}
       bg={['primary.500', 'primary.500', 'transparent', 'transparent']}
-      {...props}
     >
       <Flex align="center">
         <Link href="/"><a><Logo /></a></Link>
@@ -78,16 +75,16 @@ const Header: React.FC<HeaderProps> = (props) => {
           direction={['column', 'row', 'row', 'row']}
           pt={[4, 4, 0, 0]}
         >
-          {userInfo ? (
+          {user && token && user.token ? (
             <>
               <Text mr={30}>
                 Welcome
                 {' '}
-                <strong>{userInfo.name}</strong>
+                <strong>{user.name}</strong>
               </Text>
+              <MenuItems href="/">Home</MenuItems>
               <MenuItems href="/notes">Notes</MenuItems>
-              <MenuItems href="/profile">Profile</MenuItems>
-
+              <MenuItems href="/about">About</MenuItems>
               <Button colorScheme="teal" size="md" onClick={logoutHandler}>
                 Logout
               </Button>
@@ -103,7 +100,8 @@ const Header: React.FC<HeaderProps> = (props) => {
               </Button>
             </>
           )}
-          {userInfo && userInfo.isAdmin && (
+
+          {token && user.isAdmin && (
           <>
             <Button colorScheme="green" size="md" ml={20}>
               <Link href="/admin/userlist">Manage users</Link>
@@ -111,7 +109,6 @@ const Header: React.FC<HeaderProps> = (props) => {
 
           </>
           )}
-
         </Flex>
       </Box>
     </Flex>

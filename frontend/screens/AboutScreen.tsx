@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NextSeo } from 'next-seo';
 import {
   ListItem,
   UnorderedList,
@@ -11,10 +11,18 @@ import {
 
 const AboutScreen = () => (
   <>
+    <NextSeo
+      title="About | Take My Notes"
+      canonical="https://take-my-notes.com/about"
+      openGraph={{
+        url: 'https://take-my-notes.com/about',
+        title: 'About | take-my-notes.com',
+      }}
+    />
     <Container>
       <Heading fontSize="40px" mb={10}>Take My Notes</Heading>
       <Text fontSize="20px" mb={10}>
-        Take My notes is a full stack, privacy oriented, open source note taking
+        Take My notes is a full stack, open source note taking
         app
       </Text>
       <Box mb={10}>
