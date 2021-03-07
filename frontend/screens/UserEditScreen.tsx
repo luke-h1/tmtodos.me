@@ -10,10 +10,12 @@ import Error from 'components/Error';
 import UserContext from 'context/user/userContext';
 import AuthContext from 'context/auth/authContext';
 import { setNestedObjectValues } from 'formik';
+import Message from 'components/Message';
 
 const UserEditScreen = () => {
   const userContext = useContext(UserContext);
   const authContext = useContext(AuthContext);
+  const [message, setMessage] = useState('');
   const { user: AuthUser, loading } = authContext;
   const {
     users, user, userInfo, updateUser, getUserDetails, success, resetUpdateUser, loading: userLoading, error,
@@ -24,43 +26,25 @@ const UserEditScreen = () => {
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    if (success) {
-      resetUpdateUser();
-      router.push('/admin/userlist');
-    } else if (!user || user._id !== id) {
-      if (id) {
-        getUserDetails(id);
-      }
-    } else if (id) {
-      getUserDetails(id);
-      setName(user.name);
-      console.log(user);
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
-    }
-    if (success) {
-      resetUpdateUser();
-      router.push('/');
-    }
-  }, [router, id, success]);
-
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(`ID: ${id}  NAME: ${name} EMAIL: ${email} ISADMIN: ${isAdmin}`);
     updateUser({
       _id: id, name, email, isAdmin,
     });
+    setMessage('user updated');
+    setTimeout(() => {
+      setMessage('');
+      router.push('/admin/userlist');
+    }, [1000]);
   };
 
   return (
     <>
       <Center>
-        {/* {loadingUpdate && <Loader />}
         {loading && <Loader />}
-        {errorUpdate && <Error>{errorUpdate}</Error>}
-        {error && <Error>{error}</Error>} */}
+        {' '}
+        {error && <Error>{error}</Error>}
         {!userLoading || !loading || !error }
         {!userLoading || !error ? (
           <Flex direction="column" justify="center" align="center">
@@ -93,9 +77,11 @@ const UserEditScreen = () => {
                 </Button>
               </div>
             </form>
+            <Flex direction="column" justify="center" align="center" mt={10}>
+              {message && <Message>{message}</Message>}
+            </Flex>
           </Flex>
         ) : ''}
-
       </Center>
     </>
   );
