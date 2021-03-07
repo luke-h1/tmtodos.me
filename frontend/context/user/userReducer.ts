@@ -57,6 +57,7 @@ export default (state, action) => {
       return {
         loading: false,
         error: action.payload,
+        users: [],
       };
 
     case USER_LIST_RESET:
@@ -93,9 +94,14 @@ export default (state, action) => {
         user: {},
       };
 
+    case USER_LIST_REQUEST:
+      return {
+        loading: true,
+        users: [],
+      };
+
     case USER_DETAILS_REQUEST:
     case USER_UPDATE_PROFILE_REQUEST:
-    case USER_LIST_REQUEST:
     case USER_DELETE_REQUEST:
     case USER_UPDATE_REQUEST:
       return {
