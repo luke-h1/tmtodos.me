@@ -14,7 +14,7 @@ const AboutScreen = () => (
     <Container>
       <Heading fontSize="40px" mb={10}>Take My Notes</Heading>
       <Text fontSize="20px" mb={10}>
-        Take My notes is a full stack, privacy oriented, open source note taking
+        Take My notes is a full stack, open source note taking
         app
       </Text>
       <Box mb={10}>
