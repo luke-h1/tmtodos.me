@@ -2,6 +2,7 @@
 
 Take My notes. A full stack, open source note taking app
 
+Disclaimer: I wouldn't recommend using this as your notes app as I built this mainly to learn React, Next & Node + there are bugs I haven't fixed yet (plus I will probably clear down the DB from time to time)
 ## Tech Stack: 
 
 
