@@ -19,13 +19,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
-const argon2_1 = __importDefault(require("argon2"));
 const type_graphql_1 = require("type-graphql");
+const bcryptjs_1 = require("bcryptjs");
 const User_1 = require("../entities/User");
 const auth_1 = require("../utils/auth");
 let LoginResponse = class LoginResponse {
@@ -72,7 +69,7 @@ let UserResolver = class UserResolver {
             if (!user) {
                 throw new Error('Could not find that user');
             }
-            const valid = yield argon2_1.default.verify(password, user.password);
+            const valid = yield bcryptjs_1.compare(password, user.password);
             if (!valid) {
                 throw new Error('bad password');
             }
@@ -85,7 +82,7 @@ let UserResolver = class UserResolver {
     }
     register(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const hashedPassword = yield argon2_1.default.hash(password);
+            const hashedPassword = yield bcryptjs_1.hash(password, 12);
             try {
                 yield User_1.User.insert({
                     email,
