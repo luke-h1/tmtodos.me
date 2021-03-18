@@ -1,9 +1,6 @@
-import { Home } from "./pages/Home";
-import { Navbar } from "./components/Navbar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Login } from "./pages/Login";
 import { useState, useEffect } from "react";
 import { setAccessToken } from "./utils/accessToken";
+import { Routes } from "./Routes";
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
@@ -20,17 +17,8 @@ export const App = () => {
 
   if (loading) {
     return <p>loading</p>;
-  } else {
-    return (
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-        </Switch>
-      </Router>
-    );
   }
+  return <Routes />;
 };
 
 export default App;
