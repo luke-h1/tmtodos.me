@@ -1,5 +1,4 @@
 import { verify } from 'jsonwebtoken';
-import argon2 from 'argon2';
 import {
   Arg,
   Ctx,
@@ -9,8 +8,10 @@ import {
   Query,
   Resolver,
 } from 'type-graphql';
+import { compare, hash } from 'bcryptjs';
 import { User } from '../entities/User';
 import { MyContext } from '../types';
+
 import {
   createAccessToken,
   createRefreshToken,
@@ -65,7 +66,7 @@ export class UserResolver {
     if (!user) {
       throw new Error('Could not find that user');
     }
-    const valid = await argon2.verify(password, user.password);
+    const valid = await compare(password, user.password);
     if (!valid) {
       throw new Error('bad password');
       //   need to handle these errors better and send something useful to frontend
@@ -83,7 +84,7 @@ export class UserResolver {
     @Arg('email') email: string,
     @Arg('password') password: string,
   ) {
-    const hashedPassword = await argon2.hash(password);
+    const hashedPassword = await hash(password, 12);
     try {
       await User.insert({
         email,
