@@ -1,18 +1,29 @@
 import React from "react";
-import { useMeQuery } from "../generated/graphql";
+import { useLogoutMutation, useMeQuery } from "../generated/graphql";
+import { setAccessToken } from "../utils/accessToken";
 import { CustomLink } from "./CustomLink";
 import { CustomText } from "./CustomText";
 
-interface NavbarProps {}
 
-export const Navbar: React.FC<NavbarProps> = ({}) => {
+export const Navbar: React.FC<{}> = () => {
   const { data, loading } = useMeQuery();
+  const [logout, { client }] = useLogoutMutation()
+
+  const LogoutUser = async () => { 
+    await logout()
+    setAccessToken('')
+    await client!.resetStore()
+  }
 
   let body: any = null;
   if (loading) {
     body = null;
   } else if (data && data.me) {
-    body = <CustomText>{data.me.email}</CustomText>;
+    body = (
+        <>
+      <CustomText>{data.me.email}</CustomText>;
+      </>
+      )
   } else {
     body = (
       <>
@@ -28,7 +39,11 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           <p className="mr-2 ml-2">{body}</p>
           <CustomLink to="/">Home</CustomLink>
           <CustomLink to="/notes">Notes</CustomLink>
-          <CustomText>Logout</CustomText>
+          {!loading && data && data.me ? (
+            <CustomText onClick={LogoutUser}>
+            Logout
+          </CustomText>
+          ) : null}
         </div>
       </div>
     </>
