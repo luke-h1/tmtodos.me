@@ -8,6 +8,7 @@
       "es2017",
       "esnext.asynciterable"
     ],
+    "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "node",
@@ -31,7 +32,7 @@
     "node_modules"
   ],
   "include": [
-    "./src/**/*.tsx",
-    "./src/**/*.ts"
+    "src/**/*.tsx",
+    "src/**/*.ts"
   ]
 }
