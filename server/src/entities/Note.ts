@@ -5,7 +5,7 @@ import {
 import { User } from './User';
 
 @ObjectType()
-@Entity('notes')
+@Entity()
 export class Note extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()

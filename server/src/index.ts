@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import express from 'express';
+import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
@@ -15,17 +16,20 @@ import {
 } from './utils/auth';
 import { User } from './entities/User';
 import { MyContext } from './types';
+import { Note } from './entities/Note';
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: 'postgres',
-    database: 'takemynotes',
+    database: 'takemynotes2',
     username: 'lhowsam',
     password: 'postgres',
     logging: true,
+    migrations: [path.join(__dirname, './migrations/*')],
     synchronize: true,
-    entities: [User],
+    entities: [User, Note],
   });
+  // await conn.runMigrations();
 
   const app = express();
   app.use(

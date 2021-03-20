@@ -46,7 +46,7 @@ __decorate([
 ], Note.prototype, "updatedAt", void 0);
 Note = __decorate([
     type_graphql_1.ObjectType(),
-    typeorm_1.Entity('notes')
+    typeorm_1.Entity()
 ], Note);
 exports.Note = Note;
 //# sourceMappingURL=Note.js.map

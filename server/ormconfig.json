@@ -1,25 +1,11 @@
+
 {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "lhowsam",
-    "password": "Password",
-    "database": "takemynotes",
-    "synchronize": true,
-    "logging": true,
-    "entities": [
-       "src/entities/**/*.ts"
-    ],
-    "migrations": [
-       "src/migration/**/*.ts"
-    ],
-    "subscribers": [
-       "src/subscriber/**/*.ts"
-    ],
-    "cli": {
-       "entitiesDir": "src/entities",
-       "migrationsDir": "src/migration",
-       "subscribersDir": "src/subscriber"
-    }
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "lhowsam",
+   "password": "Password",
+   "database": "takemynotes2",
+   "entities": ["dist/entities/*.js"],
+   "migrations": ["dist/migrations/*.js"]
  }
- 

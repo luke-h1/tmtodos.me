@@ -49,7 +49,7 @@ __decorate([
 ], User.prototype, "updatedAt", void 0);
 User = __decorate([
     type_graphql_1.ObjectType(),
-    typeorm_1.Entity('users')
+    typeorm_1.Entity()
 ], User);
 exports.User = User;
 //# sourceMappingURL=User.js.map
