@@ -84,6 +84,10 @@ let UserResolver = class UserResolver {
     }
     register(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
+            const exists = yield User_1.User.findOne({ where: { email } });
+            if (exists) {
+                return false;
+            }
             const hashedPassword = yield bcryptjs_1.hash(password, 12);
             try {
                 yield User_1.User.insert({
@@ -96,6 +100,7 @@ let UserResolver = class UserResolver {
                 console.error(e);
                 return false;
             }
+            return true;
         });
     }
 };

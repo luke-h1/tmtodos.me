@@ -26,12 +26,13 @@ const user_1 = require("./resolvers/user");
 const auth_1 = require("./utils/auth");
 const User_1 = require("./entities/User");
 const Note_1 = require("./entities/Note");
+const note_1 = require("./resolvers/note");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const conn = yield typeorm_1.createConnection({
         type: 'postgres',
         database: 'takemynotes2',
         username: 'lhowsam',
-        password: 'postgres',
+        password: 'Password',
         logging: true,
         migrations: [path_1.default.join(__dirname, './migrations/*')],
         synchronize: true,
@@ -71,7 +72,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({
-            resolvers: [user_1.UserResolver],
+            resolvers: [user_1.UserResolver, note_1.noteResolver],
         }),
         context: ({ req, res }) => ({ req, res }),
     });

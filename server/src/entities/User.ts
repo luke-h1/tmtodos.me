@@ -9,11 +9,11 @@ import { Note } from './Note';
 export class User extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Field()
   @Column('text')
-  email: string;
+  email!: string;
 
   @Column('text')
   password: string;
@@ -27,6 +27,10 @@ export class User extends BaseEntity {
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
+
+  // @Column('int')
+  // @Field(() => String)
+  // isAdmin: Boolean
 
   @Field(() => String)
   @UpdateDateColumn()

@@ -31,6 +31,11 @@ __decorate([
     __metadata("design:type", String)
 ], Note.prototype, "text", void 0);
 __decorate([
+    type_graphql_1.Field(),
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Note.prototype, "creatorId", void 0);
+__decorate([
     typeorm_1.ManyToOne(() => User_1.User, (user) => user.notes),
     __metadata("design:type", User_1.User)
 ], Note.prototype, "creator", void 0);

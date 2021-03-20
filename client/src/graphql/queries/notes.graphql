@@ -1,0 +1,9 @@
+query Notes {
+    notes(limit: 10){
+        id
+        createdAt
+        updatedAt
+        title
+        text
+    }
+}
