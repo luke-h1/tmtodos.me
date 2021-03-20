@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 require("dotenv/config");
 const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
@@ -24,15 +25,17 @@ const cors_1 = __importDefault(require("cors"));
 const user_1 = require("./resolvers/user");
 const auth_1 = require("./utils/auth");
 const User_1 = require("./entities/User");
+const Note_1 = require("./entities/Note");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield typeorm_1.createConnection({
+    const conn = yield typeorm_1.createConnection({
         type: 'postgres',
-        database: 'takemynotes',
+        database: 'takemynotes2',
         username: 'lhowsam',
         password: 'postgres',
         logging: true,
+        migrations: [path_1.default.join(__dirname, './migrations/*')],
         synchronize: true,
-        entities: [User_1.User],
+        entities: [User_1.User, Note_1.Note],
     });
     const app = express_1.default();
     app.use(cors_1.default({

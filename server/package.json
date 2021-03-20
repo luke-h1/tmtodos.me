@@ -43,7 +43,7 @@
     "dev": "nodemon dist/index.js",
     "start": "node dist/index.js",
     "lint": "eslint ./src/**/*.ts --fix && eslint ./src/*.ts --fix",
-    "create:migration": "typeorm migration:create -n migration_name",
+    "create:migration": "typeorm migration:generate -n migration_name",
     "run:migration": "typeorm migration:run"
   }
 }
