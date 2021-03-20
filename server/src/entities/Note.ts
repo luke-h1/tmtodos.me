@@ -19,6 +19,10 @@ export class Note extends BaseEntity {
     @Column()
     text!: string;
 
+    @Field()
+    @Column()
+    creatorId: number;
+  
     @ManyToOne(() => User, (user) => user.notes)
     creator: User
 

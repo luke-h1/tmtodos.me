@@ -1,37 +1,22 @@
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
-import { setAccessToken } from '../utils/accessToken';
+import { useRegisterMutation } from '../generated/graphql';
 
-export const Login: React.FC<RouteComponentProps> = ({ history }) => {
+export const Register: React.FC<RouteComponentProps> = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [login] = useLoginMutation();
+  const [register] = useRegisterMutation();
 
   const Submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await login({
+    e.preventDefault();
+    const response = await register({
       variables: {
         email,
         password,
       },
-      update: (store, { data }) => {
-        if (!data) {
-          return null;
-        }
-        store.writeQuery<MeQuery>({
-          query: MeDocument,
-          data: {
-            __typename: 'Query',
-            me: data.login.user,
-          },
-        });
-      },
     });
     console.log(response);
-    if (response && response.data) {
-      setAccessToken(response.data.login.accessToken);
-    }
     history.push('/');
   };
 
@@ -85,7 +70,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
               className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
             >
-              Login
+              Register
             </button>
           </div>
         </div>

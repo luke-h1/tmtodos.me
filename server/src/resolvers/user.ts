@@ -9,6 +9,7 @@ import {
   Resolver,
 } from 'type-graphql';
 import { compare, hash } from 'bcryptjs';
+import { FindOptionsUtils } from 'typeorm';
 import { User } from '../entities/User';
 import { MyContext } from '../types';
 
@@ -84,6 +85,12 @@ export class UserResolver {
     @Arg('email') email: string,
     @Arg('password') password: string,
   ) {
+    const exists = await User.findOne({ where: { email } });
+    if (exists) {
+      // user already exists
+      // don't do anything
+      return false;
+    }
     const hashedPassword = await hash(password, 12);
     try {
       await User.insert({
@@ -95,5 +102,7 @@ export class UserResolver {
       console.error(e);
       return false;
     }
+
+    return true;
   }
 }

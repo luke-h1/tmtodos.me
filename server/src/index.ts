@@ -17,19 +17,19 @@ import {
 import { User } from './entities/User';
 import { MyContext } from './types';
 import { Note } from './entities/Note';
+import { noteResolver } from './resolvers/note';
 
 const main = async () => {
   const conn = await createConnection({
     type: 'postgres',
     database: 'takemynotes2',
     username: 'lhowsam',
-    password: 'postgres',
+    password: 'Password',
     logging: true,
     migrations: [path.join(__dirname, './migrations/*')],
     synchronize: true,
     entities: [User, Note],
   });
-  // await conn.runMigrations();
 
   const app = express();
   app.use(
@@ -68,7 +68,7 @@ const main = async () => {
   });
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, noteResolver],
     }),
     context: ({ req, res }): MyContext => ({ req, res }),
   });

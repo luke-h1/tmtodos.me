@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.12",
     "@apollo/react-hooks": "^4.0.0",
     "@craco/craco": "^6.1.1",
+    "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -15,6 +17,7 @@
     "@types/react-dom": "^17.0.0",
     "apollo-boost": "^0.4.9",
     "apollo-link-token-refresh": "^0.3.2",
+    "formik": "^2.2.6",
     "framer-motion": "^4.0.0",
     "graphql": "^15.5.0",
     "jwt-decode": "^3.1.2",
@@ -30,6 +33,7 @@
     "build": "craco build",
     "test": "craco test",
     "gen": "graphql-codegen --config codegen.yml",
+    "lint": "eslint ./src/**/*.tsx --fix && eslint ./src/*.ts --fix",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -59,7 +63,15 @@
     "@types/graphql": "^14.5.0",
     "@types/jwt-decode": "^3.1.0",
     "@types/react-router-dom": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "autoprefixer": "^9.8.6",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
   }
