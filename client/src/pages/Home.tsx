@@ -1,4 +1,5 @@
 import React from "react";
+import { Spinner } from "../components/Spinner";
 import { Wrapper } from "../components/Wrapper";
 import { useNotesQuery } from "../generated/graphql";
 export const Home: React.FC<{}> = () => {
@@ -9,7 +10,7 @@ export const Home: React.FC<{}> = () => {
         Take My Notes
       </h1>
       {!data ? (
-        <div>loading...</div>
+        <Spinner />
       ) : (
         data.notes.map((p) => (
           <Wrapper>

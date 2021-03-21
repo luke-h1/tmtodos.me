@@ -3,6 +3,7 @@ import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { setAccessToken } from '../utils/accessToken';
 import { CustomLink } from './CustomLink';
 import { CustomText } from './CustomText';
+import { Spinner } from './Spinner';
 
 export const Navbar: React.FC<{}> = () => {
   const { data, loading } = useMeQuery();
@@ -16,7 +17,7 @@ export const Navbar: React.FC<{}> = () => {
 
   let body: any = null;
   if (loading) {
-    body = null;
+    body = <Spinner />
   } else if (data && data.me) {
     body = (
       <>
