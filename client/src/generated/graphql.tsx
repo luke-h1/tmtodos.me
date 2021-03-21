@@ -97,8 +97,8 @@ export type LoginResponse = {
 };
 
 export type CreateNoteMutationVariables = Exact<{
-  text: Scalars['String'];
   title: Scalars['String'];
+  text: Scalars['String'];
 }>;
 
 
@@ -179,8 +179,8 @@ export type NotesQuery = (
 
 
 export const CreateNoteDocument = gql`
-    mutation CreateNote($text: String!, $title: String!) {
-  createNote(text: $text, title: $title) {
+    mutation CreateNote($title: String!, $text: String!) {
+  createNote(title: $title, text: $text) {
     id
     createdAt
     title
@@ -205,8 +205,8 @@ export type CreateNoteMutationFn = Apollo.MutationFunction<CreateNoteMutation, C
  * @example
  * const [createNoteMutation, { data, loading, error }] = useCreateNoteMutation({
  *   variables: {
- *      text: // value for 'text'
  *      title: // value for 'title'
+ *      text: // value for 'text'
  *   },
  * });
  */

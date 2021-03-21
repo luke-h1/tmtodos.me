@@ -47,7 +47,7 @@ let noteResolver = class noteResolver {
             const qb = typeorm_1.getConnection()
                 .getRepository(Note_1.Note)
                 .createQueryBuilder("n")
-                .orderBy('"createdAt", "DESC"')
+                .orderBy('"createdAt"')
                 .take(realLimit);
             if (cursor) {
                 qb.where('"createdAt" < :cursor', { cursor: new Date(parseInt(cursor)) });
@@ -58,17 +58,16 @@ let noteResolver = class noteResolver {
     note(id) {
         return Note_1.Note.findOne(id);
     }
-    createNote(title, text, { context }) {
+    createNote(title, text, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authorization = context.req.headers.authorization;
+            const authorization = req.headers.authorization;
             if (!authorization) {
                 throw new Error("not authenticated");
             }
             const token = authorization.split(" ")[1];
             const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
             return Note_1.Note.create({
-                title,
-                text,
+                title, text,
                 creatorId: payload.userId,
             }).save();
         });

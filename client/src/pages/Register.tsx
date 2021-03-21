@@ -9,7 +9,6 @@ export const Register: React.FC<RouteComponentProps> = ({ history }) => {
 
   const Submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    e.preventDefault();
     const response = await register({
       variables: {
         email,

@@ -10,10 +10,11 @@ import {
   Resolver,
   UseMiddleware,
 } from "type-graphql";
-import { FindOptionsUtils, getConnection } from "typeorm";
+import { getConnection } from "typeorm";
 import { verify } from "jsonwebtoken";
 import { Note } from "../entities/Note";
 import { isAuth } from "../utils/isAuth";
+import { MyContext } from "src/types";
 
 @InputType()
 class NoteInput {
@@ -35,7 +36,7 @@ export class noteResolver {
     const qb = getConnection()
       .getRepository(Note)
       .createQueryBuilder("n")
-      .orderBy('"createdAt", "DESC"')
+      .orderBy('"createdAt"')
       .take(realLimit);
     if (cursor) {
       qb.where('"createdAt" < :cursor', { cursor: new Date(parseInt(cursor)) });
@@ -54,17 +55,16 @@ export class noteResolver {
     @Arg("title") title: string,
     @Arg("text") text: string,
 
-    @Ctx() { context }: any
+    @Ctx() { req }: MyContext
   ): Promise<Note> {
-    const authorization = context.req.headers.authorization;
+    const authorization = req.headers.authorization;
     if (!authorization) {
       throw new Error("not authenticated");
     }
     const token = authorization.split(" ")[1];
     const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
     return Note.create({
-      title,
-      text,
+      title, text,
       creatorId: payload.userId,
     }).save();
   }
