@@ -1,5 +1,5 @@
-mutation CreateNote($text: String!, $title: String!){
-  createNote(text: $text, title: $title) {
+mutation CreateNote($title: String!, $text: String!, ) {
+  createNote(title: $title, text: $text) {
     id
     createdAt
     title
