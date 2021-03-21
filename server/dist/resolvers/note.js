@@ -43,12 +43,11 @@ NoteInput = __decorate([
 let noteResolver = class noteResolver {
     notes(limit, cursor) {
         return __awaiter(this, void 0, void 0, function* () {
-            const realLimit = Math.min(50, limit);
+            const realLimit = Math.min(150, limit);
             const qb = typeorm_1.getConnection()
                 .getRepository(Note_1.Note)
                 .createQueryBuilder("n")
-                .orderBy('"createdAt"')
-                .take(realLimit);
+                .orderBy('"createdAt"');
             if (cursor) {
                 qb.where('"createdAt" < :cursor', { cursor: new Date(parseInt(cursor)) });
             }

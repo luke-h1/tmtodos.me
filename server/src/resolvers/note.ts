@@ -32,12 +32,11 @@ export class noteResolver {
     @Arg("limit") limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null
   ): Promise<Note[]> {
-    const realLimit = Math.min(50, limit);
+    const realLimit = Math.min(150, limit);
     const qb = getConnection()
       .getRepository(Note)
       .createQueryBuilder("n")
       .orderBy('"createdAt"')
-      .take(realLimit);
     if (cursor) {
       qb.where('"createdAt" < :cursor', { cursor: new Date(parseInt(cursor)) });
     }

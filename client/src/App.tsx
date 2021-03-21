@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { setAccessToken } from "./utils/accessToken";
 import { Routes } from "./Routes";
+import { Spinner } from "./components/Spinner";
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export const App = () => {
   }, []);
 
   if (loading) {
-    return <p>loading</p>;
+    return <Spinner /> 
   }
   return <Routes />;
 };
