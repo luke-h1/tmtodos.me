@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, Router } from "react-router";
 import { Wrapper } from "../components/Wrapper";
 import { useCreateNoteMutation } from "../generated/graphql";
 export const Notes: React.FC<RouteComponentProps> = ({ history }) => {
@@ -15,9 +15,9 @@ export const Notes: React.FC<RouteComponentProps> = ({ history }) => {
         text,
       }
     });
-    console.log(response)
+    console.log(response)    
+    alert('note created')
     history.push('/')
-    
   };
 
   return (
