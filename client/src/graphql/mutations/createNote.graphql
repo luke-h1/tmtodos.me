@@ -1,0 +1,10 @@
+mutation CreateNote($title: String!, $text: String!, ) {
+  createNote(title: $title, text: $text) {
+    id
+    createdAt
+    title
+    updatedAt
+    text
+    creatorId
+  }
+}
