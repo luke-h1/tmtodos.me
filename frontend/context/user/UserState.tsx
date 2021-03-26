@@ -40,6 +40,8 @@ export interface initalStateProps {
 }
 
 const UserState = ({ children }: ReactNode) => {
+  const API_URL = process.env.NODE_ENV === 'production' ? 'https://take-my-notes-api.xyz' : 'http://localhost:5000'
+
   const authContext = useContext(AuthContext);
   const { user: AuthenticatedUser } = authContext;
   const initialState: initalStateProps = {
@@ -60,8 +62,8 @@ const UserState = ({ children }: ReactNode) => {
       },
     };
     try {
-      const { data } = await axios.get(
-        `https://take-my-notes-dev.herokuapp.com/api/users/${id}`,
+      const { data } = await axios.get( 
+        `${API_URL}/api/users/${id}`,
         config,
       );
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
@@ -86,7 +88,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: MY_USER_DETAILS_REQUEST });
       const { data } = await axios.get(
-        `https://take-my-notes-dev.herokuapp.com/api/users/me/${id}`,
+        `${API_URL}/api/users/me/${id}`,
         config,
       );
       dispatch({ type: MY_USER_DETAILS_SUCCESS, payload: data });
@@ -111,7 +113,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
       const { data } = await axios.put(
-        'https://take-my-notes-dev.herokuapp.com/api/users/profile',
+        '${API_URL}/api/users/profile',
         config,
         user,
       );
@@ -137,7 +139,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_LIST_REQUEST });
       const { data } = await axios.get(
-        'https://take-my-notes-dev.herokuapp.com/api/users',
+        `${API_URL}/api/users`,
         config,
       );
       dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -161,7 +163,7 @@ const UserState = ({ children }: ReactNode) => {
     };
     try {
       dispatch({ type: USER_DELETE_REQUEST });
-      await axios.delete(`https://take-my-notes-dev.herokuapp.com/api/users/${id}`, config);
+      await axios.delete(`${API_URL}/api/users/${id}`, config);
       dispatch({ type: USER_DELETE_SUCCESS });
       listUsers();
     } catch (e) {
@@ -193,7 +195,7 @@ const UserState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: USER_UPDATE_REQUEST });
       const { data } = await axios.put(
-        `https://take-my-notes-dev.herokuapp.com/api/users/${user._id}`,
+        `${API_URL}/api/users/${user._id}`,
         user,
         config,
       );

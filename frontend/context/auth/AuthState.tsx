@@ -16,9 +16,13 @@ import {
   LOGOUT_REQUEST,
 } from '../constants/AuthContstants';
 
+
+
 import { USER_DETAILS_RESET, USER_LIST_RESET } from '../constants/UserConstants';
 
 const AuthState = ({ children }: ReactNode) => {
+  const API_URL = process.env.NODE_ENV === 'production' ? 'https://take-my-notes-api.xyz' : 'http://localhost:5000'
+
   const router = useRouter();
 
   const initialState = {
@@ -39,7 +43,7 @@ const AuthState = ({ children }: ReactNode) => {
       dispatch({ type: REGISTER_REQUEST });
 
       const { data } = await axios.post(
-        'https://take-my-notes-dev.herokuapp.com/api/users',
+        `${API_URL}/api/users`,
         { name, email, password },
         config,
       );
@@ -66,7 +70,7 @@ const AuthState = ({ children }: ReactNode) => {
     try {
       dispatch({ type: LOGIN_REQUEST });
       const { data } = await axios.post(
-        'https://take-my-notes-dev.herokuapp.com/api/users/login',
+        `${API_URL}/api/users/login`,
         { email, password },
         config,
       );

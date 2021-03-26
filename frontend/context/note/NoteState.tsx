@@ -30,6 +30,7 @@ export interface initNoteStateProps {
 }
 
 const NoteState = ({ children }: ReactNode) => {
+  const API_URL = process.env.NODE_ENV === 'production' ? 'https://take-my-notes-api.xyz' : 'http://localhost:5000'
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const initialState: initNoteStateProps = {
@@ -49,7 +50,7 @@ const NoteState = ({ children }: ReactNode) => {
     };
     try {
       dispatch({ type: NOTE_CREATE_REQUEST });
-      const { data } = await axios.post('https://take-my-notes-dev.herokuapp.com/api/notes', { id, title, body }, config);
+      const { data } = await axios.post(`${API_URL}/api/notes`, { id, title, body }, config);
       listNotes();
       dispatch({ type: NOTE_CREATE_SUCCESS, payload: data });
     } catch (e) {
@@ -73,7 +74,7 @@ const NoteState = ({ children }: ReactNode) => {
     };
     try {
       dispatch({ type: NOTE_LIST_REQUEST });
-      const { data } = await axios.get(`https://take-my-notes-dev.herokuapp.com/api/notes/me/${user._id}`, config);
+      const { data } = await axios.get(`${API_URL}/api/notes/me/${user._id}`, config);
       dispatch({ type: NOTE_LIST_SUCCESS, payload: data });
     } catch (e) {
       dispatch({
@@ -96,7 +97,7 @@ const NoteState = ({ children }: ReactNode) => {
     };
     try {
       dispatch({ type: NOTE_DELETE_REQUEST });
-      const { data } = await axios.delete(`https://take-my-notes-dev.herokuapp.com/api/notes/${id}`, config);
+      const { data } = await axios.delete(`${API_URL}/api/notes/${id}`, config);
       dispatch({ type: NOTE_DELETE_SUCCESS, payload: data });
       listNotes();
     } catch (e) {
