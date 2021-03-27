@@ -22,7 +22,7 @@ Take My notes. full stack note taking site
 * Postgresql 
 * Type-graphql 
 * Express
-* json web tokens 
+* JWT
 * Digital Ocean
 * PM2 
 * Nginx
