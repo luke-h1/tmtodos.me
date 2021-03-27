@@ -23,3 +23,6 @@ Take My notes. full stack note taking site
 * type-graphql 
 * express
 * json web tokens 
+* Digital Ocean
+* PM2 
+* Nginx
