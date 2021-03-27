@@ -13,7 +13,7 @@ Take My notes. full stack note taking site
 * Polished 
 * React-icons
 * Vercel 
-* graphQL codegen 
+* GraphQL codegen 
 * Apollo 
 
 ### Backend 
