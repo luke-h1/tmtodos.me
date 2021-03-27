@@ -22,6 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.noteResolver = void 0;
+require("dotenv/config");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const jsonwebtoken_1 = require("jsonwebtoken");

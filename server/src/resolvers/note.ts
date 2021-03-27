@@ -1,4 +1,5 @@
 /* eslint-disable radix */
+import 'dotenv/config';
 import {
   Arg,
   Ctx,

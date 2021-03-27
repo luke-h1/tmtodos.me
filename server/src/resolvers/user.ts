@@ -1,4 +1,5 @@
 import { verify } from 'jsonwebtoken';
+import 'dotenv/config';
 import {
   Arg,
   Ctx,
@@ -9,7 +10,6 @@ import {
   Resolver,
 } from 'type-graphql';
 import { compare, hash } from 'bcryptjs';
-import { FindOptionsUtils } from 'typeorm';
 import { User } from '../entities/User';
 import { MyContext } from '../types';
 

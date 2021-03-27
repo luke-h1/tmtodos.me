@@ -23,6 +23,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
+require("dotenv/config");
 const type_graphql_1 = require("type-graphql");
 const bcryptjs_1 = require("bcryptjs");
 const User_1 = require("../entities/User");

@@ -1,6 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from '../types';
+import 'dotenv/config';
 
 // bearer 12312321321
 
