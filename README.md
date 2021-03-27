@@ -1,4 +1,3 @@
-# [take-my-notes.com](https://take-my-notes.com)
 
 Take My notes. full stack note taking site 
 
