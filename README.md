@@ -10,18 +10,18 @@ Take My notes. full stack note taking site
 * Typescript 
 * Tailwind css 
 * Emotion css 
-* polished 
-* react-icons
-* vercel 
+* Polished 
+* React-icons
+* Vercel 
 * graphQL codegen 
-* apollo 
+* Apollo 
 
 ### Backend 
 * TypeORM 
 * Typescript 
 * Postgresql 
-* type-graphql 
-* express
+* Type-graphql 
+* Express
 * json web tokens 
 * Digital Ocean
 * PM2 
