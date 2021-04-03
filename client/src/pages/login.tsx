@@ -1,14 +1,62 @@
+import { Form, Formik } from 'formik';
+import { withUrqlClient } from 'next-urql';
+import { useRouter } from 'next/dist/client/router';
+import Link from 'next/link';
 import React from 'react';
+import { Flex } from '../components/Flex';
+import { InputField } from '../components/InputField';
+import { useLoginMutation } from '../generated/graphql';
+import { createUrqlClient } from '../utils/createUrqlClient';
+import { toErrorMap } from '../utils/toErrorMap';
 
-interface loginProps {
-
-}
-
-const login: React.FC<loginProps> = ({}) => {
+const LoginPage: React.FC<{}> = () => {
+  const router = useRouter();
+  const [, login] = useLoginMutation();
   return (
-    <>
-      <h1>login</h1>
-    </>
+    <Flex>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={async (values, { setErrors }) => {
+          const res = await login(values);
+          if (res.data?.login.errors) {
+            setErrors(toErrorMap(res.data.login.errors));
+          }
+          if (typeof router.query.next === 'string') {
+            router.push(router.query.next);
+          } else {
+            router.push('/');
+          }
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <InputField
+              name="email"
+              placeholder="email"
+              label="email"
+            />
+            <div className="mt-5 mb-5">
+              <InputField
+                name="password"
+                placeholder="password"
+                label="password"
+                type="password"
+              />
+            </div>
+            <div className="mt-5 mb-5">
+              <Link href="/forgot-password">
+                <a className="text-center text-black">
+                  Forgot Password ?
+                </a>
+              </Link>
+            </div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+              Sign In
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </Flex>
   );
 };
-export default login;
+export default withUrqlClient(createUrqlClient)(LoginPage);
