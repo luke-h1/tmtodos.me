@@ -8,3 +8,4 @@ dist
 !.env.production.example
 env
 !.env.example
+.env.*
