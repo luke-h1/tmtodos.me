@@ -29,7 +29,7 @@ const Note_1 = require("./entities/Note");
 const note_1 = require("./resolvers/note");
 const createUserLoader_1 = require("./utils/createUserLoader");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const conn = yield typeorm_1.createConnection({
+    yield typeorm_1.createConnection({
         type: "postgres",
         url: process.env.DATABASE_URL,
         logging: true,

@@ -32,21 +32,8 @@ const type_graphql_1 = require("type-graphql");
 const User_1 = require("../entities/User");
 const auth_1 = require("../utils/auth");
 const UsernamePasswordInput_1 = require("./UsernamePasswordInput");
-const validateRegister_1 = require("src/utils/validateRegister");
+const validateRegister_1 = require("../utils/validateRegister");
 const typeorm_1 = require("typeorm");
-let LoginResponse = class LoginResponse {
-};
-__decorate([
-    type_graphql_1.Field(),
-    __metadata("design:type", String)
-], LoginResponse.prototype, "accessToken", void 0);
-__decorate([
-    type_graphql_1.Field(() => User_1.User),
-    __metadata("design:type", User_1.User)
-], LoginResponse.prototype, "user", void 0);
-LoginResponse = __decorate([
-    type_graphql_1.ObjectType()
-], LoginResponse);
 class FieldError {
 }
 __decorate([
@@ -65,7 +52,7 @@ __decorate([
 ], UserResponse.prototype, "errors", void 0);
 __decorate([
     type_graphql_1.Field(() => User_1.User, { nullable: true }),
-    __metadata("design:type", User_1.User)
+    __metadata("design:type", Object)
 ], UserResponse.prototype, "user", void 0);
 __decorate([
     type_graphql_1.Field(() => String, { nullable: true }),
