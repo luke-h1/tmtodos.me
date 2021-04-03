@@ -45,6 +45,15 @@ let UserResolver = class UserResolver {
     hello() {
         return 'hi';
     }
+    email(user, { req }) {
+        const authorization = req.headers.authorization;
+        const token = authorization === null || authorization === void 0 ? void 0 : authorization.split(' ')[1];
+        const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        if (payload.userId === user.id) {
+            return user.email;
+        }
+        return '';
+    }
     me(context) {
         const authorization = context.req.headers.authorization;
         if (!authorization) {
@@ -112,6 +121,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserResolver.prototype, "hello", null);
 __decorate([
+    type_graphql_1.FieldResolver(() => String),
+    __param(0, type_graphql_1.Root()), __param(1, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [User_1.User, Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "email", null);
+__decorate([
     type_graphql_1.Query(() => User_1.User, { nullable: true }),
     __param(0, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
@@ -143,7 +159,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 UserResolver = __decorate([
-    type_graphql_1.Resolver()
+    type_graphql_1.Resolver(User_1.User)
 ], UserResolver);
 exports.UserResolver = UserResolver;
 //# sourceMappingURL=user.js.map

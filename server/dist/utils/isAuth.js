@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAuth = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 require("dotenv/config");
-const isAuth = ({ context }, next) => {
+exports.isAuth = ({ context }, next) => {
     const authorization = context.req.headers.authorization;
     if (!authorization) {
         throw new Error('not authenticated');
@@ -19,5 +19,4 @@ const isAuth = ({ context }, next) => {
     }
     return next();
 };
-exports.isAuth = isAuth;
 //# sourceMappingURL=isAuth.js.map

@@ -4,10 +4,12 @@ import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from 'type-graphql';
 import { compare, hash } from 'bcryptjs';
 import { User } from '../entities/User';
@@ -28,12 +30,26 @@ class LoginResponse {
   user: User;
 }
 
-@Resolver()
+@Resolver(User)
 export class UserResolver {
   @Query(() => String)
   hello() {
     return 'hi';
   }
+
+  @FieldResolver(() => String)
+  email(@Root() user: User, @Ctx() { req }: MyContext){
+    // this is the current logged in user so can show them their own email
+    const authorization = req.headers.authorization;
+    const token = authorization?.split(' ')[1];
+    const payload: any = verify(token!, process.env.ACCESS_TOKEN_SECRET!);
+    if(payload.userId === user.id) {
+      return user.email;
+    }
+    // current user is trying to see someone elses email 🙅‍♂️
+    return '';
+  }
+
 
   @Query(() => User, { nullable: true })
   me(@Ctx() context: MyContext) {
