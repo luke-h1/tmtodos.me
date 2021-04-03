@@ -25,12 +25,8 @@
     "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.1.5",
-    "@types/bcryptjs": "^2.4.2",
     "apollo-server-express": "^2.21.1",
     "argon2": "^0.27.2",
-    "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.1",
     "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
@@ -42,7 +38,6 @@
     "framer-motion": "^4.1.2",
     "graphql": "^15.5.0",
     "ioredis": "^4.25.0",
-    "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.5.0",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.13",
@@ -54,8 +49,6 @@
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
     "start": "node dist/index.js",
-    "lint": "eslint ./src/**/*.ts --fix && eslint ./src/*.ts --fix",
-    "create:migration": "typeorm migration:generate -n migration_name",
-    "run:migration": "typeorm migration:run"
-  }
+    "lint": "eslint ./src/**/*.ts --fix && eslint ./src/*.ts --fix"
+    }
 }
