@@ -27,30 +27,29 @@ const auth_1 = require("./utils/auth");
 const User_1 = require("./entities/User");
 const Note_1 = require("./entities/Note");
 const note_1 = require("./resolvers/note");
+const createUserLoader_1 = require("./utils/createUserLoader");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const conn = yield typeorm_1.createConnection({
-        type: 'postgres',
-        database: 'takemynotes2',
-        username: 'lhowsam',
-        password: 'Password',
+        type: "postgres",
+        url: process.env.DATABASE_URL,
         logging: true,
-        migrations: [path_1.default.join(__dirname, './migrations/*')],
+        migrations: [path_1.default.join(__dirname, "./migrations/*")],
         synchronize: true,
         entities: [User_1.User, Note_1.Note],
     });
     const app = express_1.default();
     app.use(cors_1.default({
         credentials: true,
-        origin: 'http://localhost:3000',
+        origin: "http://localhost:3000",
     }));
     app.use(cookie_parser_1.default());
-    app.get('/', (_, res) => {
-        res.status(200).json({ msg: 'API is running' });
+    app.get("/", (_, res) => {
+        res.status(200).json({ msg: "API is running" });
     });
-    app.post('/refresh_token', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    app.post("/refresh_token", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const token = req.cookies.jid;
         if (!token) {
-            return res.send({ ok: false, accessToken: '' });
+            return res.send({ ok: false, accessToken: "" });
         }
         let payload = null;
         try {
@@ -58,14 +57,14 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         }
         catch (e) {
             console.error(e);
-            return res.send({ ok: false, accessToken: '' });
+            return res.send({ ok: false, accessToken: "" });
         }
         const user = yield User_1.User.findOne({ id: payload.userId });
         if (!user) {
-            return res.send({ ok: false, accessToken: '' });
+            return res.send({ ok: false, accessToken: "" });
         }
         if (user.tokenVersion !== payload.tokenVersion) {
-            return res.send({ ok: false, accessToken: '' });
+            return res.send({ ok: false, accessToken: "" });
         }
         auth_1.sendRefreshToken(res, auth_1.createRefreshToken(user));
         return res.send({ ok: true, accessToken: auth_1.createAccessToken(user) });
@@ -74,7 +73,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         schema: yield type_graphql_1.buildSchema({
             resolvers: [user_1.UserResolver, note_1.noteResolver],
         }),
-        context: ({ req, res }) => ({ req, res }),
+        context: ({ req, res }) => ({
+            req,
+            res,
+            userLoader: createUserLoader_1.createUserLoader(),
+        }),
     });
     apolloServer.applyMiddleware({ app, cors: false });
     app.listen(process.env.PORT, () => {
