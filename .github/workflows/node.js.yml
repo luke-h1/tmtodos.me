@@ -1,23 +1,40 @@
-name: Node.js CI
+name: CI / Node.js builds (push / pull)
 
 on:
   push:
-    branches: [ main ]
+    branches: [dev]
+  pull_request:
+    branches: [dev]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
+      - name: Checkout
+        uses: luke-h1/checkout@v2.3.4
+
+      - name: Cache
+        uses: luke-h1/cache@v2.1.3
+        with:
+          path: |
+            ~/cache
+            ~/.dts/
+            !~/cache/exclude
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+      - name: Use (Volta) Node.js ${{ matrix.node-version }}
+        uses: luke-h1/action@v1.6.0
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: build server
+        run: cd server && npm i && npm run build 
+
+      - name: build frontend 
+        run: cd ../client && npm i && npm run build 
