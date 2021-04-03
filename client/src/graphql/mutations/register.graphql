@@ -1,3 +1,5 @@
-mutation Register($email: String!, $password: String!) {
-  register(email: $email, password: $password)
+mutation Register($options: UsernamePasswordInput!) {
+  register(options: $options) {
+    ...UserResponseFragment
+  }
 }

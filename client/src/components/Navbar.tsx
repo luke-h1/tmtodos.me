@@ -1,9 +1,9 @@
 import { useRouter } from 'next/dist/client/router';
 import React from 'react';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
-import { setAccessToken } from '../utils/accessToken';
 import { isServer } from '../utils/isServer';
 import { CustomLink } from './CustomLink';
+import { Spinner } from './Spinner';
 
 interface NavbarProps {}
 
@@ -14,13 +14,6 @@ export const Navbar: React.FC<NavbarProps> = () => {
     pause: isServer(),
   });
   let body = null;
-
-  const logoutUser = async () => {
-    await logout();
-    setAccessToken('');
-    // await client!.resetStore();
-    router.reload();
-  };
 
   if (fetching) {
     // user is not logged in
@@ -46,16 +39,19 @@ export const Navbar: React.FC<NavbarProps> = () => {
             Create Note
           </a>
         </CustomLink>
-        <button
-          onClick={async () => {
-            await logoutUser();
-          }}
-          className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1"
-          disabled={logoutFetching}
-          type="button"
-        >
-          Logout
-        </button>
+        {logoutFetching ? <Spinner /> : (
+          <button
+            onClick={async () => {
+              await logout();
+              router.reload();
+            }}
+            className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1"
+            disabled={logoutFetching}
+            type="button"
+          >
+            Logout
+          </button>
+        )}
       </div>
     );
   }
