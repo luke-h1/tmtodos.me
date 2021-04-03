@@ -1,5 +1,5 @@
-import { verify } from "jsonwebtoken";
 import "dotenv/config";
+import { v4 } from "uuid";
 import argon2 from "argon2";
 import {
   Arg,
@@ -15,24 +15,18 @@ import {
 import { User } from "../entities/User";
 import { MyContext } from "../types";
 
-import {
-  createAccessToken,
-  createRefreshToken,
-  sendRefreshToken,
-} from "../utils/auth";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
 import { validateRegister } from "../utils/validateRegister";
 import { getConnection } from "typeorm";
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constants";
+import { sendEmail } from "../utils/sendEmail";
 
-
-
+@ObjectType()
 class FieldError {
   @Field()
   field: string;
-
   @Field()
   message: string;
-
 }
 
 @ObjectType()
@@ -41,113 +35,109 @@ class UserResponse {
   errors?: FieldError[];
 
   @Field(() => User, { nullable: true })
-  user?: any
-
-  @Field(() => String, { nullable: true })
-  accessToken?: string
+  user?: User;
 }
-
-// @ObjectType(typeof UserResponse)
-// class UserResponse {
-//   @Field(() => [FieldError], { nullable: true })
-//   errors?: FieldError[];
-
-//   @Field(() => User, { nullable: true })
-//   user?: User;
-
-//   @Field(() => String)
-//   accessToken?: String;
-// }
-
 @Resolver(User)
 export class UserResolver {
-  @Query(() => String)
-  hello() {
-    return "hi";
-  }
-
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
     // this is the current logged in user so can show them their own email
-    const authorization = req.headers.authorization;
-    const token = authorization?.split(" ")[1];
-    const payload: any = verify(token!, process.env.ACCESS_TOKEN_SECRET!);
-    if (payload.userId === user.id) {
+    if (req.session.userId === user.id) {
       return user.email;
     }
-    // current user is trying to see someone elses email 🙅‍♂️
     return "";
   }
 
-  @Query(() => User, { nullable: true })
-  me(@Ctx() context: MyContext) {
-    const authorization = context.req.headers.authorization;
-    if (!authorization) {
-      return null;
-    }
-    try {
-      const token = authorization.split(" ")[1];
-      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-      return User.findOne(payload.userId);
-    } catch (e) {
-      console.error(e);
-      console.error("ME QUERY ERROR", e);
-      return null;
-    }
-  }
-
-  @Mutation(() => Boolean)
-  async logout(@Ctx() { res }: MyContext) {
-    try {
-      sendRefreshToken(res, "");
-      return true;
-    } catch (e) {
-      console.error("LOGOUT ERROR", e);
-      return false;
-    }
-  }
-
   @Mutation(() => UserResponse)
-  async login(
-    @Arg("email") email: string,
-    @Arg("password") password: string,
-    @Ctx() { res }: MyContext
+  async changePassword(
+    @Arg("token") token: string,
+    @Arg("newPassword") newPassword: string,
+    @Ctx() { redis, req }: MyContext
   ): Promise<UserResponse> {
-    const user = await User.findOne({ where: { email } });
+    if (newPassword.length <= 2) {
+      return {
+        errors: [
+          {
+            field: "newPassword",
+            message: "length must be greater than 2",
+          },
+        ],
+      };
+    }
+    const key = FORGET_PASSWORD_PREFIX + token;
+    const userId = await redis.get(key);
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: "token",
+            message: "token expired",
+          },
+        ],
+      };
+    }
+    const userIdNum = parseInt(userId);
+    const user = await User.findOne(userIdNum);
     if (!user) {
       return {
         errors: [
           {
-            field: "email",
-            message: "That email doesn't exist",
+            field: "token",
+            message: "user no longer exists",
           },
         ],
       };
     }
-    const valid = await argon2.verify(user.password, password);
-    if (!valid) {
-      return {
-        errors: [
-          {
-            field: "password",
-            message: "incorrect password",
-          },
-        ],
-      };
-    }
-    //   login successful
-    sendRefreshToken(res, createRefreshToken(user));
-    return {
-      accessToken: createAccessToken(user),
-      user,
-    };
+    await User.update(
+      { id: userIdNum },
+      {
+        password: await argon2.hash(newPassword),
+      }
+    );
+    await redis.del(key);
+    // login user after changed password
+    req.session.userId = user.id;
+    return { user };
   }
 
   @Mutation(() => Boolean)
+  async forgotPassword(
+    @Arg("email") email: string,
+    @Ctx() { redis }: MyContext
+  ) {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return true;
+    }
+    const token = v4();
+
+    await redis.set(
+      FORGET_PASSWORD_PREFIX + token,
+      user.id,
+      "ex",
+      1000 * 60 * 60 * 24 * 2 // 2 days
+    );
+    await sendEmail(
+      email,
+      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`
+    );
+    return true;
+  }
+
+  @Query(() => User, { nullable: true })
+  me(@Ctx() { req }: MyContext) {
+    // not logged in
+    if (!req.session.userId) {
+      return null;
+    }
+    return User.findOne(req.session.userId);
+  }
+
+  @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UsernamePasswordInput,
-    @Ctx() { res }: MyContext
-  ) {
+    @Ctx() { req }: MyContext
+  ): Promise<UserResponse> {
     const errors = validateRegister(options);
     if (errors) {
       return { errors };
@@ -172,18 +162,65 @@ export class UserResolver {
           errors: [
             {
               field: "email",
-              message: "email already taken 🙅‍♂️",
+              message: "email already taken",
             },
           ],
         };
       }
     }
-    // need to log in the user after they have registered here. Will need to set the cookie
-    // return true;
-    sendRefreshToken(res, createRefreshToken(user));
+    // store user id session
+    // this will set a cookie on the user
+    // keep them logged in
+    req.session.userId = user.id;
+    return { user };
+  }
+
+  @Mutation(() => UserResponse)
+  async login(
+    @Arg("email") email: string,
+    @Arg("password") password: string,
+    @Ctx() { req }: MyContext
+  ): Promise<UserResponse> {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: "email",
+            message: "That email doesn't exist",
+          },
+        ],
+      };
+    }
+    const valid = await argon2.verify(user.password, password);
+    if (!valid) {
+      return {
+        errors: [
+          {
+            field: "password",
+            message: "Incorrect credentials",
+          },
+        ],
+      };
+    }
+    req.session.userId = user.id;
     return {
-      accessToken: createAccessToken(user),
       user,
     };
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Ctx() { req, res }: MyContext) {
+    return new Promise((resolve) =>
+      req.session.destroy((e: any) => {
+        res.clearCookie(COOKIE_NAME);
+        if (e) {
+          console.log("LOGOUT ERROR", e);
+          resolve(false);
+          return;
+        }
+        resolve(true);
+      })
+    );
   }
 }

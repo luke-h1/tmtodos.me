@@ -25,10 +25,9 @@ exports.noteResolver = void 0;
 require("dotenv/config");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const jsonwebtoken_1 = require("jsonwebtoken");
 const Note_1 = require("../entities/Note");
-const isAuth_1 = require("../utils/isAuth");
 const User_1 = require("../entities/User");
+const isAuth_1 = require("../middleware/isAuth");
 let NoteInput = class NoteInput {
 };
 __decorate([
@@ -88,30 +87,18 @@ let noteResolver = class noteResolver {
     }
     createNote(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authorization = req.headers.authorization;
-            if (!authorization) {
-                throw new Error("not authenticated");
-            }
-            const token = authorization.split(" ")[1];
-            const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            return Note_1.Note.create(Object.assign(Object.assign({}, input), { creatorId: payload.userId })).save();
+            return Note_1.Note.create(Object.assign(Object.assign({}, input), { creatorId: req.session.userId })).save();
         });
     }
     updateNote(id, title, text, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authorization = req.headers.authorization;
-            if (!authorization) {
-                throw new Error("not authenticated");
-            }
-            const token = authorization.split(" ")[1];
-            const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
             const result = yield typeorm_1.getConnection()
                 .createQueryBuilder()
                 .update(Note_1.Note)
                 .set({ title, text })
                 .where('id = :id and "creatorId" = :creatorId', {
                 id,
-                creatorId: payload.userId,
+                creatorId: req.session.userId,
             })
                 .returning("*")
                 .execute();
@@ -120,13 +107,7 @@ let noteResolver = class noteResolver {
     }
     deleteNote(id, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authorization = req.headers.authorization;
-            if (!authorization) {
-                throw new Error("not authenticated");
-            }
-            const token = authorization.split(" ")[1];
-            const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            yield Note_1.Note.delete({ id, creatorId: payload.userId });
+            yield Note_1.Note.delete({ id, creatorId: req.session.userId });
             return true;
         });
     }

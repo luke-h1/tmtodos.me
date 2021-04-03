@@ -1,26 +1,23 @@
 import "reflect-metadata";
 import "dotenv/config";
+import session from "express-session";
+import Redis from "ioredis";
+import connectRedis from "connect-redis";
 import express from "express";
 import path from "path";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import cookieParser from "cookie-parser";
-import { verify } from "jsonwebtoken";
 import cors from "cors";
 import { UserResolver } from "./resolvers/user";
-import {
-  createAccessToken,
-  createRefreshToken,
-  sendRefreshToken,
-} from "./utils/auth";
 import { User } from "./entities/User";
 import { Note } from "./entities/Note";
 import { noteResolver } from "./resolvers/note";
 import { createUserLoader } from "./utils/createUserLoader";
+import { COOKIE_NAME, __prod__ } from "./constants";
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL!,
     logging: true,
@@ -28,50 +25,50 @@ const main = async () => {
     synchronize: true,
     entities: [User, Note],
   });
+  await conn.runMigrations();
 
   const app = express();
+
+  const RedisStore = connectRedis(session);
+  const redis = new Redis(process.env.REDIS_URL!);
+  app.set("trust proxy", 1); // Let Express know about nginx proxies
   app.use(
     cors({
+      origin: process.env.CORS_ORIGIN!,
       credentials: true,
-      origin: "http://localhost:3000",
     })
   );
-  app.use(cookieParser());
-  app.get("/", (_, res) => {
-    res.status(200).json({ msg: "API is running" });
-  });
 
-  app.post("/refresh_token", async (req, res) => {
-    const token = req.cookies.jid;
-    if (!token) {
-      return res.send({ ok: false, accessToken: "" });
-    }
-    let payload: any = null;
-    try {
-      payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
-    } catch (e) {
-      console.error(e);
-      return res.send({ ok: false, accessToken: "" });
-    }
-    // token is valid & can send back token to client
-    const user = await User.findOne({ id: payload.userId });
-    if (!user) {
-      return res.send({ ok: false, accessToken: "" });
-    }
-    if (user.tokenVersion !== payload.tokenVersion) {
-      return res.send({ ok: false, accessToken: "" });
-    }
-    sendRefreshToken(res, createRefreshToken(user));
-    return res.send({ ok: true, accessToken: createAccessToken(user) });
-  });
+  app.use(
+    session({
+      name: COOKIE_NAME,
+      store: new RedisStore({
+        client: redis,
+        disableTouch: true,
+      }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+        httpOnly: true,
+        sameSite: "lax", // csrf
+        secure: __prod__, // cookie only works in https
+        domain: __prod__ ? ".takemynotes.com" : undefined,
+      },
+      saveUninitialized: false,
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+    })
+  );
+
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver, noteResolver],
+      validate: false,
     }),
     context: ({ req, res }) => ({
       req,
       res,
-      userLoader: createUserLoader(),
+      redis,
+      userLoader: createUserLoader(), // batches SQL requests for users
     }),
   });
   apolloServer.applyMiddleware({ app, cors: false });
