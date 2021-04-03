@@ -20,14 +20,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 require("dotenv/config");
+const argon2_1 = __importDefault(require("argon2"));
 const type_graphql_1 = require("type-graphql");
-const bcryptjs_1 = require("bcryptjs");
 const User_1 = require("../entities/User");
 const auth_1 = require("../utils/auth");
+const UsernamePasswordInput_1 = require("./UsernamePasswordInput");
+const validateRegister_1 = require("src/utils/validateRegister");
+const typeorm_1 = require("typeorm");
 let LoginResponse = class LoginResponse {
 };
 __decorate([
@@ -41,18 +47,45 @@ __decorate([
 LoginResponse = __decorate([
     type_graphql_1.ObjectType()
 ], LoginResponse);
+class FieldError {
+}
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], FieldError.prototype, "field", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], FieldError.prototype, "message", void 0);
+let UserResponse = class UserResponse {
+};
+__decorate([
+    type_graphql_1.Field(() => [FieldError], { nullable: true }),
+    __metadata("design:type", Array)
+], UserResponse.prototype, "errors", void 0);
+__decorate([
+    type_graphql_1.Field(() => User_1.User, { nullable: true }),
+    __metadata("design:type", User_1.User)
+], UserResponse.prototype, "user", void 0);
+__decorate([
+    type_graphql_1.Field(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserResponse.prototype, "accessToken", void 0);
+UserResponse = __decorate([
+    type_graphql_1.ObjectType()
+], UserResponse);
 let UserResolver = class UserResolver {
     hello() {
-        return 'hi';
+        return "hi";
     }
     email(user, { req }) {
         const authorization = req.headers.authorization;
-        const token = authorization === null || authorization === void 0 ? void 0 : authorization.split(' ')[1];
+        const token = authorization === null || authorization === void 0 ? void 0 : authorization.split(" ")[1];
         const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (payload.userId === user.id) {
             return user.email;
         }
-        return '';
+        return "";
     }
     me(context) {
         const authorization = context.req.headers.authorization;
@@ -60,30 +93,51 @@ let UserResolver = class UserResolver {
             return null;
         }
         try {
-            const token = authorization.split(' ')[1];
+            const token = authorization.split(" ")[1];
             const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
             return User_1.User.findOne(payload.userId);
         }
         catch (e) {
             console.error(e);
+            console.error("ME QUERY ERROR", e);
             return null;
         }
     }
     logout({ res }) {
         return __awaiter(this, void 0, void 0, function* () {
-            auth_1.sendRefreshToken(res, '');
-            return true;
+            try {
+                auth_1.sendRefreshToken(res, "");
+                return true;
+            }
+            catch (e) {
+                console.error("LOGOUT ERROR", e);
+                return false;
+            }
         });
     }
     login(email, password, { res }) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield User_1.User.findOne({ where: { email } });
             if (!user) {
-                throw new Error('Could not find that user');
+                return {
+                    errors: [
+                        {
+                            field: "email",
+                            message: "That email doesn't exist",
+                        },
+                    ],
+                };
             }
-            const valid = yield bcryptjs_1.compare(password, user.password);
+            const valid = yield argon2_1.default.verify(user.password, password);
             if (!valid) {
-                throw new Error('bad password');
+                return {
+                    errors: [
+                        {
+                            field: "password",
+                            message: "incorrect password",
+                        },
+                    ],
+                };
             }
             auth_1.sendRefreshToken(res, auth_1.createRefreshToken(user));
             return {
@@ -92,25 +146,44 @@ let UserResolver = class UserResolver {
             };
         });
     }
-    register(email, password) {
+    register(options, { res }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const exists = yield User_1.User.findOne({ where: { email } });
-            if (exists) {
-                return false;
+            const errors = validateRegister_1.validateRegister(options);
+            if (errors) {
+                return { errors };
             }
-            const hashedPassword = yield bcryptjs_1.hash(password, 12);
+            const hashedPassword = yield argon2_1.default.hash(options.password);
+            let user;
             try {
-                yield User_1.User.insert({
-                    email,
+                const result = yield typeorm_1.getConnection()
+                    .createQueryBuilder()
+                    .insert()
+                    .into(User_1.User)
+                    .values({
+                    email: options.email,
                     password: hashedPassword,
-                });
-                return true;
+                })
+                    .returning("*")
+                    .execute();
+                user = result.raw[0];
             }
             catch (e) {
-                console.error(e);
-                return false;
+                if (e.code === "23505") {
+                    return {
+                        errors: [
+                            {
+                                field: "email",
+                                message: "email already taken 🙅‍♂️",
+                            },
+                        ],
+                    };
+                }
             }
-            return true;
+            auth_1.sendRefreshToken(res, auth_1.createRefreshToken(user));
+            return {
+                accessToken: auth_1.createAccessToken(user),
+                user,
+            };
         });
     }
 };
@@ -142,9 +215,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "logout", null);
 __decorate([
-    type_graphql_1.Mutation(() => LoginResponse),
-    __param(0, type_graphql_1.Arg('email')),
-    __param(1, type_graphql_1.Arg('password')),
+    type_graphql_1.Mutation(() => UserResponse),
+    __param(0, type_graphql_1.Arg("email")),
+    __param(1, type_graphql_1.Arg("password")),
     __param(2, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, Object]),
@@ -152,10 +225,10 @@ __decorate([
 ], UserResolver.prototype, "login", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
-    __param(0, type_graphql_1.Arg('email')),
-    __param(1, type_graphql_1.Arg('password')),
+    __param(0, type_graphql_1.Arg("options")),
+    __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [UsernamePasswordInput_1.UsernamePasswordInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 UserResolver = __decorate([
