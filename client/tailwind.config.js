@@ -1,14 +1,7 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  purge: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
-    fontFamily: {
-      'body': ['Roboto', 'sans-serif'] 
-    },
-    extend: {},
+    // ...
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+  // ...
+};
