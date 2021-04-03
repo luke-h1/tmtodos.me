@@ -21,23 +21,18 @@ import {
   sendRefreshToken,
 } from "../utils/auth";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
-import { validateRegister } from "src/utils/validateRegister";
+import { validateRegister } from "../utils/validateRegister";
 import { getConnection } from "typeorm";
 
-@ObjectType()
-class LoginResponse {
-  @Field()
-  accessToken: string;
 
-  @Field(() => User)
-  user: User;
-}
 
 class FieldError {
   @Field()
   field: string;
+
   @Field()
   message: string;
+
 }
 
 @ObjectType()
@@ -46,11 +41,23 @@ class UserResponse {
   errors?: FieldError[];
 
   @Field(() => User, { nullable: true })
-  user?: User;
+  user?: any
 
   @Field(() => String, { nullable: true })
-  accessToken?: String;
+  accessToken?: string
 }
+
+// @ObjectType(typeof UserResponse)
+// class UserResponse {
+//   @Field(() => [FieldError], { nullable: true })
+//   errors?: FieldError[];
+
+//   @Field(() => User, { nullable: true })
+//   user?: User;
+
+//   @Field(() => String)
+//   accessToken?: String;
+// }
 
 @Resolver(User)
 export class UserResolver {

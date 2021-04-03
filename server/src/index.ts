@@ -15,13 +15,12 @@ import {
   sendRefreshToken,
 } from "./utils/auth";
 import { User } from "./entities/User";
-import { MyContext } from "./types";
 import { Note } from "./entities/Note";
 import { noteResolver } from "./resolvers/note";
 import { createUserLoader } from "./utils/createUserLoader";
 
 const main = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL!,
     logging: true,
