@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <>
-      <div className="bg-gray-100 w-full min-h-screen m-0">
+      <div className="bg-gray-100 w-full mb-10 m-0">
         <div className="bg-white shadow">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between py-5 align-center">
