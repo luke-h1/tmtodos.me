@@ -1,0 +1,11 @@
+fragment NoteSnippet on Note {
+    id
+    createdAt
+    updatedAt
+    title
+    textSnippet
+    creator { 
+        id
+        email
+    }
+}

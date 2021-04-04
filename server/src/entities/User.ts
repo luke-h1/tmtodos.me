@@ -12,14 +12,11 @@ export class User extends BaseEntity {
   id!: number;
 
   @Field()
-  @Column('text')
+  @Column({ unique: true })
   email!: string;
 
-  @Column('text')
-  password: string;
-
-  @Column('int', { default: 0 })
-  tokenVersion: number;
+  @Column()
+  password!: string;
 
   @OneToMany(() => Note, (note) => note.creator)
   notes: Note[]
@@ -28,9 +25,6 @@ export class User extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  // @Column('int')
-  // @Field(() => String)
-  // isAdmin: Boolean
 
   @Field(() => String)
   @UpdateDateColumn()

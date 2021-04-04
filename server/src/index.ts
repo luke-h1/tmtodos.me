@@ -25,7 +25,7 @@ const main = async () => {
     synchronize: true,
     entities: [User, Note],
   });
-  await conn.runMigrations();
+  // await conn.runMigrations();
 
   const app = express();
 

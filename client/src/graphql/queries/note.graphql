@@ -1,0 +1,13 @@
+query Note($id: Int!){
+    note(id: $id){
+        id
+        createdAt
+        updatedAt
+        title
+        text
+        creator { 
+            id
+            email
+        }
+    }
+}

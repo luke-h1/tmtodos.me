@@ -50,10 +50,11 @@ export class noteResolver {
     return userLoader.load(note.creatorId);
   }
 
-  @Query(() => [Note])
+  @Query(() => PaginatedNotes)
   async notes(
-    @Arg("limit") limit: number,
+    @Arg("limit", () => Int) limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null
+    @Ctx() { req }: MyContext
   ): Promise<PaginatedNotes> {
     const realLimit = Math.min(150, limit);
     const realLimitPlusOne = realLimit + 1;
@@ -62,6 +63,8 @@ export class noteResolver {
       replacements.push(new Date(parseInt(cursor)));
     }
 
+
+// need where clause to check if logged in user owns a given note
     const notes = await getConnection().query(
       `
         SELECT n.* 
@@ -70,7 +73,8 @@ export class noteResolver {
         ORDER BY n."createdAt" DESC 
         limit $1
       `,
-      replacements
+      replacements,
+      req.session.userId
     );
     return {
       notes: notes.slice(0, realLimit),

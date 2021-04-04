@@ -1,0 +1,8 @@
+query Notes($limit: Int!, $cursor: String){
+    notes(limit: $limit, cursor: $cursor){
+        hasMore
+        notes { 
+            ...NoteSnippet
+        }
+    }
+}
