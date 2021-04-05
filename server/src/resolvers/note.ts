@@ -64,12 +64,36 @@ export class noteResolver {
     }
 
 
-    // createQueryBuilder("user")
-    // .where("user.firstName = :firstName", { firstName: "Timber" })
-    // .andWhere("user.lastName = :lastName", { lastName: "Saw" });
+/* 
+
+OLD QUERY: 
+      `
+        SELECT n.* 
+        from note n 
+        ${cursor ? `where n."createdAt" < $2` : ""}
+        ORDER BY n."createdAt" DESC 
+        limit $1
+      `,
 
 
-// need where clause to check if logged in user owns a given note
+RAW postgres version: 
+------------------------------
+SELECT u.id FROM public.user u 
+JOIN note n 
+ON n."creatorId" = u.id 
+------------------------------
+
+
+TypeORM version: 
+------------------------------
+SELECT u.id FROM user u 
+JOIN note n 
+ON n."creatorId" = u.id 
+------------------------------
+*/
+
+
+   // need where clause to check if logged in user owns a given note
 
     const notes = await getConnection().query(
       `
