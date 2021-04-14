@@ -73,13 +73,11 @@ export class noteResolver {
 
     const notes = await getConnection().query(
       `
-        SELECT n.* 
-        from note n 
-        ${cursor ? `where n."createdAt" < $2` : ""}
-        ORDER BY n."createdAt" DESC 
-        limit $1
+      SELECT n.* FROM "note" n 
+      WHERE (n."creatorId" = $1)
+      ORDER BY n."createdAt" DESC 
       `,
-      replacements
+      [req.session.userId]
           );
     return {
       notes: notes.slice(0, realLimit),

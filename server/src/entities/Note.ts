@@ -1,6 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import {
-  BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn,
+  BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
 import { User } from './User';
 
@@ -23,7 +23,8 @@ export class Note extends BaseEntity {
     @Column()
     creatorId: number;
   
-    @ManyToOne(() => User, (user) => user.notes)
+    @ManyToOne(() => User, (u) => u.notes)
+    @JoinColumn({ name: 'creatorId' })
     creator: User
 
     @Field(() => String)
