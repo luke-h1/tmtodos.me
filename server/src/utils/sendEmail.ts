@@ -12,9 +12,9 @@ export async function sendEmail(to: string, html: string) {
   });
 
   const info = await transporter.sendMail({
-    from: '"todos.io"',
+    from: '"tmtodos.me"',
     to,
-    subject: 'todos.io | Change password',
+    subject: 'tmtodos.me | Change password',
     html,
   });
   console.log('Message sent: %s', info.messageId);
