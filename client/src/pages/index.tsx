@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Spinner } from '../components/Spinner';
+import { TodoItem } from '../components/TodoItem';
 import { useTodosQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 
@@ -43,19 +44,9 @@ const Home = () => {
       ) : (
         <>
           {data!.todos.todos.map((t) => (!t ? null : (
-            <Wrapper>
-              <Link href="/todo[id]" as={`/todo/${t.id}`}>
-                <div className="hover:bg-gray-100 focus:outline-none focus:ring-2 cursor-pointer rounded mb-4 min-w-lg w-full">
-                  <div className="border-gray-300 p-5 rounded-md shadow-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-left">{t.title}</h4>
-                    <p className="text-md font-semibold mb-2 text-left">{t.textSnippet}</p>
-                    <div className="flex mt-5">
-                      <p className="text-left">{t.creator.email}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </Wrapper>
+            <div className="max-w-md rounded focus:ring mx-auto w-full" key={t.id}>
+              <TodoItem title={t.title} textSnippet={t.textSnippet} email={t.creator.email} id={t.id} />
+            </div>
           )))}
           {data && data.todos.hasMore ? (
             <button
