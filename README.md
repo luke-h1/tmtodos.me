@@ -34,6 +34,8 @@ This structure is currently completely seperated however I may consider using so
 
 [![CI / Node.js builds (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/node.js.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/node.js.yml)
 
+[![CI / typecheck (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml)
+
 
 ## Tech stack 
 - [React](https://github.com/facebook/react)
