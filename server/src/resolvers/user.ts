@@ -1,6 +1,6 @@
-import "dotenv/config";
-import { v4 } from "uuid";
-import argon2 from "argon2";
+import 'dotenv/config';
+import { v4 } from 'uuid';
+import argon2 from 'argon2';
 import {
   Arg,
   Ctx,
@@ -11,20 +11,21 @@ import {
   Query,
   Resolver,
   Root,
-} from "type-graphql";
-import { User } from "../entities/User";
-import { MyContext } from "../types";
+} from 'type-graphql';
+import { getConnection } from 'typeorm';
+import { User } from '../entities/User';
+import { MyContext } from '../types';
 
-import { UsernamePasswordInput } from "./UsernamePasswordInput";
-import { validateRegister } from "../utils/validateRegister";
-import { getConnection } from "typeorm";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constants";
-import { sendEmail } from "../utils/sendEmail";
+import { UsernamePasswordInput } from './UsernamePasswordInput';
+import { validateRegister } from '../utils/validateRegister';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../constants';
+import { sendEmail } from '../utils/sendEmail';
 
 @ObjectType()
 class FieldError {
   @Field()
   field: string;
+
   @Field()
   message: string;
 }
@@ -45,21 +46,21 @@ export class UserResolver {
     if (req.session.userId === user.id) {
       return user.email;
     }
-    return "";
+    return '';
   }
 
   @Mutation(() => UserResponse)
   async changePassword(
-    @Arg("token") token: string,
-    @Arg("newPassword") newPassword: string,
-    @Ctx() { redis, req }: MyContext
+    @Arg('token') token: string,
+    @Arg('newPassword') newPassword: string,
+    @Ctx() { redis, req }: MyContext,
   ): Promise<UserResponse> {
     if (newPassword.length <= 2) {
       return {
         errors: [
           {
-            field: "newPassword",
-            message: "length must be greater than 2",
+            field: 'newPassword',
+            message: 'length must be greater than 2',
           },
         ],
       };
@@ -70,20 +71,21 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: "token",
-            message: "token expired",
+            field: 'token',
+            message: 'token expired',
           },
         ],
       };
     }
+    // eslint-disable-next-line radix
     const userIdNum = parseInt(userId);
     const user = await User.findOne(userIdNum);
     if (!user) {
       return {
         errors: [
           {
-            field: "token",
-            message: "user no longer exists",
+            field: 'token',
+            message: 'user no longer exists',
           },
         ],
       };
@@ -92,7 +94,7 @@ export class UserResolver {
       { id: userIdNum },
       {
         password: await argon2.hash(newPassword),
-      }
+      },
     );
     await redis.del(key);
     // login user after changed password
@@ -102,8 +104,8 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async forgotPassword(
-    @Arg("email") email: string,
-    @Ctx() { redis }: MyContext
+    @Arg('email') email: string,
+    @Ctx() { redis }: MyContext,
   ) {
     const user = await User.findOne({ where: { email } });
     if (!user) {
@@ -114,12 +116,12 @@ export class UserResolver {
     await redis.set(
       FORGET_PASSWORD_PREFIX + token,
       user.id,
-      "ex",
-      1000 * 60 * 60 * 24 * 2 // 2 days TODO: (change when deploying)
+      'ex',
+      1000 * 60 * 60 * 24 * 2, // 2 days TODO: (change when deploying)
     );
     await sendEmail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>` // TODO: setup mailgun on prod 
+      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`, // TODO: setup mailgun on prod
     );
     return true;
   }
@@ -135,8 +137,8 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg("options") options: UsernamePasswordInput,
-    @Ctx() { req }: MyContext
+    @Arg('options') options: UsernamePasswordInput,
+    @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);
     if (errors) {
@@ -153,17 +155,17 @@ export class UserResolver {
           email: options.email,
           password: hashedPassword,
         })
-        .returning("*")
+        .returning('*')
         .execute();
       user = result.raw[0];
-      console.log(user)
+      console.log(user);
     } catch (e) {
-      if (e.code === "23505") {
+      if (e.code === '23505') {
         return {
           errors: [
             {
-              field: "email",
-              message: "email already taken",
+              field: 'email',
+              message: 'email already taken',
             },
           ],
         };
@@ -178,16 +180,16 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async login(
-    @Arg("email") email: string,
-    @Arg("password") password: string,
-    @Ctx() { req }: MyContext
+    @Arg('email') email: string,
+    @Arg('password') password: string,
+    @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       return {
         errors: [
           {
-            field: "email",
+            field: 'email',
             message: "That email doesn't exist",
           },
         ],
@@ -198,8 +200,8 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: "password",
-            message: "Incorrect credentials",
+            field: 'password',
+            message: 'Incorrect credentials',
           },
         ],
       };
@@ -212,16 +214,14 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: MyContext) {
-    return new Promise((resolve) =>
-      req.session.destroy((e: any) => {
-        res.clearCookie(COOKIE_NAME);
-        if (e) {
-          console.log("LOGOUT ERROR", e);
-          resolve(false);
-          return;
-        }
-        resolve(true);
-      })
-    );
+    return new Promise((resolve) => req.session.destroy((e: any) => {
+      res.clearCookie(COOKIE_NAME);
+      if (e) {
+        console.log('LOGOUT ERROR', e);
+        resolve(false);
+        return;
+      }
+      resolve(true);
+    }));
   }
 }

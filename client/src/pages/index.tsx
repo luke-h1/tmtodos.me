@@ -1,21 +1,10 @@
-import styled from '@emotion/styled';
 import { withUrqlClient } from 'next-urql';
-import Link from 'next/link';
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Spinner } from '../components/Spinner';
 import { TodoItem } from '../components/TodoItem';
 import { useTodosQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem 0 1rem 0;
-  width: 1000px;
-`;
 
 const Home = () => {
   const [variables, setVariables] = useState({

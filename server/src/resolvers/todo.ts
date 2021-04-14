@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import "dotenv/config";
+import 'dotenv/config';
 import {
   Arg,
   Ctx,
@@ -13,12 +13,12 @@ import {
   Resolver,
   Root,
   UseMiddleware,
-} from "type-graphql";
-import { getConnection } from "typeorm";
-import { Todo } from "../entities/Todo";
-import { MyContext } from "../types";
-import { User } from "../entities/User";
-import { isAuth } from "../middleware/isAuth";
+} from 'type-graphql';
+import { getConnection } from 'typeorm';
+import { Todo } from '../entities/Todo';
+import { MyContext } from '../types';
+import { User } from '../entities/User';
+import { isAuth } from '../middleware/isAuth';
 
 @InputType()
 class TodoInput {
@@ -52,9 +52,9 @@ export class todoResolver {
 
   @Query(() => PaginatedTodos)
   async todos(
-    @Arg("limit", () => Int) limit: number,
-    @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
-    @Ctx() { req }: MyContext
+    @Arg('limit', () => Int) limit: number,
+    @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
+    @Ctx() { req }: MyContext,
   ): Promise<PaginatedTodos> {
     const realLimit = Math.min(150, limit);
     const realLimitPlusOne = realLimit + 1;
@@ -68,8 +68,8 @@ export class todoResolver {
       WHERE (t."creatorId" = $1)
       ORDER BY t."createdAt" DESC 
       `,
-      [req.session.userId]
-          );
+      [req.session.userId],
+    );
     return {
       todos: todos.slice(0, realLimit),
       hasMore: todos.length === realLimitPlusOne,
@@ -77,15 +77,15 @@ export class todoResolver {
   }
 
   @Query(() => Todo, { nullable: true })
-  todo(@Arg("id", () => Int) id: number): Promise<Todo | undefined> {
+  todo(@Arg('id', () => Int) id: number): Promise<Todo | undefined> {
     return Todo.findOne(id);
   }
 
   @Mutation(() => Todo)
   @UseMiddleware(isAuth)
   async createTodo(
-    @Arg("input") input: TodoInput,
-    @Ctx() { req }: MyContext
+    @Arg('input') input: TodoInput,
+    @Ctx() { req }: MyContext,
   ): Promise<Todo> {
     return Todo.create({
       ...input,
@@ -95,10 +95,10 @@ export class todoResolver {
 
   @Mutation(() => Todo, { nullable: true })
   async updateTodo(
-    @Arg("id", () => Int) id: number,
-    @Arg("title") title: string,
-    @Arg("text") text: string,
-    @Ctx() { req }: MyContext
+    @Arg('id', () => Int) id: number,
+    @Arg('title') title: string,
+    @Arg('text') text: string,
+    @Ctx() { req }: MyContext,
   ): Promise<Todo | null> {
     const result = await getConnection()
       .createQueryBuilder()
@@ -108,7 +108,7 @@ export class todoResolver {
         id,
         creatorId: req.session.userId,
       })
-      .returning("*")
+      .returning('*')
       .execute();
     return result.raw[0];
   }
@@ -116,8 +116,8 @@ export class todoResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async deleteTodo(
-    @Arg("id", () => Int) id: number,
-    @Ctx() { req }: MyContext
+    @Arg('id', () => Int) id: number,
+    @Ctx() { req }: MyContext,
   ): Promise<boolean> {
     await Todo.delete({ id, creatorId: req.session.userId });
     return true;

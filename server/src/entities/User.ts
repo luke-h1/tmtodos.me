@@ -25,7 +25,6 @@ export class User extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date;

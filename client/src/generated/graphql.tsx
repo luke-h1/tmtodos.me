@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
+
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -32,40 +33,33 @@ export type Mutation = {
   deleteTodo: Scalars['Boolean'];
 };
 
-
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   token: Scalars['String'];
 };
 
-
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
-
 export type MutationRegisterArgs = {
   options: UsernamePasswordInput;
 };
-
 
 export type MutationLoginArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
 };
 
-
 export type MutationCreateTodoArgs = {
   input: TodoInput;
 };
-
 
 export type MutationUpdateTodoArgs = {
   text: Scalars['String'];
   title: Scalars['String'];
   id: Scalars['Int'];
 };
-
 
 export type MutationDeleteTodoArgs = {
   id: Scalars['Int'];
@@ -84,12 +78,10 @@ export type Query = {
   todo?: Maybe<Todo>;
 };
 
-
 export type QueryTodosArgs = {
   cursor?: Maybe<Scalars['String']>;
   limit: Scalars['Int'];
 };
-
 
 export type QueryTodoArgs = {
   id: Scalars['Int'];
@@ -165,7 +157,6 @@ export type CreateTodoMutationVariables = Exact<{
   input: TodoInput;
 }>;
 
-
 export type CreateTodoMutation = (
   { __typename?: 'Mutation' }
   & { createTodo: (
@@ -178,7 +169,6 @@ export type DeleteTodoMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
-
 export type DeleteTodoMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'deleteTodo'>
@@ -188,7 +178,6 @@ export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
-
 
 export type LoginMutation = (
   { __typename?: 'Mutation' }
@@ -200,7 +189,6 @@ export type LoginMutation = (
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
-
 export type LogoutMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'logout'>
@@ -209,7 +197,6 @@ export type LogoutMutation = (
 export type RegisterMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
-
 
 export type RegisterMutation = (
   { __typename?: 'Mutation' }
@@ -225,7 +212,6 @@ export type UpdateTodoMutationVariables = Exact<{
   text: Scalars['String'];
 }>;
 
-
 export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
   & { updateTodo?: Maybe<(
@@ -235,7 +221,6 @@ export type UpdateTodoMutation = (
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
 
 export type MeQuery = (
   { __typename?: 'Query' }
@@ -248,7 +233,6 @@ export type MeQuery = (
 export type TodoQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
-
 
 export type TodoQuery = (
   { __typename?: 'Query' }
@@ -266,7 +250,6 @@ export type TodosQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: Maybe<Scalars['String']>;
 }>;
-
 
 export type TodosQuery = (
   { __typename?: 'Query' }
@@ -331,7 +314,7 @@ export const CreateTodoDocument = gql`
 
 export function useCreateTodoMutation() {
   return Urql.useMutation<CreateTodoMutation, CreateTodoMutationVariables>(CreateTodoDocument);
-};
+}
 export const DeleteTodoDocument = gql`
     mutation DeleteTodo($id: Int!) {
   deleteTodo(id: $id)
@@ -340,7 +323,7 @@ export const DeleteTodoDocument = gql`
 
 export function useDeleteTodoMutation() {
   return Urql.useMutation<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument);
-};
+}
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -351,7 +334,7 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-};
+}
 export const LogoutDocument = gql`
     mutation Logout {
   logout
@@ -360,7 +343,7 @@ export const LogoutDocument = gql`
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
-};
+}
 export const RegisterDocument = gql`
     mutation Register($options: UsernamePasswordInput!) {
   register(options: $options) {
@@ -371,7 +354,7 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
-};
+}
 export const UpdateTodoDocument = gql`
     mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
   updateTodo(id: $id, title: $title, text: $text) {
@@ -385,7 +368,7 @@ export const UpdateTodoDocument = gql`
 
 export function useUpdateTodoMutation() {
   return Urql.useMutation<UpdateTodoMutation, UpdateTodoMutationVariables>(UpdateTodoDocument);
-};
+}
 export const MeDocument = gql`
     query Me {
   me {
@@ -396,7 +379,7 @@ export const MeDocument = gql`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-};
+}
 export const TodoDocument = gql`
     query Todo($id: Int!) {
   todo(id: $id) {
@@ -415,7 +398,7 @@ export const TodoDocument = gql`
 
 export function useTodoQuery(options: Omit<Urql.UseQueryArgs<TodoQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TodoQuery>({ query: TodoDocument, ...options });
-};
+}
 export const TodosDocument = gql`
     query Todos($limit: Int!, $cursor: String) {
   todos(limit: $limit, cursor: $cursor) {
@@ -429,4 +412,4 @@ export const TodosDocument = gql`
 
 export function useTodosQuery(options: Omit<Urql.UseQueryArgs<TodosQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TodosQuery>({ query: TodosDocument, ...options });
-};
+}
