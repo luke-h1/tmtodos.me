@@ -27,9 +27,9 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  createNote: Note;
-  updateNote?: Maybe<Note>;
-  deleteNote: Scalars['Boolean'];
+  createTodo: Todo;
+  updateTodo?: Maybe<Todo>;
+  deleteTodo: Scalars['Boolean'];
 };
 
 
@@ -55,24 +55,48 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationCreateNoteArgs = {
-  input: NoteInput;
+export type MutationCreateTodoArgs = {
+  input: TodoInput;
 };
 
 
-export type MutationUpdateNoteArgs = {
+export type MutationUpdateTodoArgs = {
   text: Scalars['String'];
   title: Scalars['String'];
   id: Scalars['Int'];
 };
 
 
-export type MutationDeleteNoteArgs = {
+export type MutationDeleteTodoArgs = {
   id: Scalars['Int'];
 };
 
-export type Note = {
-  __typename?: 'Note';
+export type PaginatedTodos = {
+  __typename?: 'PaginatedTodos';
+  todos: Array<Todo>;
+  hasMore: Scalars['Boolean'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  me?: Maybe<User>;
+  todos: PaginatedTodos;
+  todo?: Maybe<Todo>;
+};
+
+
+export type QueryTodosArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
+};
+
+
+export type QueryTodoArgs = {
+  id: Scalars['Int'];
+};
+
+export type Todo = {
+  __typename?: 'Todo';
   id: Scalars['Float'];
   title: Scalars['String'];
   text: Scalars['String'];
@@ -83,33 +107,9 @@ export type Note = {
   creator: User;
 };
 
-export type NoteInput = {
+export type TodoInput = {
   title: Scalars['String'];
   text: Scalars['String'];
-};
-
-export type PaginatedNotes = {
-  __typename?: 'PaginatedNotes';
-  notes: Array<Note>;
-  hasMore: Scalars['Boolean'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  me?: Maybe<User>;
-  notes: PaginatedNotes;
-  note?: Maybe<Note>;
-};
-
-
-export type QueryNotesArgs = {
-  cursor?: Maybe<Scalars['String']>;
-  limit: Scalars['Int'];
-};
-
-
-export type QueryNoteArgs = {
-  id: Scalars['Int'];
 };
 
 export type User = {
@@ -136,9 +136,9 @@ export type ErrorFragment = (
   & Pick<FieldError, 'field' | 'message'>
 );
 
-export type NoteSnippetFragment = (
-  { __typename?: 'Note' }
-  & Pick<Note, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'textSnippet'>
+export type TodoSnippetFragment = (
+  { __typename?: 'Todo' }
+  & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'textSnippet'>
   & { creator: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'email'>
@@ -161,27 +161,27 @@ export type UserResponseFragmentFragment = (
   )> }
 );
 
-export type CreateNoteMutationVariables = Exact<{
-  input: NoteInput;
+export type CreateTodoMutationVariables = Exact<{
+  input: TodoInput;
 }>;
 
 
-export type CreateNoteMutation = (
+export type CreateTodoMutation = (
   { __typename?: 'Mutation' }
-  & { createNote: (
-    { __typename?: 'Note' }
-    & Pick<Note, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'creatorId'>
+  & { createTodo: (
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'creatorId'>
   ) }
 );
 
-export type DeleteNoteMutationVariables = Exact<{
+export type DeleteTodoMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type DeleteNoteMutation = (
+export type DeleteTodoMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteNote'>
+  & Pick<Mutation, 'deleteTodo'>
 );
 
 export type LoginMutationVariables = Exact<{
@@ -219,18 +219,18 @@ export type RegisterMutation = (
   ) }
 );
 
-export type UpdateNoteMutationVariables = Exact<{
+export type UpdateTodoMutationVariables = Exact<{
   id: Scalars['Int'];
   title: Scalars['String'];
   text: Scalars['String'];
 }>;
 
 
-export type UpdateNoteMutation = (
+export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
-  & { updateNote?: Maybe<(
-    { __typename?: 'Note' }
-    & Pick<Note, 'id' | 'title' | 'text' | 'textSnippet'>
+  & { updateTodo?: Maybe<(
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'title' | 'text' | 'textSnippet'>
   )> }
 );
 
@@ -245,16 +245,16 @@ export type MeQuery = (
   )> }
 );
 
-export type NoteQueryVariables = Exact<{
+export type TodoQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type NoteQuery = (
+export type TodoQuery = (
   { __typename?: 'Query' }
-  & { note?: Maybe<(
-    { __typename?: 'Note' }
-    & Pick<Note, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text'>
+  & { todo?: Maybe<(
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text'>
     & { creator: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
@@ -262,26 +262,26 @@ export type NoteQuery = (
   )> }
 );
 
-export type NotesQueryVariables = Exact<{
+export type TodosQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: Maybe<Scalars['String']>;
 }>;
 
 
-export type NotesQuery = (
+export type TodosQuery = (
   { __typename?: 'Query' }
-  & { notes: (
-    { __typename?: 'PaginatedNotes' }
-    & Pick<PaginatedNotes, 'hasMore'>
-    & { notes: Array<(
-      { __typename?: 'Note' }
-      & NoteSnippetFragment
+  & { todos: (
+    { __typename?: 'PaginatedTodos' }
+    & Pick<PaginatedTodos, 'hasMore'>
+    & { todos: Array<(
+      { __typename?: 'Todo' }
+      & TodoSnippetFragment
     )> }
   ) }
 );
 
-export const NoteSnippetFragmentDoc = gql`
-    fragment NoteSnippet on Note {
+export const TodoSnippetFragmentDoc = gql`
+    fragment TodoSnippet on Todo {
   id
   createdAt
   updatedAt
@@ -316,9 +316,9 @@ export const UserResponseFragmentFragmentDoc = gql`
 }
     ${ErrorFragmentDoc}
 ${UserFragmentFragmentDoc}`;
-export const CreateNoteDocument = gql`
-    mutation CreateNote($input: NoteInput!) {
-  createNote(input: $input) {
+export const CreateTodoDocument = gql`
+    mutation CreateTodo($input: TodoInput!) {
+  createTodo(input: $input) {
     id
     createdAt
     updatedAt
@@ -329,17 +329,17 @@ export const CreateNoteDocument = gql`
 }
     `;
 
-export function useCreateNoteMutation() {
-  return Urql.useMutation<CreateNoteMutation, CreateNoteMutationVariables>(CreateNoteDocument);
+export function useCreateTodoMutation() {
+  return Urql.useMutation<CreateTodoMutation, CreateTodoMutationVariables>(CreateTodoDocument);
 };
-export const DeleteNoteDocument = gql`
-    mutation DeleteNote($id: Int!) {
-  deleteNote(id: $id)
+export const DeleteTodoDocument = gql`
+    mutation DeleteTodo($id: Int!) {
+  deleteTodo(id: $id)
 }
     `;
 
-export function useDeleteNoteMutation() {
-  return Urql.useMutation<DeleteNoteMutation, DeleteNoteMutationVariables>(DeleteNoteDocument);
+export function useDeleteTodoMutation() {
+  return Urql.useMutation<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument);
 };
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
@@ -372,9 +372,9 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
-export const UpdateNoteDocument = gql`
-    mutation UpdateNote($id: Int!, $title: String!, $text: String!) {
-  updateNote(id: $id, title: $title, text: $text) {
+export const UpdateTodoDocument = gql`
+    mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
+  updateTodo(id: $id, title: $title, text: $text) {
     id
     title
     text
@@ -383,8 +383,8 @@ export const UpdateNoteDocument = gql`
 }
     `;
 
-export function useUpdateNoteMutation() {
-  return Urql.useMutation<UpdateNoteMutation, UpdateNoteMutationVariables>(UpdateNoteDocument);
+export function useUpdateTodoMutation() {
+  return Urql.useMutation<UpdateTodoMutation, UpdateTodoMutationVariables>(UpdateTodoDocument);
 };
 export const MeDocument = gql`
     query Me {
@@ -397,9 +397,9 @@ export const MeDocument = gql`
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };
-export const NoteDocument = gql`
-    query Note($id: Int!) {
-  note(id: $id) {
+export const TodoDocument = gql`
+    query Todo($id: Int!) {
+  todo(id: $id) {
     id
     createdAt
     updatedAt
@@ -413,20 +413,20 @@ export const NoteDocument = gql`
 }
     `;
 
-export function useNoteQuery(options: Omit<Urql.UseQueryArgs<NoteQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<NoteQuery>({ query: NoteDocument, ...options });
+export function useTodoQuery(options: Omit<Urql.UseQueryArgs<TodoQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<TodoQuery>({ query: TodoDocument, ...options });
 };
-export const NotesDocument = gql`
-    query Notes($limit: Int!, $cursor: String) {
-  notes(limit: $limit, cursor: $cursor) {
+export const TodosDocument = gql`
+    query Todos($limit: Int!, $cursor: String) {
+  todos(limit: $limit, cursor: $cursor) {
     hasMore
-    notes {
-      ...NoteSnippet
+    todos {
+      ...TodoSnippet
     }
   }
 }
-    ${NoteSnippetFragmentDoc}`;
+    ${TodoSnippetFragmentDoc}`;
 
-export function useNotesQuery(options: Omit<Urql.UseQueryArgs<NotesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<NotesQuery>({ query: NotesDocument, ...options });
+export function useTodosQuery(options: Omit<Urql.UseQueryArgs<TodosQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<TodosQuery>({ query: TodosDocument, ...options });
 };

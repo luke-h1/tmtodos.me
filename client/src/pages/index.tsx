@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Spinner } from '../components/Spinner';
-import { useNotesQuery } from '../generated/graphql';
+import { useTodosQuery } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 
 const Wrapper = styled.div`
@@ -22,7 +22,7 @@ const Home = () => {
     cursor: null as null | string,
   });
 
-  const [{ data, error, fetching }] = useNotesQuery({
+  const [{ data, error, fetching }] = useTodosQuery({
     variables,
   });
 
@@ -42,33 +42,33 @@ const Home = () => {
         <Spinner />
       ) : (
         <>
-          {data!.notes.notes.map((n) => (!n ? null : (
+          {data!.todos.todos.map((t) => (!t ? null : (
             <Wrapper>
-              <Link href="/note[id]" as={`/note/${n.id}`}>
+              <Link href="/todo[id]" as={`/todo/${t.id}`}>
                 <div className="hover:bg-gray-100 focus:outline-none focus:ring-2 cursor-pointer rounded mb-4 min-w-lg w-full">
                   <div className="border-gray-300 p-5 rounded-md shadow-lg">
-                    <h4 className="text-xl font-semibold mb-2 text-left">{n.title}</h4>
-                    <p className="text-md font-semibold mb-2 text-left">{n.textSnippet}</p>
+                    <h4 className="text-xl font-semibold mb-2 text-left">{t.title}</h4>
+                    <p className="text-md font-semibold mb-2 text-left">{t.textSnippet}</p>
                     <div className="flex mt-5">
-                      <p className="text-left">{n.creator.email}</p>
+                      <p className="text-left">{t.creator.email}</p>
                     </div>
                   </div>
                 </div>
               </Link>
             </Wrapper>
           )))}
-          {data && data.notes.hasMore ? (
+          {data && data.todos.hasMore ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-6 rounded"
               type="button"
               onClick={() => {
                 setVariables({
                   limit: variables.limit,
-                  cursor: data.notes.notes[data.notes.notes.length - 1].createdAt,
+                  cursor: data.todos.todos[data.todos.todos.length - 1].createdAt,
                 });
               }}
             >
-              Load More Notes
+              Load More todos
             </button>
           ) : null}
         </>

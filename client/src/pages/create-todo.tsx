@@ -4,20 +4,20 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Flex } from '../components/Flex';
 import { InputField } from '../components/InputField';
-import { useCreateNoteMutation } from '../generated/graphql';
+import { useCreateTodoMutation } from '../generated/graphql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { useIsAuth } from '../utils/useIsAuth';
 
-const CreateNotePage: React.FC<{}> = () => {
+const CreateTodoPage: React.FC<{}> = () => {
   const router = useRouter();
   useIsAuth();
-  const [, createNote] = useCreateNoteMutation();
+  const [, createTodo] = useCreateTodoMutation();
   return (
     <Flex>
       <Formik
         initialValues={{ title: '', text: '' }}
         onSubmit={async (values) => {
-          const { error } = await createNote({ input: values });
+          const { error } = await createTodo({ input: values });
           if (!error) {
             router.push('/');
           }
@@ -30,7 +30,7 @@ const CreateNotePage: React.FC<{}> = () => {
               <InputField name="text" placeholder="text" label="body" />
             </div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
-              Create Note
+              Create Todo
             </button>
           </Form>
         ))}
@@ -38,4 +38,4 @@ const CreateNotePage: React.FC<{}> = () => {
     </Flex>
   );
 };
-export default withUrqlClient(createUrqlClient)(CreateNotePage);
+export default withUrqlClient(createUrqlClient)(CreateTodoPage);

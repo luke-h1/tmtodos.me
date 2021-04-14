@@ -1,8 +1,0 @@
-mutation UpdateNote($id: Int!, $title: String!, $text: String!) {
-  updateNote(id: $id, title: $title, text: $text) {
-    id
-    title
-    text
-    textSnippet
-  }
-}

@@ -1,5 +1,5 @@
-query Note($id: Int!){
-    note(id: $id){
+query Todo($id: Int!){
+    todo(id: $id){
         id
         createdAt
         updatedAt

@@ -11,19 +11,19 @@ import { createConnection } from "typeorm";
 import cors from "cors";
 import { UserResolver } from "./resolvers/user";
 import { User } from "./entities/User";
-import { Note } from "./entities/Note";
-import { noteResolver } from "./resolvers/note";
+import { Todo } from "./entities/Todo";
+import { todoResolver } from "./resolvers/todo";
 import { createUserLoader } from "./utils/createUserLoader";
 import { COOKIE_NAME, __prod__ } from "./constants";
 
 const main = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL!,
     logging: true,
     migrations: [path.join(__dirname, "./migrations/*")],
     synchronize: true,
-    entities: [User, Note],
+    entities: [User, Todo],
   });
   // await conn.runMigrations();
 
@@ -51,7 +51,7 @@ const main = async () => {
         httpOnly: true,
         sameSite: "lax", // csrf
         secure: __prod__, // cookie only works in https
-        domain: __prod__ ? ".takemynotes.com" : undefined,
+        domain: __prod__ ? "deployed api url" : undefined,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET!,
@@ -61,7 +61,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver, noteResolver],
+      resolvers: [UserResolver, todoResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({

@@ -1,0 +1,8 @@
+query Todos($limit: Int!, $cursor: String){
+    todos(limit: $limit, cursor: $cursor){
+        hasMore
+        todos { 
+            ...TodoSnippet
+        }
+    }
+}
