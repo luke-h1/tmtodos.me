@@ -15,13 +15,13 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Note } from "../entities/Note";
+import { Todo } from "../entities/Todo";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
 import { isAuth } from "../middleware/isAuth";
 
 @InputType()
-class NoteInput {
+class TodoInput {
   @Field()
   title: string;
 
@@ -30,88 +30,79 @@ class NoteInput {
 }
 
 @ObjectType()
-class PaginatedNotes {
-  @Field(() => [Note])
-  notes: Note[];
+class PaginatedTodos {
+  @Field(() => [Todo])
+  todos: Todo[];
 
   @Field()
   hasMore: boolean;
 }
 
-@Resolver(Note)
-export class noteResolver {
+@Resolver(Todo)
+export class todoResolver {
   @FieldResolver(() => String)
-  textSnippet(@Root() note: Note) {
-    return note.text.slice(0, 50);
+  textSnippet(@Root() todo: Todo) {
+    return todo.text.slice(0, 50);
   }
 
   @FieldResolver(() => User)
-  creator(@Root() note: Note, @Ctx() { userLoader }: MyContext) {
-    return userLoader.load(note.creatorId);
+  creator(@Root() todo: Todo, @Ctx() { userLoader }: MyContext) {
+    return userLoader.load(todo.creatorId);
   }
 
-  @Query(() => PaginatedNotes)
-  async notes(
+  @Query(() => PaginatedTodos)
+  async todos(
     @Arg("limit", () => Int) limit: number,
     @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
     @Ctx() { req }: MyContext
-  ): Promise<PaginatedNotes> {
+  ): Promise<PaginatedTodos> {
     const realLimit = Math.min(150, limit);
     const realLimitPlusOne = realLimit + 1;
     const replacements: any[] = [realLimitPlusOne];
     if (cursor) {
       replacements.push(new Date(parseInt(cursor)));
     }
-
-
-    // createQueryBuilder("user")
-    // .where("user.firstName = :firstName", { firstName: "Timber" })
-    // .andWhere("user.lastName = :lastName", { lastName: "Saw" });
-
-
-// need where clause to check if logged in user owns a given note
-
-    const notes = await getConnection().query(
+    const todos = await getConnection().query(
       `
-      SELECT n.* FROM "note" n 
-      WHERE (n."creatorId" = $1)
-      ORDER BY n."createdAt" DESC 
+      SELECT t.* FROM "todo" t 
+      WHERE (t."creatorId" = $1)
+      ORDER BY t."createdAt" DESC 
       `,
       [req.session.userId]
           );
     return {
-      notes: notes.slice(0, realLimit),
-      hasMore: notes.length === realLimitPlusOne,
+      todos: todos.slice(0, realLimit),
+      hasMore: todos.length === realLimitPlusOne,
     };
   }
 
-  @Query(() => Note, { nullable: true })
-  note(@Arg("id", () => Int) id: number): Promise<Note | undefined> {
-    return Note.findOne(id);
+  @Query(() => Todo, { nullable: true })
+  todo(@Arg("id", () => Int) id: number): Promise<Todo | undefined> {
+    return Todo.findOne(id);
   }
 
-  @Mutation(() => Note)
+  @Mutation(() => Todo)
   @UseMiddleware(isAuth)
-  async createNote(
-    @Arg("input") input: NoteInput,
+  async createTodo(
+    @Arg("input") input: TodoInput,
     @Ctx() { req }: MyContext
-  ): Promise<Note> {
-    return Note.create({
+  ): Promise<Todo> {
+    return Todo.create({
       ...input,
       creatorId: req.session.userId,
     }).save();
   }
 
-  @Mutation(() => Note, { nullable: true })
-  async updateNote(
+  @Mutation(() => Todo, { nullable: true })
+  async updateTodo(
     @Arg("id", () => Int) id: number,
     @Arg("title") title: string,
     @Arg("text") text: string,
     @Ctx() { req }: MyContext
-  ): Promise<Note | null> {
+  ): Promise<Todo | null> {
     const result = await getConnection()
       .createQueryBuilder()
-      .update(Note)
+      .update(Todo)
       .set({ title, text })
       .where('id = :id and "creatorId" = :creatorId', {
         id,
@@ -124,11 +115,11 @@ export class noteResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
-  async deleteNote(
+  async deleteTodo(
     @Arg("id", () => Int) id: number,
     @Ctx() { req }: MyContext
   ): Promise<boolean> {
-    await Note.delete({ id, creatorId: req.session.userId });
+    await Todo.delete({ id, creatorId: req.session.userId });
     return true;
   }
 }

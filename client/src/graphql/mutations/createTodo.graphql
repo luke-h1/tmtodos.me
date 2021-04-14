@@ -1,5 +1,5 @@
-mutation CreateNote($input: NoteInput!) {
-  createNote(input: $input) {
+mutation CreateTodo($input: TodoInput!) {
+  createTodo(input: $input) {
     id
     createdAt
     updatedAt

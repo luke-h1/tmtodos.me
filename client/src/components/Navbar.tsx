@@ -41,9 +41,9 @@ export const Navbar: React.FC<NavbarProps> = () => {
             {data.me.email}
           </a>
         </CustomLink>
-        <CustomLink href="/create-note">
+        <CustomLink href="/create-todo">
           <a className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-7">
-            Create Note
+            Create todo
           </a>
         </CustomLink>
         {logoutFetching ? <Spinner /> : (
@@ -58,12 +58,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
           >
             Logout
           </button>
-
         )}
       </div>
     );
   }
-
   return (
     <>
       <div className="bg-gray-100 w-full mb-10 m-0">

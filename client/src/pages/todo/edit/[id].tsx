@@ -3,7 +3,7 @@ import React from 'react';
 const EditPage: React.FC<{}> = () => {
   return (
     <>
-      <h1>note edit page</h1>
+      <h1>todo edit page</h1>
     </>
   );
 };

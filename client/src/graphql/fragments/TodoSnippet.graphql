@@ -1,4 +1,4 @@
-fragment NoteSnippet on Note {
+fragment TodoSnippet on Todo {
     id
     createdAt
     updatedAt

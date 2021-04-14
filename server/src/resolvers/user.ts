@@ -115,11 +115,11 @@ export class UserResolver {
       FORGET_PASSWORD_PREFIX + token,
       user.id,
       "ex",
-      1000 * 60 * 60 * 24 * 2 // 2 days
+      1000 * 60 * 60 * 24 * 2 // 2 days TODO: (change when deploying)
     );
     await sendEmail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`
+      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>` // TODO: setup mailgun on prod 
     );
     return true;
   }

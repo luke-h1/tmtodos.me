@@ -6,7 +6,7 @@ import { User } from './User';
 
 @ObjectType()
 @Entity()
-export class Note extends BaseEntity {
+export class Todo extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
     id!: number;
@@ -23,7 +23,7 @@ export class Note extends BaseEntity {
     @Column()
     creatorId: number;
   
-    @ManyToOne(() => User, (u) => u.notes)
+    @ManyToOne(() => User, (u) => u.todos)
     @JoinColumn({ name: 'creatorId' })
     creator: User
 

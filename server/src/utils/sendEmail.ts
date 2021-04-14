@@ -11,9 +11,9 @@ export async function sendEmail(to: string, html: string) {
   });
 
   let info = await transporter.sendMail({
-    from: '"Take My Notes 📝"',
+    from: '"todos.io"',
     to: to,
-    subject: "Take My Notes | Change password",
+    subject: "todos.io | Change password",
     html,
   });
   console.log("Message sent: %s", info.messageId);

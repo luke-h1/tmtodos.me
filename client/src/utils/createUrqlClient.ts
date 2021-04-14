@@ -16,7 +16,7 @@ import {
   MeDocument,
   RegisterMutation,
   MeQuery,
-  DeleteNoteMutationVariables,
+  DeleteTodoMutationVariables,
 } from '../generated/graphql';
 import { CustomUpdateQuery } from './CustomUpdateQuery';
 import { isServer } from '../utils/isServer';
@@ -44,14 +44,14 @@ const cursorPagination = (): Resolver => {
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
     const inTheCache = cache.resolve(
       cache.resolveFieldByKey(entityKey, fieldKey) as string,
-      'notes',
+      'todos',
     );
     info.partial = !inTheCache;
     let hasMore = true;
     const results: string[] = [];
     fieldInfos.forEach((fi) => {
       const key = cache.resolveFieldByKey(entityKey, fi.fieldKey) as string;
-      const data = cache.resolve(key, 'notes') as string[];
+      const data = cache.resolve(key, 'todos') as string[];
       const _hasMore = cache.resolve(key, 'hasMore');
       if (!_hasMore) {
         hasMore = _hasMore as boolean;
@@ -59,18 +59,18 @@ const cursorPagination = (): Resolver => {
       results.push(...data);
     });
     return {
-      __typename: 'PaginatedNotes',
+      __typename: 'PaginatedTodos',
       hasMore,
-      notes: results,
+      todos: results,
     };
   };
 };
 
-const invalidateAllNotes = (cache: Cache) => {
+const invalidateAllTodos = (cache: Cache) => {
   const allFields = cache.inspectFields('Query');
-  const fieldInfos = allFields.filter((info) => info.fieldName === 'notes');
+  const fieldInfos = allFields.filter((info) => info.fieldName === 'todos');
   fieldInfos.forEach((fi) => {
-    cache.invalidate('Query', 'notes', fi.arguments || {});
+    cache.invalidate('Query', 'todos', fi.arguments || {});
   });
 };
 
@@ -89,23 +89,23 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
       dedupExchange,
       cacheExchange({
         keys: {
-          PaginatedNotes: () => null,
+          PaginatedTodos: () => null,
         },
         resolvers: {
           Query: {
-            notes: cursorPagination(),
+            todos: cursorPagination(),
           },
         },
         updates: {
           Mutation: {
-            deleteNote: (_result, args, cache) => {
+            deleteTodo: (_result, args, cache) => {
               cache.invalidate({
-                __typename: 'Note',
-                id: (args as DeleteNoteMutationVariables).id,
+                __typename: 'Todo',
+                id: (args as DeleteTodoMutationVariables).id,
               });
             },
-            createNote: (_result, args, cache) => {
-              invalidateAllNotes(cache);
+            createTodo: (_result, args, cache) => {
+              invalidateAllTodos(cache);
             },
             login: (_result, args, cache) => {
               CustomUpdateQuery<LoginMutation, MeQuery>(
@@ -121,7 +121,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   };
                 },
               );
-              invalidateAllNotes(cache);
+              invalidateAllTodos(cache);
             },
             register: (_result, args, cache) => {
               CustomUpdateQuery<RegisterMutation, MeQuery>(
