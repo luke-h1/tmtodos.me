@@ -22,7 +22,7 @@ export class Todo extends BaseEntity {
     @Field()
     @Column()
     creatorId: number;
-  
+
     @ManyToOne(() => User, (u) => u.todos)
     @JoinColumn({ name: 'creatorId' })
     creator: User

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Cache, QueryInput } from '@urql/exchange-graphcache';
 
 export function CustomUpdateQuery<Result, Query>(

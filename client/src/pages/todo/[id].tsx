@@ -4,7 +4,7 @@ interface SingleTodoProps {
 
 }
 
-const SingleTodo: React.FC<SingleTodoProps> = ({}) => {
+const SingleTodo: React.FC<SingleTodoProps> = () => {
   return (
     <>
       <h1>single todo page</h1>
