@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           site_name: 'take my todos',
           images: [
             {
-              url: 'https://tmtodos.me/logo.png',
+              url: 'https://tmtodos.me/logo192.png',
               alt: 'Site Logo',
             },
           ],
