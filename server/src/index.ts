@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import 'dotenv-safe/config';
+import 'dotenv/config';
 import session from 'express-session';
 import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
