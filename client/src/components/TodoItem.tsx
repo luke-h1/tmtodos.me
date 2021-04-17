@@ -3,19 +3,22 @@ import React from 'react';
 import { EditDeleteTodoButtons } from './EditDeleteTodoButtons';
 
 interface TodoItemProps {
-title: string;
-textSnippet: string;
-email: string;
-id: number;
-creatorId: number;
+  title: string;
+  textSnippet: string;
+  email: string;
+  id: number;
+  creatorId: number;
 }
 
 export const TodoItem: React.FC<TodoItemProps> = ({
-  title, textSnippet, email, id, creatorId,
+  title,
+  textSnippet,
+  email,
+  id,
+  creatorId,
 }) => {
   return (
     <a className="p-2 w-full" key={id}>
-
       <div className="mb-3 border-gray-800 ring-gray-800 ">
         <div className="flex flex-col md:flex-row justify-left">
           <Link href={`/todo/${id}`}>
@@ -28,17 +31,10 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           {textSnippet}
         </p>
         <div className="flex flex-col">
-          <p className="text-left text-gray-400 mb-4 ">
-            {email}
-          </p>
+          <p className="text-left text-gray-400 mb-4 ">{email}</p>
         </div>
-
       </div>
-      <EditDeleteTodoButtons
-        id={id}
-        creatorId={creatorId}
-      />
+      <EditDeleteTodoButtons id={id} creatorId={creatorId} />
     </a>
-
   );
 };

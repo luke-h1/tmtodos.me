@@ -30,11 +30,7 @@ const LoginPage: React.FC<{}> = () => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <InputField
-              name="email"
-              placeholder="email"
-              label="email"
-            />
+            <InputField name="email" placeholder="email" label="email" />
             <div className="mt-5 mb-5">
               <InputField
                 name="password"
@@ -45,12 +41,14 @@ const LoginPage: React.FC<{}> = () => {
             </div>
             <div className="mt-5 mb-5">
               <Link href="/forgot-password">
-                <a className="text-center text-black">
-                  Forgot Password ?
-                </a>
+                <a className="text-center text-black">Forgot Password ?</a>
               </Link>
             </div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Sign In
             </button>
           </Form>

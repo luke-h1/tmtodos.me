@@ -48,7 +48,9 @@ export const Navbar: React.FC<NavbarProps> = () => {
             </a>
           </CustomLink>
         </div>
-        {logoutFetching ? <Spinner /> : (
+        {logoutFetching ? (
+          <Spinner />
+        ) : (
           <button
             onClick={async () => {
               await logout();

@@ -5,7 +5,10 @@ import React from 'react';
 import { Flex } from '../../../components/Flex';
 import { InputField } from '../../../components/InputField';
 import { Spinner } from '../../../components/Spinner';
-import { useTodoQuery, useUpdateTodoMutation } from '../../../generated/graphql';
+import {
+  useTodoQuery,
+  useUpdateTodoMutation,
+} from '../../../generated/graphql';
 import { createUrqlClient } from '../../../utils/createUrqlClient';
 import { useGetIntId } from '../../../utils/useGetIntId';
 
@@ -38,9 +41,7 @@ const EditPage: React.FC<{}> = () => {
   if (!data?.todo) {
     return (
       <Flex>
-        <h1 className="text-center text-2xl">
-          Could not find todo
-        </h1>
+        <h1 className="text-center text-2xl">Could not find todo</h1>
       </Flex>
     );
   }
@@ -59,17 +60,21 @@ const EditPage: React.FC<{}> = () => {
             router.back();
           }}
         >
-          {({ isSubmitting }) => ((
+          {({ isSubmitting }) => (
             <Form>
               <InputField name="title" placeholder="title" label="title" />
               <div className="mt-4 mb-4">
                 <InputField name="text" placeholder="text" label="body" />
               </div>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 Update todo
               </button>
             </Form>
-          ))}
+          )}
         </Formik>
       </Flex>
     </>

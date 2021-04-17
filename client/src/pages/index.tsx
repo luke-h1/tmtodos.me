@@ -33,7 +33,10 @@ const Home = () => {
       ) : (
         <>
           {data!.todos.todos.map((t) => (!t ? null : (
-            <div className="max-w-md rounded focus:ring mx-auto w-full" key={t.id}>
+            <div
+              className="max-w-md rounded focus:ring mx-auto w-full"
+              key={t.id}
+            >
               <TodoItem
                 title={t.title}
                 textSnippet={t.textSnippet}
@@ -50,7 +53,8 @@ const Home = () => {
               onClick={() => {
                 setVariables({
                   limit: variables.limit,
-                  cursor: data.todos.todos[data.todos.todos.length - 1].createdAt,
+                  cursor:
+                    data.todos.todos[data.todos.todos.length - 1].createdAt,
                 });
               }}
             >

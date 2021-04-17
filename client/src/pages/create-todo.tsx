@@ -23,17 +23,21 @@ const CreateTodoPage: React.FC<{}> = () => {
           }
         }}
       >
-        {({ isSubmitting }) => ((
+        {({ isSubmitting }) => (
           <Form>
             <InputField name="title" placeholder="title" label="title" />
             <div className="mt-4 mb-4">
               <InputField name="text" placeholder="text" label="body" />
             </div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Create Todo
             </button>
           </Form>
-        ))}
+        )}
       </Formik>
     </Flex>
   );

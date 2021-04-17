@@ -6,9 +6,7 @@ import React from 'react';
 import { createUrqlClient } from 'utils/createUrqlClient';
 import { useGetTodoFromUrl } from 'utils/useGetTodoFromUrl';
 
-interface SingleTodoProps {
-
-}
+interface SingleTodoProps {}
 
 const SingleTodo: React.FC<SingleTodoProps> = () => {
   const [{ data, error, fetching }] = useGetTodoFromUrl();
@@ -34,9 +32,7 @@ const SingleTodo: React.FC<SingleTodoProps> = () => {
   return (
     <Flex>
       <h1 className="text-center text-2xl">{data?.todo?.title}</h1>
-      <div className="my-4 text-1xl">
-        {data?.todo?.text}
-      </div>
+      <div className="my-4 text-1xl">{data?.todo?.text}</div>
       <EditDeleteTodoButtons
         id={data.todo.id}
         creatorId={data.todo.creator.id}
