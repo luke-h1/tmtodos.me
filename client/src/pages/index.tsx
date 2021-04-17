@@ -1,5 +1,7 @@
 import { withUrqlClient } from 'next-urql';
 import { useState } from 'react';
+import { CustomHead } from 'components/CustomHead';
+import { NextSeo } from 'next-seo';
 import { Navbar } from '../components/Navbar';
 import { Spinner } from '../components/Spinner';
 import { TodoItem } from '../components/TodoItem';
@@ -27,6 +29,15 @@ const Home = () => {
 
   return (
     <>
+      <CustomHead title="Home | tmtodos.me" description="Home" />
+      <NextSeo
+        title="Home"
+        canonical="https://tmtodos.me/"
+        openGraph={{
+          url: 'https://tmtodos.me/',
+          title: 'Home',
+        }}
+      />
       <Navbar />
       {!data && fetching ? (
         <Spinner />
