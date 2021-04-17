@@ -66,4 +66,4 @@ const Home = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(Home);
+export default withUrqlClient(createUrqlClient, { ssr: false })(Home);
