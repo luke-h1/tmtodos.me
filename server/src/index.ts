@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import 'dotenv/config';
+import 'dotenv-safe/config';
 import session from 'express-session';
 import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
@@ -20,9 +20,9 @@ const main = async () => {
   await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL!,
-    logging: true,
+    logging: !__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
-    synchronize: true,
+    synchronize: !__prod__,
     entities: [User, Todo],
   });
   // await conn.runMigrations();
@@ -47,11 +47,11 @@ const main = async () => {
         disableTouch: true,
       }),
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: __prod__, // cookie only works in https
-        domain: __prod__ ? 'deployed api url' : undefined,
+        domain: __prod__ ? process.env.FRONTEND_URL : undefined,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET!,
