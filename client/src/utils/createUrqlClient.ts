@@ -44,7 +44,7 @@ const cursorPagination = (): Resolver => {
     }
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
     const inTheCache = cache.resolve(
-      cache.resolveFieldByKey(entityKey, fieldKey) as string,
+      cache.resolve(entityKey, fieldKey) as string,
       'todos',
     );
     info.partial = !inTheCache;
@@ -67,13 +67,13 @@ const cursorPagination = (): Resolver => {
   };
 };
 
-const invalidateAllTodos = (cache: Cache) => {
+function invalidateAllTodos(cache: Cache) {
   const allFields = cache.inspectFields('Query');
   const fieldInfos = allFields.filter((info) => info.fieldName === 'todos');
   fieldInfos.forEach((fi) => {
     cache.invalidate('Query', 'todos', fi.arguments || {});
   });
-};
+}
 
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   let cookie = '';
