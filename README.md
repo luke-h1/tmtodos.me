@@ -50,3 +50,4 @@ This structure is currently completely seperated however I may consider using so
 - [Digital Ocean](https://www.digitalocean.com/)
 - [Docker](https://www.docker.com/)
 - [Dokku](https://dokku.com/)
+- [Redis](https://redis.io/)
