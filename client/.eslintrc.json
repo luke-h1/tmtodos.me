@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": ["plugin:react/recommended", "airbnb"],
   "parser": "@typescript-eslint/parser",
@@ -35,5 +36,25 @@
     "no-multi-str": "off",
     "max-len": "off",
     "no-tabs": "off" // issue with tailwind class formatting
+  },
+  "globals": {
+    "React": "writable"
+  },
+  "ignorePatterns": ["node_modules/", ".next/"],
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["@src/*", "src/*"],
+        ["@tests/*", "src/__tests__/*"],
+        ["@pages/*", "src/pages/*"],
+        ["@components/*", "src/components/*"],
+        ["@utils/*", "src/utils/*"],
+        ["@styles/*", "src/styles/*"],
+        ["@generated/*", "src/graphql/generated/*"],
+        ["@queries/*", "src/graphql/queries"],
+        ["@mutations/*", "src/graphql/mutations"],
+        ["@fragments/*", "src/graphql/fragments"]
+      ]
+    }
   }
 }

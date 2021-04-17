@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
+// @ts-nocheck
 import { cacheExchange, Resolver, Cache } from '@urql/exchange-graphcache';
 import {
   dedupExchange,
