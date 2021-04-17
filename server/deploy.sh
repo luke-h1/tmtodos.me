@@ -6,6 +6,6 @@ read VERSION
 
 echo "Deploying to production 🚀 🔥"
 
-docker build -t lhowsam/tmtodosme:$VERSION
-docker push lhowsam/tmtodosme:$VERSION
-ssh root@DevVPS "docker pull lhowsam/tmtodosme:$VERSION && docker tag lhowsam/tmtodosme:$VERSION dokku/api:$VERSION && dokku deploy api $VERSION"
+docker build -t lhowsam/tmtodos-api:$VERSION . 
+docker push lhowsam/tmtodos-api:$VERSION
+ssh root@VPS_ADDR "docker pull lhowsam/tmtodos-api:$VERSION && docker tag lhowsam/tmtodos-api:$VERSION dokku/tmtodos-api:$VERSION && dokku deploy tmtodos-api $VERSION"
