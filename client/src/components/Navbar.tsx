@@ -78,6 +78,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                     Home
                   </a>
                 </CustomLink>
+                <CustomLink href="/about">
+                  <a className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">
+                    About
+                  </a>
+                </CustomLink>
               </div>
               {body}
             </div>
