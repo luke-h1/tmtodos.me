@@ -37,6 +37,8 @@ This structure is currently completely seperated however I may consider using so
 [![CI / typecheck (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml)
 
 
+[![CI / frontend unit tests (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/frontend-unit-tests.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/frontend-unit-tests.yml)
+
 ## Tech stack 
 - [React](https://github.com/facebook/react)
 - [Next](https://github.com/vercel/next.js)
