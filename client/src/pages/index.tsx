@@ -34,7 +34,13 @@ const Home = () => {
         <>
           {data!.todos.todos.map((t) => (!t ? null : (
             <div className="max-w-md rounded focus:ring mx-auto w-full" key={t.id}>
-              <TodoItem title={t.title} textSnippet={t.textSnippet} email={t.creator.email} id={t.id} />
+              <TodoItem
+                title={t.title}
+                textSnippet={t.textSnippet}
+                email={t.creator.email}
+                id={t.id}
+                creatorId={t.creator.id}
+              />
             </div>
           )))}
           {data && data.todos.hasMore ? (
