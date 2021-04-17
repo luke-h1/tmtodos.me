@@ -50,7 +50,10 @@ const EditPage: React.FC<{}> = () => {
 
   return (
     <>
-      <CustomHead title={`Edit Todo - ${data.todo.title} | tmtodos.me`} description={`Edit your todo - ${data.todo.title}`} />
+      <CustomHead
+        title={`Edit Todo - ${data.todo.title} | tmtodos.me`}
+        description={`Edit your todo - ${data.todo.title}`}
+      />
       <NextSeo
         title={`Edit todo - ${data.todo.title} | tmtodos.me`}
         canonical={`https://tmtodos.me/todo/edit/${data.todo.id}`}

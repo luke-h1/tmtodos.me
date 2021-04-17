@@ -18,9 +18,7 @@ const about = () => {
       />
       <div className={styles.flex}>
         <h1 className="text-4xl">About tmtodos.me</h1>
-        <div className="py-2 text-center">
-          Full stack todo app that uses:
-        </div>
+        <div className="py-2 text-center">Full stack todo app that uses:</div>
         <div className="flex flex-col align-left items-left text-left">
           <ul className="list-disc">
             <li>React</li>
@@ -41,22 +39,34 @@ const about = () => {
         <div className="flex  mt-10 align-right text-right">
           {' '}
           <Link href="/">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded" type="button">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
+              type="button"
+            >
               Home
             </button>
           </Link>
           <Link href="/create-todo">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded" type="button">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
+              type="button"
+            >
               Create a todo
             </button>
           </Link>
-          <a href="https://github.com/luke-h1/tmtodos.me" target="_blank" rel="noreferrer">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">
+          <a
+            href="https://github.com/luke-h1/tmtodos.me"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              type="button"
+            >
               Source code
             </button>
           </a>
         </div>
-
       </div>
     </>
   );

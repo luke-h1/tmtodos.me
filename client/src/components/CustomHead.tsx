@@ -5,7 +5,7 @@ import { isServer } from '../utils/isServer';
 interface Props {
   title: string;
   description: string;
-   image?: string
+  image?: string;
 }
 
 export const CustomHead: React.FC<Props> = ({ title, description, image }) => {

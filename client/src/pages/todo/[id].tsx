@@ -33,7 +33,10 @@ const SingleTodo: React.FC<SingleTodoProps> = () => {
   }
   return (
     <>
-      <CustomHead title={`todo - ${data.todo.title} | tmtodos.me`} description={`view your todo - ${data.todo.title}`} />
+      <CustomHead
+        title={`todo - ${data.todo.title} | tmtodos.me`}
+        description={`view your todo - ${data.todo.title}`}
+      />
       <NextSeo
         title={`todo - ${data.todo.title} | tmtodos.me`}
         canonical={`https://tmtodos.me/todo/${data.todo.id}`}

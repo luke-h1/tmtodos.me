@@ -16,7 +16,10 @@ const CreateTodoPage: React.FC<{}> = () => {
   const [, createTodo] = useCreateTodoMutation();
   return (
     <>
-      <CustomHead title="Create todo | tmtodos.me" description="create a todo" />
+      <CustomHead
+        title="Create todo | tmtodos.me"
+        description="create a todo"
+      />
       <NextSeo
         title="Create todo"
         canonical="https://tmtodos.me/create-todo"
