@@ -5,7 +5,7 @@
    "port": 5432,
    "username": "lhowsam",
    "password": "Password",
-   "database": "todosio",
+   "database": "todosio-prod",
    "entities": ["dist/entities/*.js"],
    "migrations": ["dist/migrations/*.js"]
  }
