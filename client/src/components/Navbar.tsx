@@ -41,11 +41,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
             {data.me.email}
           </a>
         </CustomLink>
-        <CustomLink href="/create-todo">
-          <a className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-7">
-            Create todo
-          </a>
-        </CustomLink>
+        <div className="mr-4 ml-2 flex">
+          <CustomLink href="/create-todo">
+            <a className="text-gray-800 text-sm font-semibold hover:text-purple-600">
+              Create todo
+            </a>
+          </CustomLink>
+        </div>
         {logoutFetching ? <Spinner /> : (
           <button
             onClick={async () => {
