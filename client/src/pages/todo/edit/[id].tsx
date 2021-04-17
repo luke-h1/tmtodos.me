@@ -1,4 +1,6 @@
+import { CustomHead } from 'components/CustomHead';
 import { Formik, Form } from 'formik';
+import { NextSeo } from 'next-seo';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -48,6 +50,15 @@ const EditPage: React.FC<{}> = () => {
 
   return (
     <>
+      <CustomHead title={`Edit Todo - ${data.todo.title} | tmtodos.me`} description={`Edit your todo - ${data.todo.title}`} />
+      <NextSeo
+        title={`Edit todo - ${data.todo.title} | tmtodos.me`}
+        canonical={`https://tmtodos.me/todo/edit/${data.todo.id}`}
+        openGraph={{
+          url: `https://tmtodos.me/todo/edit/${data.todo.id}`,
+          title: `Edit todo - ${data.todo.title}`,
+        }}
+      />
       <Flex>
         <Formik
           initialValues={{ title: data.todo.title, text: data.todo.text }}
