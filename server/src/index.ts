@@ -51,7 +51,7 @@ const main = async () => {
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: __prod__, // cookie only works in https
-        domain: __prod__ ? process.env.FRONTEND_URL : undefined,
+        domain: __prod__ ? '.tmtodos.me' : undefined, // SSR issues with forwarding cookies
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET!,
