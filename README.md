@@ -21,9 +21,6 @@ Currently this project consists of two areas:
 * Server - Contains Graphql API & backend code 
 * Client - Contains Frontend Next JS app 
 
-<br />
-
-This structure is currently completely seperated however I may consider using something such as yarn workspaces for this project in the future. 
 
 ## Tests 
 
