@@ -22,6 +22,16 @@ Cypress.Commands.add('createTodo', (title, body) => {
     cy.url().should('contain', '/')
     cy.contains(title).should('exist')
     cy.contains(body).should('exist')
+    
+})
+
+
+Cypress.Commands.add('login', (username, password) => { 
+    cy.visit('/login')
+    cy.get('[data-testid=email]').type(username)
+    cy.get('[data-testid=password]').type(password)
+    cy.contains('Sign In').click()
+
 })
 
 //

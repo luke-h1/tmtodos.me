@@ -15,17 +15,22 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 }
 declare namespace Cypress {
+
   interface Chainable {
     /**
      * Custom command to select DOM element by data-cy attribute.
      * @example cy.dataCy('greeting')
      */
-    createTodo(title: string, body: string): Chainable<Element>
+
+     createTodo(title: string, body: string): Chainable<Element>,
+     login(username: string, password: string): Chainable<Element>
+   
   }
+
 }

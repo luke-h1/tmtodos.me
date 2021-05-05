@@ -36,7 +36,9 @@ const LoginPage: React.FC<{}> = () => {
             if (typeof router.query.next === 'string') {
               router.push(router.query.next);
             } else {
-              router.push('/');
+              setTimeout(() => {
+                router.push('/');
+              }, 2000);
             }
           }}
         >
