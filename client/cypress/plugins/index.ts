@@ -19,19 +19,17 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-}
+};
 declare namespace Cypress {
-
   interface Chainable {
     /**
      * Custom command to select DOM element by data-cy attribute.
      * @example cy.dataCy('greeting')
      */
 
-     createTodo(title: string, body: string): Chainable<Element>,
-     login(email: string, password: string): Chainable<Element>,
-     register(email: string, password: string): Chainable<Element>
-   
+    createTodo(title: string, body: string): Chainable<Element>;
+    editTodo(id: number, title?: string, body?: string): Chainable<Element>;
+    login(email: string, password: string): Chainable<Element>;
+    register(email: string, password: string): Chainable<Element>;
   }
-
 }

@@ -288,7 +288,7 @@ export const CreateTodoDocument = gql`
 
 export function useCreateTodoMutation() {
   return Urql.useMutation<CreateTodoMutation, CreateTodoMutationVariables>(
-    CreateTodoDocument,
+    CreateTodoDocument
   );
 }
 export const DeleteTodoDocument = gql`
@@ -299,7 +299,7 @@ export const DeleteTodoDocument = gql`
 
 export function useDeleteTodoMutation() {
   return Urql.useMutation<DeleteTodoMutation, DeleteTodoMutationVariables>(
-    DeleteTodoDocument,
+    DeleteTodoDocument
   );
 }
 export const LoginDocument = gql`
@@ -322,7 +322,7 @@ export const LogoutDocument = gql`
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument,
+    LogoutDocument
   );
 }
 export const RegisterDocument = gql`
@@ -336,7 +336,7 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
+    RegisterDocument
   );
 }
 export const UpdateTodoDocument = gql`
@@ -352,7 +352,7 @@ export const UpdateTodoDocument = gql`
 
 export function useUpdateTodoMutation() {
   return Urql.useMutation<UpdateTodoMutation, UpdateTodoMutationVariables>(
-    UpdateTodoDocument,
+    UpdateTodoDocument
   );
 }
 export const MeDocument = gql`
@@ -365,7 +365,7 @@ export const MeDocument = gql`
 `;
 
 export function useMeQuery(
-  options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {},
+  options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}
 ) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 }
@@ -386,7 +386,7 @@ export const TodoDocument = gql`
 `;
 
 export function useTodoQuery(
-  options: Omit<Urql.UseQueryArgs<TodoQueryVariables>, 'query'> = {},
+  options: Omit<Urql.UseQueryArgs<TodoQueryVariables>, 'query'> = {}
 ) {
   return Urql.useQuery<TodoQuery>({ query: TodoDocument, ...options });
 }
@@ -403,7 +403,7 @@ export const TodosDocument = gql`
 `;
 
 export function useTodosQuery(
-  options: Omit<Urql.UseQueryArgs<TodosQueryVariables>, 'query'> = {},
+  options: Omit<Urql.UseQueryArgs<TodosQueryVariables>, 'query'> = {}
 ) {
   return Urql.useQuery<TodosQuery>({ query: TodosDocument, ...options });
 }

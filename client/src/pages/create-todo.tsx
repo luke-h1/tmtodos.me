@@ -40,9 +40,19 @@ const CreateTodoPage: React.FC<{}> = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <InputField name="title" placeholder="title" label="title" data-testid='title'/>
+              <InputField
+                name="title"
+                placeholder="title"
+                label="title"
+                data-testid="title"
+              />
               <div className="mt-4 mb-4">
-                <InputField name="text" placeholder="text" label="body" data-testid='body'/>
+                <InputField
+                  name="text"
+                  placeholder="text"
+                  label="body"
+                  data-testid="body"
+                />
               </div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

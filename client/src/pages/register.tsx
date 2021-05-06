@@ -38,7 +38,12 @@ const RegisterPage: React.FC<{}> = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <InputField name="email" placeholder="email" label="email" data-testid="email" />
+              <InputField
+                name="email"
+                placeholder="email"
+                label="email"
+                data-testid="email"
+              />
               <div className="mt-5 mb-5">
                 <InputField
                   name="password"
