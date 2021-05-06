@@ -48,3 +48,4 @@ Currently this project consists of two areas:
 - [Docker](https://www.docker.com/)
 - [Dokku](https://dokku.com/)
 - [Redis](https://redis.io/)
+- [Cypress](https://www.cypress.io/)
