@@ -34,6 +34,7 @@ export const EditDeleteTodoButtons: React.FC<EditDeleteTodoButtonsProps> = ({
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         type="button"
         aria-label="delete todo"
+        data-testid={`delete-todo-${id}`}
         onClick={() => {
           deleteTodo({ id });
         }}

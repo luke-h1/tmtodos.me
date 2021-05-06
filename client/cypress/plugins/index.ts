@@ -29,6 +29,7 @@ declare namespace Cypress {
 
     createTodo(title: string, body: string): Chainable<Element>;
     editTodo(id: number, title?: string, body?: string): Chainable<Element>;
+    deleteTodo(id: number): Chainable<Element>;
     login(email: string, password: string): Chainable<Element>;
     register(email: string, password: string): Chainable<Element>;
   }
