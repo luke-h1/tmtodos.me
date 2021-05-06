@@ -25,6 +25,7 @@ export const EditDeleteTodoButtons: React.FC<EditDeleteTodoButtonsProps> = ({
         <button
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-5"
           type="button"
+          data-testid={`edit-todo-${id}`}
         >
           <FiEdit3 />
         </button>
@@ -33,6 +34,7 @@ export const EditDeleteTodoButtons: React.FC<EditDeleteTodoButtonsProps> = ({
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         type="button"
         aria-label="delete todo"
+        data-testid={`delete-todo-${id}`}
         onClick={() => {
           deleteTodo({ id });
         }}

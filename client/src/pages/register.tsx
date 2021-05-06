@@ -31,19 +31,26 @@ const RegisterPage: React.FC<{}> = () => {
             const res = await register({ options: values });
             if (res.data?.register.errors) {
               setErrors(toErrorMap(res.data.register.errors));
+            } else {
+              router.push('/');
             }
-            router.push('/');
           }}
         >
           {({ isSubmitting }) => (
             <Form>
-              <InputField name="email" placeholder="email" label="email" />
+              <InputField
+                name="email"
+                placeholder="email"
+                label="email"
+                data-testid="email"
+              />
               <div className="mt-5 mb-5">
                 <InputField
                   name="password"
                   placeholder="password"
                   label="password"
                   type="password"
+                  data-testid="password"
                 />
               </div>
               <button

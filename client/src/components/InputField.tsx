@@ -25,7 +25,10 @@ export const InputField: React.FC<Props> = ({ label, ...props }) => {
       />
       {error && (
         <div role="alert">
-          <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+          <div
+            className="bg-red-500 text-white font-bold rounded-t px-4 py-2"
+            data-testid="auth-error"
+          >
             {error}
           </div>
         </div>

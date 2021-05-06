@@ -9,8 +9,7 @@ import { createUrqlClient } from 'utils/createUrqlClient';
 import { useGetTodoFromUrl } from 'utils/useGetTodoFromUrl';
 // import { parseISO, format } from 'date-fns';
 
-interface SingleTodoProps {
-}
+interface SingleTodoProps {}
 
 const SingleTodo: React.FC<SingleTodoProps> = () => {
   const [{ data, error, fetching }] = useGetTodoFromUrl();

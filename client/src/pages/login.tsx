@@ -36,19 +36,27 @@ const LoginPage: React.FC<{}> = () => {
             if (typeof router.query.next === 'string') {
               router.push(router.query.next);
             } else {
-              router.push('/');
+              setTimeout(() => {
+                router.push('/');
+              }, 2000);
             }
           }}
         >
           {({ isSubmitting }) => (
             <Form>
-              <InputField name="email" placeholder="email" label="email" />
+              <InputField
+                name="email"
+                placeholder="email"
+                label="email"
+                data-testid="email"
+              />
               <div className="mt-5 mb-5">
                 <InputField
                   name="password"
                   placeholder="password"
                   label="password"
                   type="password"
+                  data-testid="password"
                 />
               </div>
               <div className="mt-5 mb-5">
