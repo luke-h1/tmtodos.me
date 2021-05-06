@@ -26,11 +26,19 @@ Cypress.Commands.add('createTodo', (title, body) => {
 })
 
 
-Cypress.Commands.add('login', (username, password) => { 
+Cypress.Commands.add('login', (email, password) => { 
     cy.visit('/login')
-    cy.get('[data-testid=email]').type(username)
+    cy.get('[data-testid=email]').type(email)
     cy.get('[data-testid=password]').type(password)
     cy.contains('Sign In').click()
+
+})
+
+Cypress.Commands.add('register', (email, password) => { 
+    cy.visit('/register')
+    cy.get('[data-testid=email]').type(email)
+    cy.get('[data-testid=password]').type(password)
+    cy.contains('Sign Up').click()
 
 })
 
