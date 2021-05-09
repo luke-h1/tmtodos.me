@@ -77,16 +77,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "@src/(.*)$": "src/$1",
-      "@tests/(.*)$": "src/__tests__/$1",
-      "@pages/(.*)$": "src/pages/$1",
-      "@components/(.*)$": "src/components/$1",
-      "@utils/(.*)$": "src/utils/$1",
-      "@styles/(.*)$": "src/styles/$1",
-      "@generated/(.*)$": "src/generated/$1",
-      "@queries/(.*)$": "src/queries/$1",
-      "@mutations/(.*)$": "src/mutations/$1",
-      "@fragments/(.*)$": "src/fragments/$1"
+      "@src/(.*)$": "src/$1"    
     }
   }
 }
