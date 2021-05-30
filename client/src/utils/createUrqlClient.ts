@@ -29,7 +29,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
       if (error?.message.includes('Not Authenticated')) {
         Router.replace('/login');
       }
-    })
+    }),
   );
 };
 
@@ -45,7 +45,7 @@ const cursorPagination = (): Resolver => {
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
     const inTheCache = cache.resolve(
       cache.resolve(entityKey, fieldKey) as string,
-      'todos'
+      'todos',
     );
     info.partial = !inTheCache;
     let hasMore = true;
@@ -120,7 +120,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.login.user,
                   };
-                }
+                },
               );
               invalidateAllTodos(cache);
             },
@@ -136,7 +136,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.register.user,
                   };
-                }
+                },
               );
             },
             logout: (_result, args, cache) => {
@@ -144,7 +144,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 cache,
                 { query: MeDocument },
                 _result,
-                () => ({ me: null })
+                () => ({ me: null }),
               );
             },
           },
