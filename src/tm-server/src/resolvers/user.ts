@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv-safe/config';
 import { v4 } from 'uuid';
 import argon2 from 'argon2';
 import {

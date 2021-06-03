@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
     "gen": "graphql-codegen --config codegen.yml",
     "type-check": "tsc --noEmit",
     "test": "jest src/__tests__",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "deploy": "sh deploy.sh",
     "cy:run": "cypress run",
     "cy:open": "cypress open"

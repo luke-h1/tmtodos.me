@@ -1,0 +1,5 @@
+node_modules
+migrations
+src/tm-server/dist
+src/tm-server/src/migrations/*.ts
+src/tm-web/.next
