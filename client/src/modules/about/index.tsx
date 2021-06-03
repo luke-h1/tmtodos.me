@@ -2,7 +2,7 @@ import { CustomHead } from '@src/components/CustomHead';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
-import styles from '../styles/about.module.scss';
+import styles from '@src/styles/about.module.scss';
 
 const about = () => {
   return (

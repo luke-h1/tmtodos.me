@@ -10,6 +10,11 @@ import { useCreateTodoMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useIsAuth } from '@src/utils/useIsAuth';
 
+interface FormValues {
+  title: string;
+  text: string;
+}
+
 const CreateTodoPage: React.FC<{}> = () => {
   const router = useRouter();
   useIsAuth();
@@ -29,7 +34,7 @@ const CreateTodoPage: React.FC<{}> = () => {
         }}
       />
       <Flex>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ title: '', text: '' }}
           onSubmit={async (values) => {
             const { error } = await createTodo({ input: values });

@@ -10,6 +10,11 @@ import { useRegisterMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { toErrorMap } from '@src/utils/toErrorMap';
 
+interface FormValues {
+  email: string;
+  password: string;
+}
+
 const RegisterPage: React.FC<{}> = () => {
   const router = useRouter();
   const [, register] = useRegisterMutation();
@@ -25,7 +30,7 @@ const RegisterPage: React.FC<{}> = () => {
         }}
       />
       <Flex>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
             const res = await register({ options: values });

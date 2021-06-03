@@ -14,6 +14,11 @@ import {
 import { createUrqlClient } from '../../../utils/createUrqlClient';
 import { useGetIntId } from '../../../utils/useGetIntId';
 
+interface FormValues {
+  title: string;
+  text: string;
+}
+
 const EditPage: React.FC<{}> = () => {
   const router = useRouter();
   const intId = useGetIntId();
@@ -63,7 +68,7 @@ const EditPage: React.FC<{}> = () => {
         }}
       />
       <Flex>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ title: data.todo.title, text: data.todo.text }}
           onSubmit={async (values) => {
             await updateTodo({ id: intId, ...values });

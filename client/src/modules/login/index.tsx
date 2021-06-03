@@ -11,6 +11,11 @@ import { useLoginMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { toErrorMap } from '@src/utils/toErrorMap';
 
+interface FormValues {
+  email: string;
+  password: string;
+}
+
 const LoginPage: React.FC<{}> = () => {
   const router = useRouter();
   const [, login] = useLoginMutation();
@@ -26,7 +31,7 @@ const LoginPage: React.FC<{}> = () => {
         }}
       />
       <Flex>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
             const res = await login(values);

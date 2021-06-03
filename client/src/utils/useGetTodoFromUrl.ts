@@ -1,4 +1,4 @@
-import { useTodoQuery } from 'generated/graphql';
+import { useTodoQuery } from '@src/generated/graphql';
 import { useGetIntId } from './useGetIntId';
 
 export const useGetTodoFromUrl = () => {
