@@ -65,10 +65,6 @@
 - [Redis](https://redis.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 
-## Tests 
+## Build 
 
-
-[![CI / Node.js builds (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/node.js.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/node.js.yml)
-
-[![CI / typecheck (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/typecheck.yml)
-
+[![CI / build (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml)
