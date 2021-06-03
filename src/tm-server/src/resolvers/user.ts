@@ -1,6 +1,6 @@
 import 'dotenv-safe/config';
 import { v4 } from 'uuid';
-import argon2 from 'argon2';
+import bcrypt from 'bcryptjs';
 import {
   Arg,
   Ctx,
@@ -93,7 +93,7 @@ export class UserResolver {
     await User.update(
       { id: userIdNum },
       {
-        password: await argon2.hash(newPassword),
+        password: await bcrypt.hash(newPassword, 12),
       },
     );
     await redis.del(key);
@@ -144,7 +144,7 @@ export class UserResolver {
     if (errors) {
       return { errors };
     }
-    const hashedPassword = await argon2.hash(options.password);
+    const hashedPassword = await bcrypt.hash(options.password, 12);
     let user;
     try {
       const result = await getConnection()
@@ -195,7 +195,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await argon2.verify(user.password, password);
+    const valid = await bcrypt.compare(user.password, password);
     if (!valid) {
       return {
         errors: [
