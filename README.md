@@ -36,13 +36,15 @@
 * The second one is responsible for running the generated migrations. `typeorm migration:run`
 
 ### Deployment 
-* Deployment is done via Dokku. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a> if you're interested how I deployed this project 
+* Backend deployment is done via Dokku & hosted on AWS. Frontend deployment is done via Vercel. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a> if you're interested how I deployed this project 
 
 <br />
 
 ## Tech stack 
 
 - [Lerna](https://lerna.js.org/)
+- [AWS](https://aws.amazon.com/)
+- [Digital Ocean](https://www.digitalocean.com/)
 
 ### Frontend
 - [React](https://github.com/facebook/react)
@@ -61,7 +63,6 @@
 - [Graphql](https://graphql.org/)
 - [TypeORM](https://typeorm.io/#/)
 - [DataLoader](https://github.com/graphql/dataloader)
-- [Digital Ocean](https://www.digitalocean.com/)
 - [Docker](https://www.docker.com/)
 - [Dokku](https://dokku.com/)
 - [Redis](https://redis.io/)
