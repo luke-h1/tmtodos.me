@@ -14,7 +14,7 @@
   },
   "scripts": {
     "lint": "lerna run lint",
-    "cy:frontend": "lerna run cy:ci",
+    "cy:frontend": "lerna run cy:run",
     "format": "lerna run format",
     "tsc": "lerna run tsc",
     "bootstrap": "lerna bootstrap --ci --force-local",

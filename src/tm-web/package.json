@@ -9,7 +9,7 @@
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "gen": "graphql-codegen --config codegen.yml",
-    "type-check": "tsc --noEmit",
+    "tsc": "tsc --noEmit",
     "test": "jest src/__tests__",
     "deploy": "sh deploy.sh",
     "cy:run": "cypress run",
