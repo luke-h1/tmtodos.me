@@ -1,0 +1,6 @@
+{
+  "packages": [
+    "src/tm-server", "src/tm-web"
+  ],
+  "version": "0.0.0"
+}

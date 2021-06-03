@@ -1,0 +1,27 @@
+{
+  "name": "root",
+  "private": true,
+  "npmClient": "npm",
+  "author": {
+    "name": "Luke Howsam",
+    "url": "https://lhowsam.com"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "husky": "^6.0.0",
+    "lerna": "^4.0.0",
+    "prettier": "^2.3.0"
+  },
+  "scripts": {
+    "lint": "lerna run lint",
+    "cy:frontend": "lerna run cy:ci",
+    "format": "lerna run format",
+    "tsc": "lerna run tsc",
+    "bootstrap": "lerna bootstrap --ci --force-local",
+    "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
+    "bootstrap:install": "lerna bootstrap --force-local",
+    "build": "lerna run build",
+    "clean": "lerna clean -y",
+    "prepare": "husky install"
+  }
+}
