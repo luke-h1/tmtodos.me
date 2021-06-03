@@ -18,7 +18,7 @@ FROM node:14
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-
+COPY .env.example . 
 COPY .env.production .
 COPY .env . 
 COPY .env.production .env
