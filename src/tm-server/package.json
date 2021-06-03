@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "apollo-server-express": "^2.21.1",
-    "argon2": "^0.28.1",
+    "argon2": "^0.27.2",
     "class-validator": "^0.13.1",
     "connect-redis": "^6.0.0",
     "cookie-parser": "^1.4.5",
