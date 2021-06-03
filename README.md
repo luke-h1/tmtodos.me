@@ -42,6 +42,8 @@
 
 ## Tech stack 
 
+- [Lerna](https://lerna.js.org/)
+
 ### Frontend
 - [React](https://github.com/facebook/react)
 - [Next](https://github.com/vercel/next.js)
