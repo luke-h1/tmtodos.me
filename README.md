@@ -36,7 +36,7 @@
 * The second one is responsible for running the generated migrations. `typeorm migration:run`
 
 ### Deployment 
-* Backend deployment is done via Dokku and hosted on AWS. Frontend deployment is done via Vercel. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a> if you're interested how I deployed this project 
+* Backend deployment is done via Dokku & hosted on AWS. Frontend deployment is done via Vercel. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a> if you're interested how I deployed this project 
 
 <br />
 
