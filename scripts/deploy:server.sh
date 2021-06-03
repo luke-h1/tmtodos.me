@@ -1,6 +1,6 @@
 echo What should the version be ? 
 read VERSION 
-
+cd ../src/tm-server
 echo "Deploying to production 🚀 🔥"
 
 docker build -t lhowsam/tmtodos-api:$VERSION . 

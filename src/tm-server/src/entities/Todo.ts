@@ -30,7 +30,7 @@ export class Todo extends BaseEntity {
   @Column()
   creatorId: number;
 
-  @ManyToOne(() => User, u => u.todos)
+  @ManyToOne(() => User, (u) => u.todos)
   @JoinColumn({ name: 'creatorId' })
   creator: User;
 

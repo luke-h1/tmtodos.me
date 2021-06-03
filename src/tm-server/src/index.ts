@@ -76,6 +76,6 @@ const main = async () => {
     console.log(`Server running on http://localhost:${process.env.PORT!} 🚀`);
   });
 };
-main().catch(e => {
+main().catch((e) => {
   console.error(e);
 });

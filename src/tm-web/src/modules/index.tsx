@@ -43,22 +43,20 @@ const IndexPage = () => {
         <Spinner />
       ) : (
         <>
-          {data!.todos.todos.map((t) =>
-            !t ? null : (
-              <div
-                className="max-w-md rounded focus:ring mx-auto w-full"
-                key={t.id}
-              >
-                <TodoItem
-                  title={t.title}
-                  textSnippet={t.textSnippet}
-                  email={t.creator.email}
-                  id={t.id}
-                  creatorId={t.creator.id}
-                />
-              </div>
-            )
-          )}
+          {data!.todos.todos.map((t) => (!t ? null : (
+            <div
+              className="max-w-md rounded focus:ring mx-auto w-full"
+              key={t.id}
+            >
+              <TodoItem
+                title={t.title}
+                textSnippet={t.textSnippet}
+                email={t.creator.email}
+                id={t.id}
+                creatorId={t.creator.id}
+              />
+            </div>
+          )))}
           {data && data.todos.hasMore ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-6 rounded"
