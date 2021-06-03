@@ -1,3 +1,4 @@
+#!/bin/bash
 echo What should the version be ? 
 read VERSION 
 cd ../src/tm-server
