@@ -35,12 +35,11 @@ Cypress.Commands.add('editTodo', (id, title, body) => {
   cy.contains('Update todo').click();
 });
 
-Cypress.Commands.add('deleteTodo', (id) => { 
-    cy.viewport(1920, 1080);
-    cy.visit('/');
-    cy.get(`[data-testid=delete-todo-${id}]`).click();
-  
-})
+Cypress.Commands.add('deleteTodo', (id) => {
+  cy.viewport(1920, 1080);
+  cy.visit('/');
+  cy.get(`[data-testid=delete-todo-${id}]`).click();
+});
 
 Cypress.Commands.add('login', (email, password) => {
   cy.visit('/login');

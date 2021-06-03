@@ -14,8 +14,8 @@ describe('user can perform crud operations on a todo', () => {
     cy.editTodo(20, 'update', 'update');
   });
 
-  it('allows a user to delete a todo', () => { 
+  it('allows a user to delete a todo', () => {
     cy.login('bob@bob.com', 'veryGoodPassword123');
-    cy.deleteTodo(20)
-  })
+    cy.deleteTodo(20);
+  });
 });

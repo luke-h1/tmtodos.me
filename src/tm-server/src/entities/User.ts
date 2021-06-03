@@ -1,6 +1,12 @@
 import { Field, Int, ObjectType } from 'type-graphql';
 import {
-  Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, OneToMany,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Todo } from './Todo';
 
@@ -18,8 +24,8 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @OneToMany(() => Todo, (n) => n.creator)
-  todos: Todo[]
+  @OneToMany(() => Todo, n => n.creator)
+  todos: Todo[];
 
   @Field(() => String)
   @CreateDateColumn()
