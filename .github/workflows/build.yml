@@ -42,11 +42,8 @@ jobs:
       - name: lint
         run: npm run lint
 
-      - name: Cypress UI tests 
-        run: npm run cy:frontend
-      
       - name: tsc
         run: npm run tsc
 
-      - name: build frontend & server
+      - name: build frontend & backend
         run: npm run build
