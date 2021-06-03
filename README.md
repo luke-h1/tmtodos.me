@@ -36,7 +36,7 @@
 * The second one is responsible for running the generated migrations. `typeorm migration:run`
 
 ### Deployment 
-* Deployment is done via Dokku. take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a>if you're interested how I deployed this project 
+* Deployment is done via Dokku. take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/" target="_blank">blog post</a> if you're interested how I deployed this project 
 
 <br />
 
