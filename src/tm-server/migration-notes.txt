@@ -1,1 +1,0 @@
-typeorm migration:generate -n migration_name

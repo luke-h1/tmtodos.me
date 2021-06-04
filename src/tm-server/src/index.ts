@@ -19,7 +19,7 @@ import { COOKIE_NAME, __prod__ } from './constants';
 const main = async () => {
   await createConnection({
     type: 'postgres',
-    url: process.env.DATABASE_URL!,
+    url: process.env.DATABASE_URL,
     logging: !__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
     synchronize: !__prod__,
@@ -54,7 +54,7 @@ const main = async () => {
         domain: __prod__ ? '.tmtodos.me' : undefined, // SSR issues with forwarding cookies
       },
       saveUninitialized: false,
-      secret: process.env.SESSION_SECRET!,
+      secret: process.env.SESSION_SECRET,
       resave: false,
     }),
   );
@@ -73,7 +73,7 @@ const main = async () => {
   });
   apolloServer.applyMiddleware({ app, cors: false });
   app.listen(process.env.PORT!, () => {
-    console.log(`Server running on http://localhost:${process.env.PORT!} 🚀`);
+    console.log(`Server running on http://localhost:${process.env.PORT} 🚀`);
   });
 };
 main().catch((e) => {
