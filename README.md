@@ -25,8 +25,7 @@
 * to start the backend: `cd src/tm-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
 ### Frontend: 
-* copy the `.env.example ` to `.env`. `cp .env.example .env`. 
-* Fill out the `.env` file with your own values
+* copy the `.env.example ` to `.env.local`. `cp .env.example .env.local`. 
 * run `npm run dev` to start the frontend
 
 
