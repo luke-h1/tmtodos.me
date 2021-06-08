@@ -16,7 +16,6 @@ import { todoResolver } from './resolvers/todo';
 import { createUserLoader } from './utils/createUserLoader';
 import { COOKIE_NAME, __prod__ } from './constants';
 
-
 const main = async () => {
   await createConnection({
     type: 'postgres',
