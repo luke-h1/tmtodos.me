@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import 'dotenv-safe/config';
 import session from 'express-session';
+import 'dotenv-safe/config';
 import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import express from 'express';
