@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import 'dotenv-safe/config';
 import session from 'express-session';
+import 'dotenv-safe/config';
 import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import express from 'express';
@@ -15,6 +15,7 @@ import { Todo } from './entities/Todo';
 import { todoResolver } from './resolvers/todo';
 import { createUserLoader } from './utils/createUserLoader';
 import { COOKIE_NAME, __prod__ } from './constants';
+
 
 const main = async () => {
   await createConnection({
