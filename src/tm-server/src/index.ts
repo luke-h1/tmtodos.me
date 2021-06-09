@@ -60,6 +60,7 @@ const main = async () => {
   );
 
   const apolloServer = new ApolloServer({
+    playground: process.env.NODE_ENV !== 'production',
     schema: await buildSchema({
       resolvers: [UserResolver, todoResolver],
       validate: false,
