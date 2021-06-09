@@ -10,4 +10,4 @@ echo "Deploying to production 🚀 🔥"
 
 docker build -t lhowsam/tmtodos:$VERSION .
 docker push lhowsam/tmtodos:$VERSION
-ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/*.cer "sudo docker pull lhowsam/tmtodos:$VERSION && sudo docker tag lhowsam/tmtodos:$VERSION dokku/tm-api:$VERSION tm-api && dokku deploy tm-api $VERSION"
+ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/*.cer "sudo docker pull lhowsam/tmtodos:$VERSION && sudo docker tag lhowsam/tmtodos:$VERSION dokku/tm-api:$VERSION && dokku deploy tm-api $VERSION"
