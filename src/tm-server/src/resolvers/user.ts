@@ -14,11 +14,11 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { User } from '../entities/User';
-import { MyContext } from '../types';
+import { MyContext } from '../shared/types';
 
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister';
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../constants';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../shared/constants';
 import { sendEmail } from '../utils/sendEmail';
 
 @ObjectType()
