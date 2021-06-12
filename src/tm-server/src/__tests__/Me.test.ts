@@ -3,7 +3,7 @@ import { Connection } from 'typeorm';
 import faker from 'faker';
 import { testConn } from '../test-utils/testConn';
 import { redis } from '../shared/redis';
-import { gCall } from '../test-utils/gCall'
+import { gCall } from '../test-utils/gCall';
 import { User } from '../entities/User';
 
 let conn: Connection;
