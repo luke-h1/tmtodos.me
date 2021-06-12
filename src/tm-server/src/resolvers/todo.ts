@@ -16,7 +16,7 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { Todo } from '../entities/Todo';
-import { MyContext } from '../types';
+import { MyContext } from '../shared/types';
 import { User } from '../entities/User';
 import { isAuth } from '../middleware/isAuth';
 

@@ -1,20 +1,18 @@
 import 'reflect-metadata';
 import session from 'express-session';
 import 'dotenv-safe/config';
-import Redis from 'ioredis';
 import connectRedis from 'connect-redis';
 import express from 'express';
 import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
-import { UserResolver } from './resolvers/user';
 import { User } from './entities/User';
 import { Todo } from './entities/Todo';
-import { todoResolver } from './resolvers/todo';
 import { createUserLoader } from './utils/createUserLoader';
-import { COOKIE_NAME, __prod__ } from './constants';
+import { COOKIE_NAME, __prod__ } from './shared/constants';
+import { createSchema } from './shared/createSchema';
+import { redis } from './shared/redis';
 
 const main = async () => {
   await createConnection({
@@ -30,7 +28,6 @@ const main = async () => {
   const app = express();
 
   const RedisStore = connectRedis(session);
-  const redis = new Redis(process.env.REDIS_URL!);
   app.set('trust proxy', 1); // Let Express know about nginx proxies
   app.use(
     cors({
@@ -61,10 +58,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
-    schema: await buildSchema({
-      resolvers: [UserResolver, todoResolver],
-      validate: false,
-    }),
+    schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
       res,
