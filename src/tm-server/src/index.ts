@@ -56,6 +56,10 @@ const main = async () => {
     }),
   );
 
+  app.get('/api/health', (_, res) => {
+    res.status(200).json({ status: 'ok' });
+  });
+
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
     schema: await createSchema(),
