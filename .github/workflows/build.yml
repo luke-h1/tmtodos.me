@@ -47,6 +47,4 @@ jobs:
 
       - name: tsc
         run: npm run tsc
-
-      - name: build frontend & backend
-        run: npm run build
+      
