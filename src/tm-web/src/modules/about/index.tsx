@@ -15,9 +15,15 @@ const about = () => {
           title: 'About',
         }}
       />
-      <div style={{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', placeItems: 'center', minHeight: '50vh',
-      }}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          placeItems: 'center',
+          minHeight: '50vh',
+        }}
       >
         <h1 className="text-4xl">About tmtodos.me</h1>
         <div className="py-2 text-center">Full stack todo app that uses:</div>
