@@ -1,0 +1,16 @@
+.section {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.flex { 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  place-items: center;
+  min-height: 50vh;
+}

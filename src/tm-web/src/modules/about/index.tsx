@@ -2,6 +2,7 @@ import { CustomHead } from '@src/components/CustomHead';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
+import styles from '@src/styles/about.module.scss';
 
 const about = () => {
   return (
@@ -15,16 +16,7 @@ const about = () => {
           title: 'About',
         }}
       />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          placeItems: 'center',
-          minHeight: '50vh',
-        }}
-      >
+      <div className={styles.flex}>
         <h1 className="text-4xl">About tmtodos.me</h1>
         <div className="py-2 text-center">Full stack todo app that uses:</div>
         <div className="flex flex-col align-left items-left text-left">
