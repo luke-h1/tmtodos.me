@@ -11,7 +11,6 @@ export const Reset = () => {
           padding: 0;
           margin: 0;
         }
-
         html {
           font-size: 16px;
         }
@@ -20,7 +19,6 @@ export const Reset = () => {
         *:after {
           box-sizing: inherit;
         }
-
         body {
           font-family: 'Noto Sans JP';
           -webkit-font-smoothing: antialiased;

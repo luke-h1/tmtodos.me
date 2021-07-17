@@ -28,6 +28,8 @@ RUN npm ci --production
 
 COPY --from=builder /usr/src/app/dist ./dist 
 
+ENV NODE_ENV production
+
 EXPOSE 8080
 
 CMD ["npm", "run", "start"]
