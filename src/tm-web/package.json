@@ -42,7 +42,7 @@
     "@graphql-codegen/cli": "^1.21.3",
     "@graphql-codegen/typescript": "^1.21.1",
     "@graphql-codegen/typescript-operations": "^1.17.15",
-    "@graphql-codegen/typescript-react-apollo": "2.2.7",
+    "@graphql-codegen/typescript-react-apollo": "2.3.1",
     "@graphql-codegen/typescript-urql": "^2.0.5",
     "@tailwindcss/jit": "^0.1.18",
     "@testing-library/jest-dom": "^5.11.10",
