@@ -2,7 +2,12 @@
 
 ![tmtodos.me](https://socialify.git.ci/luke-h1/tmtodos.me/image?language=1&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark)
 
-## Full stack todo app 
+
+# Full stack todo app 
+* This project consists of 3 areas: 
+   * tm-web - Next.js frontend
+   * tm-server - Node/GraphQL backend
+   * go-backend - WIP go backend (to replace the current node backend)
 
 
 ## Getting started with local development 
