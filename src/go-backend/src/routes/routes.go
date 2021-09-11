@@ -12,7 +12,7 @@ func Setup(app *fiber.App) {
 
 	user := api.Group("user")
 
-	todo := api.Group("todo")
+	todo := api.Group("todos")
 
 	// user endpoints
 	user.Post("/register", controllers.Register)
@@ -21,10 +21,10 @@ func Setup(app *fiber.App) {
 	todoAuthenticated := todo.Use(middlewares.IsAuthenticated)
 
 	// todo endpoints
-	todoAuthenticated.Get("/todos/:id", controllers.GetTodo)
-	todoAuthenticated.Get("/todos", controllers.Todos)
-	todoAuthenticated.Post("/todos", controllers.CreateTodo)
-	todoAuthenticated.Put("/todos/:id", controllers.UpdateTodo)
-	todoAuthenticated.Delete("/todos/:id", controllers.DeleteTodo)
+	todoAuthenticated.Get("/:id", controllers.GetTodo)
+	todoAuthenticated.Get("/", controllers.Todos)
+	todoAuthenticated.Post("/", controllers.CreateTodo)
+	todoAuthenticated.Put("/:id", controllers.UpdateTodo)
+	todoAuthenticated.Delete("/:id", controllers.DeleteTodo)
 
 }
