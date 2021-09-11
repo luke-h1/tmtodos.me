@@ -4,24 +4,27 @@ services:
   backend:
     build: .
     ports:
-      - 5001:5001
+      - 5000:5000
     volumes:
       - .:/app
     depends_on:
-      - postgres
+      - db
       - redis
-
-  
-  postgres:
-    image: postgres:latest
+  db:
+    image: mysql:5.7.22
     restart: always
-    environment: 
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: tmtodos_me
-      POSTGRES_HOST: tmtodos_db
+    environment:
+      MYSQL_DATABASE: tmdbdev
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 8080
+    volumes:
+      - .dbdata:/var/lib/mysql
     ports:
-      - 5432:5432
+      - 8080:8080
+    expose: 
+      - 8080
 
   redis:
     image: redis:latest

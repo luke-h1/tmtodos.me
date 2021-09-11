@@ -11,7 +11,7 @@ import (
 func main() {
 	database.Connect()
 	database.AutoMigrate()
-	// database.SetupRedis()
+	database.SetupRedis()
 
 	app := fiber.New()
 
@@ -25,5 +25,5 @@ func main() {
 		return c.SendString("Hello, World 👋!")
 	})
 
-	app.Listen(":5001")
+	app.Listen(":5000")
 }
