@@ -30,3 +30,7 @@ idea
 *idea
 idea/
 *.mp4
+*.dbdata
+src/go-backend/.dbdata
+go-backend/.dbdata
+tmp

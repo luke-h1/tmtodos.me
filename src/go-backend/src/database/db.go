@@ -12,7 +12,7 @@ var DB *gorm.DB
 func Connect() {
 	var err error
 
-	DB, err = gorm.Open(mysql.Open("root:root@tcp(db:3306)/take-my-todos-go"), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open("root:root@tcp(db:5432)/tmtodos-me"), &gorm.Config{})
 
 	if err != nil {
 		panic("Could not connect to database")
