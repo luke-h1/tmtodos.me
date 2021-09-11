@@ -1,0 +1,38 @@
+
+version: '3.9'
+services:
+  backend:
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7.22
+    restart: always
+    environment:
+      MYSQL_DATABASE: tmdbdev
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 8080
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 8080:8080
+    expose: 
+      - 8080
+
+  redis:
+    image: redis:latest
+    restart: always
+    command: --port 7600
+    expose:
+      - "6380"
+
+
+    ports: 
+      - 7600:7600
