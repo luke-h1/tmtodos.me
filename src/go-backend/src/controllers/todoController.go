@@ -25,6 +25,8 @@ func CreateTodo(c *fiber.Ctx) error {
 	}
 	database.DB.Create(&todo)
 
+	go database.ClearCache("todos")
+
 	return c.JSON(todo)
 }
 
@@ -52,6 +54,8 @@ func UpdateTodo(c *fiber.Ctx) error {
 	}
 	database.DB.Model(&todo).Updates(&todo)
 
+	go database.ClearCache("todos")
+
 	return c.JSON(todo)
 }
 
@@ -62,6 +66,8 @@ func DeleteTodo(c *fiber.Ctx) error {
 	todo.Id = uint(id)
 
 	database.DB.Delete(&todo)
+
+	go database.ClearCache("todos")
 
 	return nil
 }
