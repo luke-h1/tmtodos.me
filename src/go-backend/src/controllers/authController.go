@@ -128,6 +128,7 @@ func Logout(c *fiber.Ctx) error {
 
 // update user info
 func UpdateInfo(c *fiber.Ctx) error {
+
 	var data map[string]string
 
 	if err := c.BodyParser(&data); err != nil {
@@ -135,14 +136,17 @@ func UpdateInfo(c *fiber.Ctx) error {
 	}
 	id, _ := middlewares.GetUserId(c)
 
-	user := models.User{
-		FirstName: data["first_name"],
-		LastName:  data["last_name"],
-		Email:     data["email"],
-	}
+	user := models.User{}
+
 	user.Id = id
-	database.DB.Model(models.User{}).Updates(&user)
+
+	if err := c.BodyParser(&user); err != nil {
+		return err
+	}
+
+	database.DB.Model(&user).Updates(&user)
 	return c.JSON(user)
+
 }
 
 // update user password
