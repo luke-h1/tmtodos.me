@@ -9,6 +9,7 @@ type User struct {
 	Email     string `json:"email" gorm:"unique"`
 	Password  []byte `json:"-"`
 	IsAdmin   bool   `json:"is_admin" gorm:"false"`
+	Todos     []Todo `json:"todos" gorm:"ForeignKey:UserId"`
 }
 
 // db methods
