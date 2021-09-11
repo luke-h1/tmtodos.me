@@ -8,7 +8,8 @@ type User struct {
 	LastName  string `json:"last_name"`
 	Email     string `json:"email" gorm:"unique"`
 	Password  []byte `json:"-"`
-	isAdmin   bool   `json:"-"`
+	IsAdmin   bool   `json:"is_admin" gorm:"false"`
+	Todos     []Todo `json:"todos" gorm:"one2many:todo"`
 }
 
 // db methods

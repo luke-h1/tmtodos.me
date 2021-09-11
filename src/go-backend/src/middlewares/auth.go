@@ -2,10 +2,13 @@ package middlewares
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
+
+const Secret = "secret"
 
 func IsAuthenticated(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
@@ -38,4 +41,12 @@ func GetUserId(c *fiber.Ctx) (uint, error) {
 	id, _ := strconv.Atoi(payload.Subject)
 
 	return uint(id), nil
+}
+
+func GenerateJWT(Id uint) (string, error) {
+	payload := jwt.StandardClaims{}
+	payload.Subject = strconv.Itoa(int(Id))
+	payload.ExpiresAt = time.Now().Add(time.Hour * 24).Unix() // 1 day
+
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, payload).SignedString([]byte(Secret))
 }
