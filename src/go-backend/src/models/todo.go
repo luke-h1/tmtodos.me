@@ -2,6 +2,7 @@ package models
 
 type Todo struct {
 	Model
-	Title string `json:"title"`
-	Text  string `json:"text"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
+	IsDone bool   `json:"is_done"`
 }

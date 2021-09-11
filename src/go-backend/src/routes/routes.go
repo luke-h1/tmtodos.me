@@ -1,5 +1,15 @@
 package routes
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"go-backend/src/middlewares"
 
-func Setup(app *fiber.App) {}
+	"github.com/gofiber/fiber/v2"
+)
+
+func Setup(app *fiber.App) {
+	api := app.Group("api")
+
+	admin := app.Group("admin")
+
+	authenticated := api.Use(middlewares.IsAuthenticated)
+}
