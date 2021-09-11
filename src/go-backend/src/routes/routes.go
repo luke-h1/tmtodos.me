@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"go-backend/src/middlewares"
+	"go-backend/src/controllers"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,7 +9,11 @@ import (
 func Setup(app *fiber.App) {
 	api := app.Group("api")
 
-	admin := app.Group("admin")
+	user := api.Group("user")
 
-	authenticated := api.Use(middlewares.IsAuthenticated)
+	user.Post("/register", controllers.Register)
+	user.Post("/login", controllers.Login)
+
+	// authenticated := api.Use(middlewares.IsAuthenticated)
+
 }

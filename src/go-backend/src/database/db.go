@@ -1,9 +1,10 @@
 package database
 
 import (
+	"fmt"
 	"go-backend/src/models"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -11,11 +12,13 @@ var DB *gorm.DB
 
 func Connect() {
 	var err error
-
-	DB, err = gorm.Open(mysql.Open("root:root@tcp(db:5432)/tmtodos-me"), &gorm.Config{})
-
+	DB, err = gorm.Open(postgres.New(postgres.Config{
+		DSN: "host=tmtodos_db user=root password=root dbname=tmtodos_me port=5432 sslmode=disable TimeZone=Asia/Tokyo",
+	}), &gorm.Config{})
 	if err != nil {
-		panic("Could not connect to database")
+		fmt.Println(err)
+		// panic("could not connect to database")
+
 	}
 }
 

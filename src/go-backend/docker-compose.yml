@@ -1,32 +1,29 @@
+
 version: '3.9'
 services:
   backend:
     build: .
     ports:
-      - 6000:6000
+      - 5001:5001
     volumes:
       - .:/app
     depends_on:
-      - db
+      - postgres
       - redis
 
-  db:
-    image: "postgres:latest"
+  
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment: 
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tmtodos_me
+      POSTGRES_HOST: tmtodos_db
     ports:
       - 5432:5432
-
-    environment:
-      POSTGRES_USER: root 
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: tmtodos-me
-    #env_file:
-    #  - .env # The name of your environment file (the one at the repository root)
-
-    volumes:
-      - .dbdata:/var/lib/postgresql
-
 
   redis:
     image: redis:latest
     ports: 
-      - 3500:3500
+      - 12000:12000
