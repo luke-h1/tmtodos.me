@@ -28,5 +28,11 @@ services:
 
   redis:
     image: redis:latest
+    restart: always
+    command: --port 7600
+    expose:
+      - "6380"
+
+
     ports: 
-      - 12000:12000
+      - 7600:7600

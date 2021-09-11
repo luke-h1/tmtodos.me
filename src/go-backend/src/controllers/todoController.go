@@ -1,10 +1,14 @@
 package controllers
 
 import (
+	"context"
+	"encoding/json"
+	"fmt"
 	"go-backend/src/database"
 	"go-backend/src/middlewares"
 	"go-backend/src/models"
 	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,11 +16,32 @@ import (
 func Todos(c *fiber.Ctx) error {
 	var todos []models.Todo
 
-	database.DB.Find(&todos)
+	var ctx = context.Background()
 
-	uid, _ := middlewares.GetUserId(c)
+	result, err := database.Cache.Get(ctx, "todos").Result()
 
-	database.DB.Where("user_id = ?", uid).Find(&todos)
+	// nothing in cache
+	if err != nil {
+		fmt.Println(err.Error())
+		// fetch values from DB
+		uid, _ := middlewares.GetUserId(c)
+
+		database.DB.Where("user_id = ?", uid).Find(&todos)
+		bytes, err := json.Marshal(todos)
+
+		if err != nil {
+			panic(err)
+		}
+
+		// set values found from DB in redis
+		// expr 30 mins
+
+		if errKey := database.Cache.Set(ctx, "todos", bytes, 30*time.Minute).Err(); errKey != nil {
+			panic(errKey)
+		}
+	} else {
+		json.Unmarshal([]byte(result), &todos)
+	}
 
 	return c.JSON(todos)
 

@@ -12,7 +12,7 @@ var CacheChannel chan string
 
 func SetupRedis() {
 	Cache = redis.NewClient(&redis.Options{
-		Addr: "redis:12000",
+		Addr: "redis:7600",
 		DB:   0, // single redis instance
 	})
 }
