@@ -17,6 +17,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type FieldError = {
@@ -27,14 +29,30 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createTodo: Todo;
+  updateTodo?: Maybe<Todo>;
+  deleteTodo: Scalars['Boolean'];
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  createTodo: Todo;
-  updateTodo?: Maybe<Todo>;
-  deleteTodo: Scalars['Boolean'];
+};
+
+export type MutationCreateTodoArgs = {
+  image?: Maybe<Scalars['Upload']>;
+  input: TodoInput;
+};
+
+export type MutationUpdateTodoArgs = {
+  image?: Maybe<Scalars['Upload']>;
+  text: Scalars['String'];
+  title: Scalars['String'];
+  id: Scalars['Int'];
+};
+
+export type MutationDeleteTodoArgs = {
+  id: Scalars['Int'];
 };
 
 export type MutationChangePasswordArgs = {
@@ -47,26 +65,13 @@ export type MutationForgotPasswordArgs = {
 };
 
 export type MutationRegisterArgs = {
+  image?: Maybe<Scalars['Upload']>;
   options: UsernamePasswordInput;
 };
 
 export type MutationLoginArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
-};
-
-export type MutationCreateTodoArgs = {
-  input: TodoInput;
-};
-
-export type MutationUpdateTodoArgs = {
-  text: Scalars['String'];
-  title: Scalars['String'];
-  id: Scalars['Int'];
-};
-
-export type MutationDeleteTodoArgs = {
-  id: Scalars['Int'];
 };
 
 export type PaginatedTodos = {
@@ -77,9 +82,9 @@ export type PaginatedTodos = {
 
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
   todos: PaginatedTodos;
   todo?: Maybe<Todo>;
+  me?: Maybe<User>;
 };
 
 export type QueryTodosArgs = {
@@ -97,6 +102,7 @@ export type Todo = {
   title: Scalars['String'];
   text: Scalars['String'];
   creatorId: Scalars['Float'];
+  image: Scalars['String'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   textSnippet: Scalars['String'];
@@ -112,6 +118,7 @@ export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  image: Scalars['String'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -134,12 +141,12 @@ export type ErrorFragment = { __typename?: 'FieldError' } & Pick<
 
 export type TodoSnippetFragment = { __typename?: 'Todo' } & Pick<
   Todo,
-  'id' | 'createdAt' | 'updatedAt' | 'title' | 'textSnippet'
+  'id' | 'createdAt' | 'updatedAt' | 'title' | 'image' | 'textSnippet'
 > & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'email'> };
 
 export type UserFragmentFragment = { __typename?: 'User' } & Pick<
   User,
-  'id' | 'email'
+  'id' | 'email' | 'image'
 >;
 
 export type UserResponseFragmentFragment = { __typename?: 'UserResponse' } & {
@@ -149,12 +156,13 @@ export type UserResponseFragmentFragment = { __typename?: 'UserResponse' } & {
 
 export type CreateTodoMutationVariables = Exact<{
   input: TodoInput;
+  image: Scalars['Upload'];
 }>;
 
 export type CreateTodoMutation = { __typename?: 'Mutation' } & {
   createTodo: { __typename?: 'Todo' } & Pick<
     Todo,
-    'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'creatorId'
+    'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'image' | 'creatorId'
   >;
 };
 
@@ -185,6 +193,7 @@ export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
 
 export type RegisterMutationVariables = Exact<{
   options: UsernamePasswordInput;
+  image: Scalars['Upload'];
 }>;
 
 export type RegisterMutation = { __typename?: 'Mutation' } & {
@@ -195,13 +204,14 @@ export type UpdateTodoMutationVariables = Exact<{
   id: Scalars['Int'];
   title: Scalars['String'];
   text: Scalars['String'];
+  image: Scalars['Upload'];
 }>;
 
 export type UpdateTodoMutation = { __typename?: 'Mutation' } & {
   updateTodo?: Maybe<
     { __typename?: 'Todo' } & Pick<
       Todo,
-      'id' | 'title' | 'text' | 'textSnippet'
+      'id' | 'title' | 'text' | 'image' | 'textSnippet'
     >
   >;
 };
@@ -220,7 +230,7 @@ export type TodoQuery = { __typename?: 'Query' } & {
   todo?: Maybe<
     { __typename?: 'Todo' } & Pick<
       Todo,
-      'id' | 'createdAt' | 'updatedAt' | 'title' | 'text'
+      'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'image'
     > & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'email'> }
   >;
 };
@@ -242,6 +252,7 @@ export const TodoSnippetFragmentDoc = gql`
     createdAt
     updatedAt
     title
+    image
     textSnippet
     creator {
       id
@@ -259,6 +270,7 @@ export const UserFragmentFragmentDoc = gql`
   fragment UserFragment on User {
     id
     email
+    image
   }
 `;
 export const UserResponseFragmentFragmentDoc = gql`
@@ -274,13 +286,14 @@ export const UserResponseFragmentFragmentDoc = gql`
   ${UserFragmentFragmentDoc}
 `;
 export const CreateTodoDocument = gql`
-  mutation CreateTodo($input: TodoInput!) {
-    createTodo(input: $input) {
+  mutation CreateTodo($input: TodoInput!, $image: Upload!) {
+    createTodo(input: $input, image: $image) {
       id
       createdAt
       updatedAt
       title
       text
+      image
       creatorId
     }
   }
@@ -326,8 +339,8 @@ export function useLogoutMutation() {
   );
 }
 export const RegisterDocument = gql`
-  mutation Register($options: UsernamePasswordInput!) {
-    register(options: $options) {
+  mutation Register($options: UsernamePasswordInput!, $image: Upload!) {
+    register(options: $options, image: $image) {
       ...UserResponseFragment
     }
   }
@@ -340,11 +353,17 @@ export function useRegisterMutation() {
   );
 }
 export const UpdateTodoDocument = gql`
-  mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
-    updateTodo(id: $id, title: $title, text: $text) {
+  mutation UpdateTodo(
+    $id: Int!
+    $title: String!
+    $text: String!
+    $image: Upload!
+  ) {
+    updateTodo(id: $id, title: $title, text: $text, image: $image) {
       id
       title
       text
+      image
       textSnippet
     }
   }
@@ -377,6 +396,7 @@ export const TodoDocument = gql`
       updatedAt
       title
       text
+      image
       creator {
         id
         email

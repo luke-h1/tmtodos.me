@@ -2,26 +2,26 @@
 
 ![tmtodos.me](https://socialify.git.ci/luke-h1/tmtodos.me/image?language=1&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark)
 
-## Full stack todo app 
 
+# Full stack todo app 
+* This project consists of 2 areas: 
+   * tm-web - Next.js frontend
+   * tm-server - Node/GraphQL backend
 
 ## Getting started with local development 
-
 
 ### Prerequisites
 * This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
 * Ensure you have Node / NPM installed.
-* Ensure Postgres is installed & is running (see backend section for more details)
-* Ensure Redis is installed & is running (see backend section for more details)
+* Ensure Docker is installed & running
 * Ensure your postgres user has superuser access on the `tmtodos` DB
 
 ### Backend: 
-* [Install postgres](https://www.postgresql.org/download/)
-* [Install Redis (stable)](https://redis.io/download)
 * Create a blank postgres database called `tmtodos`
 * run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
+* To start the backend DB and redis: `docker-compose up`
 * to start the backend: `cd src/tm-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
 ### Frontend: 
