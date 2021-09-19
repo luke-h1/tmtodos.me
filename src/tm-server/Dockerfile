@@ -12,6 +12,9 @@ RUN npm ci
 COPY . . 
 RUN npm run build
 
+# stage 2 - install redis 
+
+
 # stage 2 - build for prod 
 FROM node:14 
 

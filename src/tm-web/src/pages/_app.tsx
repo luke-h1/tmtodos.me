@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
-import { Reset } from '../styles/reset';
 import '../styles/index.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -28,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           cardType: 'summary_large_image',
         }}
       />
-      {Reset}
       <div className="flex flex-col align-center items-center max-w-800 w-full">
         <Component {...pageProps} />
       </div>
