@@ -23,15 +23,16 @@ export const EditDeleteTodoButtons: React.FC<EditDeleteTodoButtonsProps> = ({
     <div className="my-2">
       <Link href={`/todo/edit/${id}`}>
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-5"
+          className="flex mx-auto mt-16 text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-500 rounded text-lg"
           type="button"
           data-testid={`edit-todo-${id}`}
         >
+          {' '}
           <FiEdit3 />
         </button>
       </Link>
       <button
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        className="flex mx-auto mt-16 text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-500 rounded text-lg"
         type="button"
         aria-label="delete todo"
         data-testid={`delete-todo-${id}`}
@@ -39,6 +40,7 @@ export const EditDeleteTodoButtons: React.FC<EditDeleteTodoButtonsProps> = ({
           deleteTodo({ id });
         }}
       >
+        {' '}
         <FiDelete />
       </button>
     </div>
