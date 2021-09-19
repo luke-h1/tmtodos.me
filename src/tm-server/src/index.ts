@@ -8,6 +8,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import { graphqlUploadExpress } from 'graphql-upload';
 import { User } from './entities/User';
 import { Todo } from './entities/Todo';
 import { createUserLoader } from './utils/createUserLoader';
@@ -36,6 +37,8 @@ const main = async () => {
       credentials: true,
     }),
   );
+
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
   app.use(
     session({
@@ -69,6 +72,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
+    uploads: false,
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,

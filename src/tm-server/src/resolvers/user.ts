@@ -13,13 +13,15 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { User } from '../entities/User';
 import { MyContext } from '../shared/types';
 
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister';
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../shared/constants';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX, S3UserImageKey } from '../shared/constants';
 import { sendEmail } from '../utils/sendEmail';
+import { Upload } from '../utils/s3';
 
 @ObjectType()
 class FieldError {
@@ -138,6 +140,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UsernamePasswordInput,
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);
@@ -147,6 +150,11 @@ export class UserResolver {
     const hashedPassword = await bcrypt.hash(options.password, 12);
     let user;
     try {
+      const { image: s3Image, imageFileName } = await Upload(
+        image.createReadStream,
+        image.filename,
+        S3UserImageKey,
+      );
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -154,6 +162,8 @@ export class UserResolver {
         .values({
           email: options.email,
           password: hashedPassword,
+          image: s3Image,
+          imageFileName,
         })
         .returning('*')
         .execute();
