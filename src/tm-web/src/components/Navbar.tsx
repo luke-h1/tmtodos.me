@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import React from 'react';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
-import { CustomLink } from './CustomLink';
+import { CustomLink, NavItem } from './CustomLink';
 import { Spinner } from './Spinner';
 
 interface NavbarProps {}
@@ -36,6 +36,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
   } else {
     body = (
       <div className="sm:flex sm:items-center">
+        <NavItem>
+          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white mr-4" src={data.me.image} alt={data.me.email} />
+        </NavItem>
+
         <CustomLink href="/">
           <a className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-7">
             {data.me.email}
