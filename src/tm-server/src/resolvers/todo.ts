@@ -97,7 +97,9 @@ export class todoResolver {
       S3TodoImageKey,
     );
 
-    const result = await getConnection().createQueryBuilder().insert()
+    const result = await getConnection()
+      .createQueryBuilder()
+      .insert()
       .into(Todo)
       .values({
         ...input,

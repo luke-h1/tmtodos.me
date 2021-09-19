@@ -2,11 +2,11 @@ import { withUrqlClient } from 'next-urql';
 import { useState } from 'react';
 import { CustomHead } from '@src/components/CustomHead';
 import { NextSeo } from 'next-seo';
-import { Navbar } from '@src/components/Navbar';
 import { Spinner } from '@src/components/Spinner';
 import { TodoItem } from '@src/components/TodoItem';
 import { useTodosQuery } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { Navbar } from '@src/components/Navbar';
 
 const IndexPage = () => {
   const [variables, setVariables] = useState({
@@ -38,11 +38,12 @@ const IndexPage = () => {
           title: 'Home',
         }}
       />
-      <Navbar />
       {!data && fetching ? (
         <Spinner />
       ) : (
         <>
+          <Navbar />
+
           {data!.todos.todos.map((t) => (!t ? null : (
             <div
               className="max-w-md rounded focus:ring mx-auto w-full"
