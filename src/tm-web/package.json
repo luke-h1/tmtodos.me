@@ -48,7 +48,7 @@
     "@tailwindcss/jit": "^0.1.18",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^12.1.0",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^27.0.1",
     "@types/node": "^16.9.3",
     "@types/react": "^17.0.3",
     "@types/react-test-renderer": "^17.0.1",
