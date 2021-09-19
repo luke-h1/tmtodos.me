@@ -19,7 +19,11 @@ import { MyContext } from '../shared/types';
 
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister';
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX, S3UserImageKey } from '../shared/constants';
+import {
+  COOKIE_NAME,
+  FORGET_PASSWORD_PREFIX,
+  S3UserImageKey,
+} from '../shared/constants';
 import { sendEmail } from '../utils/sendEmail';
 import { Upload } from '../utils/s3';
 

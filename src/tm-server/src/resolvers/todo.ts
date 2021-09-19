@@ -121,7 +121,10 @@ export class todoResolver {
       .createQueryBuilder()
       .update(Todo)
       .set({
-        title, text, image: s3Image, imageFileName,
+        title,
+        text,
+        image: s3Image,
+        imageFileName,
       })
       .where('id = :id and "creatorId" = :creatorId', {
         id,

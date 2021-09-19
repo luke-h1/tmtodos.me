@@ -9,14 +9,14 @@ export type S3Object = {
   Location: string;
   Key: string;
   Bucket: string;
-}
+};
 
 export type UploadedFileResponse = {
   filename: string;
   mimetype: string;
   encoding: string;
   url: string;
-}
+};
 
 export const AWSCONFIG = AWS.config.update({
   signatureVersion: 's3v4',
