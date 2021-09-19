@@ -40,6 +40,7 @@
     "cross-env": "^7.0.3",
     "dataloader": "^2.0.0",
     "dotenv-safe": "^8.2.0",
+    "esbuild-runner": "^2.2.1",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.1",
