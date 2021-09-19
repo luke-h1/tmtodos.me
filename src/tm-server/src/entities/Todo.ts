@@ -35,10 +35,10 @@ export class Todo extends BaseEntity {
   creator: User;
 
   @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
-  @Column()
+  @Column({ nullable: true })
   imageFileName: string;
 
   @Field(() => String)
