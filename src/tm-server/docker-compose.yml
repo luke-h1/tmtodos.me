@@ -11,3 +11,4 @@ services:
       - 6379:6379
 # CREATE ROLE lhowsam LOGIN SUPERUSER PASSWORD 'password';
 # ALTER USER lhowsam WITH PASSWORd '123'
+

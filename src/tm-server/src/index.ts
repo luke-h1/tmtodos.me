@@ -17,7 +17,7 @@ import { createSchema } from './shared/createSchema';
 import { redis } from './shared/redis';
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: !__prod__,
@@ -25,7 +25,7 @@ const main = async () => {
     synchronize: !__prod__,
     entities: [User, Todo],
   });
-  // await conn.runMigrations();
+  await conn.runMigrations();
 
   const app = express();
 
