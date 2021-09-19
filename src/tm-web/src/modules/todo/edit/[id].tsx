@@ -70,10 +70,17 @@ const EditPage: React.FC<{}> = () => {
       />
       <Flex>
         <Formik<FormValues>
-          initialValues={{ title: data.todo.title, text: data.todo.text, image: data.todo.image }}
+          initialValues={{
+            title: data.todo.title,
+            text: data.todo.text,
+            image: data.todo.image,
+          }}
           onSubmit={async (values) => {
             await updateTodo({
-              id: intId, image: values.image, title: values.title, text: values.text,
+              id: intId,
+              image: values.image,
+              title: values.title,
+              text: values.text,
             });
             /**
              * Once user has updated their todo take them back to last
@@ -105,7 +112,7 @@ const EditPage: React.FC<{}> = () => {
                   onChange={({ target: { validity, files } }) => {
                     if (validity.valid && files) {
                       setFieldValue('image', files[0]);
-                    // set 'file' of the form data as files[0]
+                      // set 'file' of the form data as files[0]
                     }
                   }}
                 />

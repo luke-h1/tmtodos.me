@@ -50,6 +50,7 @@ const IndexPage = () => {
             >
               <TodoItem
                 title={t.title}
+                image={t.image}
                 textSnippet={t.textSnippet}
                 email={t.creator.email}
                 id={t.id}

@@ -88,20 +88,26 @@ export class todoResolver {
   @UseMiddleware(isAuth)
   async createTodo(
     @Arg('input') input: TodoInput,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
   ): Promise<Todo> {
     const { image: s3Image, imageFileName } = await Upload(
       image.createReadStream,
       image.filename,
       S3TodoImageKey,
     );
-    return Todo.create({
-      ...input,
-      creatorId: req.session.userId,
-      imageFileName,
-      image: s3Image,
-    }).save();
+
+    const result = await getConnection().createQueryBuilder().insert()
+      .into(Todo)
+      .values({
+        ...input,
+        creatorId: req.session.userId,
+        imageFileName,
+        image: s3Image,
+      })
+      .returning('*')
+      .execute();
+    return result.raw[0];
   }
 
   @Mutation(() => Todo, { nullable: true })

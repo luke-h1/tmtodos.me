@@ -146,7 +146,7 @@ export type ErrorFragment = (
 
 export type TodoSnippetFragment = (
   { __typename?: 'Todo' }
-  & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'textSnippet'>
+  & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'image' | 'textSnippet'>
   & { creator: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'email'>
@@ -265,7 +265,7 @@ export type TodoQuery = (
   { __typename?: 'Query' }
   & { todo?: Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text'>
+    & Pick<Todo, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'image'>
     & { creator: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
@@ -297,6 +297,7 @@ export const TodoSnippetFragmentDoc = gql`
   createdAt
   updatedAt
   title
+  image
   textSnippet
   creator {
     id
@@ -419,6 +420,7 @@ export const TodoDocument = gql`
     updatedAt
     title
     text
+    image
     creator {
       id
       email

@@ -38,7 +38,13 @@ const CreateTodoPage: React.FC<{}> = () => {
         <Formik<FormValues>
           initialValues={{ title: '', text: '', image: '' }}
           onSubmit={async (values) => {
-            const { error } = await createTodo({ input: values, image: values.image });
+            const { error } = await createTodo({
+              input: {
+                title: values.title,
+                text: values.text,
+              },
+              image: values.image,
+            });
             if (!error) {
               router.push('/');
             }
@@ -67,7 +73,7 @@ const CreateTodoPage: React.FC<{}> = () => {
                   onChange={({ target: { validity, files } }) => {
                     if (validity.valid && files) {
                       setFieldValue('image', files[0]);
-                    // set 'file' of the form data as files[0]
+                      // set 'file' of the form data as files[0]
                     }
                   }}
                 />

@@ -3,6 +3,7 @@ fragment TodoSnippet on Todo {
     createdAt
     updatedAt
     title
+    image
     textSnippet
     creator { 
         id
