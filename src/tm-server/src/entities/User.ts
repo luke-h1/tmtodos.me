@@ -28,6 +28,13 @@ export class User extends BaseEntity {
   todos: Todo[];
 
   @Field(() => String)
+  @Column()
+  image: string;
+
+  @Column()
+  imageFileName: string;
+
+  @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
 

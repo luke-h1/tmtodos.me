@@ -5,6 +5,7 @@ query Todo($id: Int!){
         updatedAt
         title
         text
+        image
         creator { 
             id
             email

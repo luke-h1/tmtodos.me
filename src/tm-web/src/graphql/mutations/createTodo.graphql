@@ -1,10 +1,11 @@
-mutation CreateTodo($input: TodoInput!) {
-  createTodo(input: $input) {
+mutation CreateTodo($input: TodoInput!, $image: Upload!) {
+  createTodo(input: $input, image: $image) {
     id
     createdAt
     updatedAt
     title
     text
+    image
     creatorId
   }
 }

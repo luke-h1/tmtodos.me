@@ -17,6 +17,7 @@ import { useGetIntId } from '../../../utils/useGetIntId';
 interface FormValues {
   title: string;
   text: string;
+  image: string;
 }
 
 const EditPage: React.FC<{}> = () => {
@@ -69,9 +70,18 @@ const EditPage: React.FC<{}> = () => {
       />
       <Flex>
         <Formik<FormValues>
-          initialValues={{ title: data.todo.title, text: data.todo.text }}
+          initialValues={{
+            title: data.todo.title,
+            text: data.todo.text,
+            image: data.todo.image,
+          }}
           onSubmit={async (values) => {
-            await updateTodo({ id: intId, ...values });
+            await updateTodo({
+              id: intId,
+              image: values.image,
+              title: values.title,
+              text: values.text,
+            });
             /**
              * Once user has updated their todo take them back to last
              * page they were viewing
@@ -79,7 +89,7 @@ const EditPage: React.FC<{}> = () => {
             router.back();
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form>
               <InputField
                 name="title"
@@ -93,6 +103,18 @@ const EditPage: React.FC<{}> = () => {
                   placeholder="text"
                   label="body"
                   data-testid="body"
+                />
+              </div>
+              <div className="mt-4 mb-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={({ target: { validity, files } }) => {
+                    if (validity.valid && files) {
+                      setFieldValue('image', files[0]);
+                      // set 'file' of the form data as files[0]
+                    }
+                  }}
                 />
               </div>
               <button

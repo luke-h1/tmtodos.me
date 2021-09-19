@@ -13,6 +13,7 @@ import { toErrorMap } from '@src/utils/toErrorMap';
 interface FormValues {
   email: string;
   password: string;
+  image: string;
 }
 
 const RegisterPage: React.FC<{}> = () => {
@@ -31,9 +32,15 @@ const RegisterPage: React.FC<{}> = () => {
       />
       <Flex>
         <Formik<FormValues>
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: '', password: '', image: '' }}
           onSubmit={async (values, { setErrors }) => {
-            const res = await register({ options: values });
+            const res = await register({
+              options: {
+                email: values.email,
+                password: values.password,
+              },
+              image: values.image,
+            });
             if (res.data?.register.errors) {
               setErrors(toErrorMap(res.data.register.errors));
             } else {
@@ -41,7 +48,7 @@ const RegisterPage: React.FC<{}> = () => {
             }
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form>
               <InputField
                 name="email"
@@ -56,6 +63,18 @@ const RegisterPage: React.FC<{}> = () => {
                   label="password"
                   type="password"
                   data-testid="password"
+                />
+              </div>
+              <div className="mt-4 mb-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={({ target: { validity, files } }) => {
+                    if (validity.valid && files) {
+                      setFieldValue('image', files[0]);
+                      // set 'file' of the form data as files[0]
+                    }
+                  }}
                 />
               </div>
               <button
