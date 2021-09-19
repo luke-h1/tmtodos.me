@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    container_name: postgres
+    container_name: tm-db
     image: 'postgres:latest'
     restart: always
     ports:
@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: default_database
+      POSTGRES_DB: tm-db_1
     volumes: 
       - .dbdata:/var/lib/postgres 
     expose:
