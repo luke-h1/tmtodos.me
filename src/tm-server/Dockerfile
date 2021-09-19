@@ -1,4 +1,3 @@
-
 # Stage 1 - build the code 
 FROM node:14 as builder
 
@@ -6,14 +5,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-
 RUN npm ci
 
 COPY . . 
 RUN npm run build
-
-# stage 2 - install redis 
-
 
 # stage 2 - build for prod 
 FROM node:14 
@@ -25,7 +20,6 @@ COPY .env.example .
 COPY .env.production .
 COPY .env . 
 COPY .env.production .env
-
 
 RUN npm ci --production 
 
