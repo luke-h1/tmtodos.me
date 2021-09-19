@@ -37,7 +37,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
     body = (
       <div className="sm:flex sm:items-center">
         <NavItem>
-          <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white mr-4" src={data.me.image} alt={data.me.email} />
+          <img
+            className="inline-block h-8 w-8 rounded-full ring-2 ring-white mr-4"
+            src={data.me.image}
+            alt={data.me.email}
+          />
         </NavItem>
 
         <CustomLink href="/">
