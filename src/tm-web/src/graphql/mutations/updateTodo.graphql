@@ -1,8 +1,9 @@
-mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
-  updateTodo(id: $id, title: $title, text: $text) {
+mutation UpdateTodo($id: Int!, $title: String!, $text: String!, $image: Upload!) {
+  updateTodo(id: $id, title: $title, text: $text, image: $image) {
     id
     title
     text
+    image
     textSnippet
   }
 }

@@ -13,6 +13,7 @@ import { useIsAuth } from '@src/utils/useIsAuth';
 interface FormValues {
   title: string;
   text: string;
+  image: string;
 }
 
 const CreateTodoPage: React.FC<{}> = () => {
@@ -35,15 +36,15 @@ const CreateTodoPage: React.FC<{}> = () => {
       />
       <Flex>
         <Formik<FormValues>
-          initialValues={{ title: '', text: '' }}
+          initialValues={{ title: '', text: '', image: '' }}
           onSubmit={async (values) => {
-            const { error } = await createTodo({ input: values });
+            const { error } = await createTodo({ input: values, image: values.image });
             if (!error) {
               router.push('/');
             }
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form>
               <InputField
                 name="title"
@@ -57,6 +58,18 @@ const CreateTodoPage: React.FC<{}> = () => {
                   placeholder="text"
                   label="body"
                   data-testid="body"
+                />
+              </div>
+              <div className="mt-4 mb-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={({ target: { validity, files } }) => {
+                    if (validity.valid && files) {
+                      setFieldValue('image', files[0]);
+                    // set 'file' of the form data as files[0]
+                    }
+                  }}
                 />
               </div>
               <button
