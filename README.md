@@ -8,6 +8,47 @@
    * tm-web - Next.js frontend
    * tm-server - Node/GraphQL backend
 
+
+## Tech stack 
+
+### General
+- [Lerna](https://lerna.js.org/)
+- [AWS](https://aws.amazon.com/)
+
+### Frontend
+- [React](https://github.com/facebook/react)
+- [Next](https://github.com/vercel/next.js)
+- [tailwind](http://tailwindcss.com/)
+- [Emotion](https://github.com/emotion-js/emotion)
+- [Polished](https://github.com/styled-components/polished)
+- [React-icons](https://github.com/react-icons/react-icons)
+- [Typescript](https://github.com/Microsoft/TypeScript)
+- [Vercel](https://vercel.com/)
+- [Graphql-Codegen](https://www.graphql-code-generator.com/)
+- [Cypress](https://www.cypress.io/)
+
+
+### Backend 
+- [Graphql](https://graphql.org/)
+- [S3](https://aws.amazon.com/s3/)
+- [TypeORM](https://typeorm.io/#/)
+- [DataLoader](https://github.com/graphql/dataloader)
+- [Docker](https://www.docker.com/)
+- [Dokku](https://dokku.com/)
+- [Redis](https://redis.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+
+
+### Features 
+- CRUD todos 
+- CRUD user
+- upload profile images (s3)
+- upload todo images (s3)
+
+## Build 
+
+[![CI / build (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml)
+
 ## Getting started with local development 
 
 ### Prerequisites
@@ -39,34 +80,3 @@
 
 <br />
 
-## Tech stack 
-
-- [Lerna](https://lerna.js.org/)
-- [AWS](https://aws.amazon.com/)
-- [Digital Ocean](https://www.digitalocean.com/)
-
-### Frontend
-- [React](https://github.com/facebook/react)
-- [Next](https://github.com/vercel/next.js)
-- [tailwind](http://tailwindcss.com/)
-- [Emotion](https://github.com/emotion-js/emotion)
-- [Polished](https://github.com/styled-components/polished)
-- [React-icons](https://github.com/react-icons/react-icons)
-- [Typescript](https://github.com/Microsoft/TypeScript)
-- [Vercel](https://vercel.com/)
-- [Graphql-Codegen](https://www.graphql-code-generator.com/)
-- [Cypress](https://www.cypress.io/)
-
-
-### Backend 
-- [Graphql](https://graphql.org/)
-- [TypeORM](https://typeorm.io/#/)
-- [DataLoader](https://github.com/graphql/dataloader)
-- [Docker](https://www.docker.com/)
-- [Dokku](https://dokku.com/)
-- [Redis](https://redis.io/)
-- [PostgreSQL](https://www.postgresql.org/)
-
-## Build 
-
-[![CI / build (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml)
