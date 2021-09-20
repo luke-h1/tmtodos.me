@@ -15,13 +15,10 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { Upload, Delete } from '../utils/s3';
 import { Todo } from '../entities/Todo';
 import { MyContext } from '../shared/types';
 import { User } from '../entities/User';
 import { isAuth } from '../middleware/isAuth';
-import { S3TodoImageKey } from '../shared/constants';
 
 @InputType()
 class TodoInput {
@@ -89,14 +86,7 @@ export class todoResolver {
   async createTodo(
     @Arg('input') input: TodoInput,
     @Ctx() { req }: MyContext,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
   ): Promise<Todo> {
-    const { image: s3Image, imageFileName } = await Upload(
-      image.createReadStream,
-      image.filename,
-      S3TodoImageKey,
-    );
-
     const result = await getConnection()
       .createQueryBuilder()
       .insert()
@@ -104,8 +94,6 @@ export class todoResolver {
       .values({
         ...input,
         creatorId: req.session.userId,
-        imageFileName,
-        image: s3Image,
       })
       .returning('*')
       .execute();
@@ -117,22 +105,14 @@ export class todoResolver {
     @Arg('id', () => Int) id: number,
     @Arg('title') title: string,
     @Arg('text') text: string,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<Todo | null> {
-    const { image: s3Image, imageFileName } = await Upload(
-      image.createReadStream,
-      image.filename,
-      S3TodoImageKey,
-    );
     const result = await getConnection()
       .createQueryBuilder()
       .update(Todo)
       .set({
         title,
         text,
-        image: s3Image,
-        imageFileName,
       })
       .where('id = :id and "creatorId" = :creatorId', {
         id,
@@ -151,7 +131,6 @@ export class todoResolver {
   ): Promise<boolean> {
     const todo = await Todo.findOne(id);
     if (todo) {
-      await Delete(todo.imageFileName);
       await Todo.delete({ id, creatorId: req.session.userId });
     }
     return true;

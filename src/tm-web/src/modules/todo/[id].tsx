@@ -50,10 +50,6 @@ const SingleTodo: React.FC<SingleTodoProps> = () => {
           <h1 className="text-3xl dark:text-gray-300">{data?.todo?.title}</h1>
         </div>
         <div className="flex flex-col justify-between mt-2 mb-5" />
-        <div className="mt-10 overflow-hidden rounded-2xl text-[0px]">
-          <img src={data?.todo?.image} alt={data?.todo?.title} />
-        </div>
-
         <hr />
 
         <div className="prose dark:prose-dark max-w-md w-full">
