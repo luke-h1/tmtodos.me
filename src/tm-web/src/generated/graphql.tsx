@@ -5,10 +5,12 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -29,30 +31,14 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createTodo: Todo;
-  updateTodo?: Maybe<Todo>;
-  deleteTodo: Scalars['Boolean'];
   changePassword: UserResponse;
+  createTodo: Todo;
+  deleteTodo: Scalars['Boolean'];
   forgotPassword: Scalars['Boolean'];
-  register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-};
-
-export type MutationCreateTodoArgs = {
-  image?: Maybe<Scalars['Upload']>;
-  input: TodoInput;
-};
-
-export type MutationUpdateTodoArgs = {
-  image?: Maybe<Scalars['Upload']>;
-  text: Scalars['String'];
-  title: Scalars['String'];
-  id: Scalars['Int'];
-};
-
-export type MutationDeleteTodoArgs = {
-  id: Scalars['Int'];
+  register: UserResponse;
+  updateTodo?: Maybe<Todo>;
 };
 
 export type MutationChangePasswordArgs = {
@@ -60,8 +46,21 @@ export type MutationChangePasswordArgs = {
   token: Scalars['String'];
 };
 
+export type MutationCreateTodoArgs = {
+  input: TodoInput;
+};
+
+export type MutationDeleteTodoArgs = {
+  id: Scalars['Int'];
+};
+
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
+};
+
+export type MutationLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type MutationRegisterArgs = {
@@ -69,22 +68,27 @@ export type MutationRegisterArgs = {
   options: UsernamePasswordInput;
 };
 
-export type MutationLoginArgs = {
-  password: Scalars['String'];
-  email: Scalars['String'];
+export type MutationUpdateTodoArgs = {
+  id: Scalars['Int'];
+  text: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type PaginatedTodos = {
   __typename?: 'PaginatedTodos';
-  todos: Array<Todo>;
   hasMore: Scalars['Boolean'];
+  todos: Array<Todo>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  todos: PaginatedTodos;
-  todo?: Maybe<Todo>;
   me?: Maybe<User>;
+  todo?: Maybe<Todo>;
+  todos: PaginatedTodos;
+};
+
+export type QueryTodoArgs = {
+  id: Scalars['Int'];
 };
 
 export type QueryTodosArgs = {
@@ -92,34 +96,29 @@ export type QueryTodosArgs = {
   limit: Scalars['Int'];
 };
 
-export type QueryTodoArgs = {
-  id: Scalars['Int'];
-};
-
 export type Todo = {
   __typename?: 'Todo';
-  id: Scalars['Float'];
-  title: Scalars['String'];
-  text: Scalars['String'];
-  creatorId: Scalars['Float'];
-  image: Scalars['String'];
   createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
-  textSnippet: Scalars['String'];
   creator: User;
+  creatorId: Scalars['Float'];
+  id: Scalars['Float'];
+  text: Scalars['String'];
+  textSnippet: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type TodoInput = {
-  title: Scalars['String'];
   text: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['Int'];
-  email: Scalars['String'];
-  image: Scalars['String'];
   createdAt: Scalars['String'];
+  email: Scalars['String'];
+  id: Scalars['Int'];
+  image: Scalars['String'];
   updatedAt: Scalars['String'];
 };
 
@@ -134,105 +133,153 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
-export type ErrorFragment = { __typename?: 'FieldError' } & Pick<
-  FieldError,
-  'field' | 'message'
->;
+export type ErrorFragment = {
+  __typename?: 'FieldError';
+  field: string;
+  message: string;
+};
 
-export type TodoSnippetFragment = { __typename?: 'Todo' } & Pick<
-  Todo,
-  'id' | 'createdAt' | 'updatedAt' | 'title' | 'image' | 'textSnippet'
-> & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'email'> };
+export type TodoSnippetFragment = {
+  __typename?: 'Todo';
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  textSnippet: string;
+  creator: { __typename?: 'User'; id: number; email: string };
+};
 
-export type UserFragmentFragment = { __typename?: 'User' } & Pick<
-  User,
-  'id' | 'email' | 'image'
->;
+export type UserFragmentFragment = {
+  __typename?: 'User';
+  id: number;
+  email: string;
+  image: string;
+};
 
-export type UserResponseFragmentFragment = { __typename?: 'UserResponse' } & {
-  errors?: Maybe<Array<{ __typename?: 'FieldError' } & ErrorFragment>>;
-  user?: Maybe<{ __typename?: 'User' } & UserFragmentFragment>;
+export type UserResponseFragmentFragment = {
+  __typename?: 'UserResponse';
+  errors?: Maybe<
+    Array<{ __typename?: 'FieldError'; field: string; message: string }>
+  >;
+  user?: Maybe<{
+    __typename?: 'User';
+    id: number;
+    email: string;
+    image: string;
+  }>;
 };
 
 export type CreateTodoMutationVariables = Exact<{
   input: TodoInput;
-  image: Scalars['Upload'];
 }>;
 
-export type CreateTodoMutation = { __typename?: 'Mutation' } & {
-  createTodo: { __typename?: 'Todo' } & Pick<
-    Todo,
-    'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'image' | 'creatorId'
-  >;
+export type CreateTodoMutation = {
+  __typename?: 'Mutation';
+  createTodo: {
+    __typename?: 'Todo';
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    title: string;
+    text: string;
+    creatorId: number;
+  };
 };
 
 export type DeleteTodoMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
-export type DeleteTodoMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'deleteTodo'
->;
+export type DeleteTodoMutation = {
+  __typename?: 'Mutation';
+  deleteTodo: boolean;
+};
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'UserResponse' } & UserResponseFragmentFragment;
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login: {
+    __typename?: 'UserResponse';
+    errors?: Maybe<
+      Array<{ __typename?: 'FieldError'; field: string; message: string }>
+    >;
+    user?: Maybe<{
+      __typename?: 'User';
+      id: number;
+      email: string;
+      image: string;
+    }>;
+  };
 };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'logout'
->;
+export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
 
 export type RegisterMutationVariables = Exact<{
   options: UsernamePasswordInput;
   image: Scalars['Upload'];
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation' } & {
-  register: { __typename?: 'UserResponse' } & UserResponseFragmentFragment;
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  register: {
+    __typename?: 'UserResponse';
+    errors?: Maybe<
+      Array<{ __typename?: 'FieldError'; field: string; message: string }>
+    >;
+    user?: Maybe<{
+      __typename?: 'User';
+      id: number;
+      email: string;
+      image: string;
+    }>;
+  };
 };
 
 export type UpdateTodoMutationVariables = Exact<{
   id: Scalars['Int'];
   title: Scalars['String'];
   text: Scalars['String'];
-  image: Scalars['Upload'];
 }>;
 
-export type UpdateTodoMutation = { __typename?: 'Mutation' } & {
-  updateTodo?: Maybe<
-    { __typename?: 'Todo' } & Pick<
-      Todo,
-      'id' | 'title' | 'text' | 'image' | 'textSnippet'
-    >
-  >;
+export type UpdateTodoMutation = {
+  __typename?: 'Mutation';
+  updateTodo?: Maybe<{
+    __typename?: 'Todo';
+    id: number;
+    title: string;
+    text: string;
+    textSnippet: string;
+  }>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<{ __typename?: 'User' } & UserFragmentFragment>;
+export type MeQuery = {
+  __typename?: 'Query';
+  me?: Maybe<{ __typename?: 'User'; id: number; email: string; image: string }>;
 };
 
 export type TodoQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
-export type TodoQuery = { __typename?: 'Query' } & {
-  todo?: Maybe<
-    { __typename?: 'Todo' } & Pick<
-      Todo,
-      'id' | 'createdAt' | 'updatedAt' | 'title' | 'text' | 'image'
-    > & { creator: { __typename?: 'User' } & Pick<User, 'id' | 'email'> }
-  >;
+export type TodoQuery = {
+  __typename?: 'Query';
+  todo?: Maybe<{
+    __typename?: 'Todo';
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    title: string;
+    text: string;
+    creator: { __typename?: 'User'; id: number; email: string };
+  }>;
 };
 
 export type TodosQueryVariables = Exact<{
@@ -240,10 +287,21 @@ export type TodosQueryVariables = Exact<{
   cursor?: Maybe<Scalars['String']>;
 }>;
 
-export type TodosQuery = { __typename?: 'Query' } & {
-  todos: { __typename?: 'PaginatedTodos' } & Pick<PaginatedTodos, 'hasMore'> & {
-      todos: Array<{ __typename?: 'Todo' } & TodoSnippetFragment>;
-    };
+export type TodosQuery = {
+  __typename?: 'Query';
+  todos: {
+    __typename?: 'PaginatedTodos';
+    hasMore: boolean;
+    todos: Array<{
+      __typename?: 'Todo';
+      id: number;
+      createdAt: string;
+      updatedAt: string;
+      title: string;
+      textSnippet: string;
+      creator: { __typename?: 'User'; id: number; email: string };
+    }>;
+  };
 };
 
 export const TodoSnippetFragmentDoc = gql`
@@ -252,7 +310,6 @@ export const TodoSnippetFragmentDoc = gql`
     createdAt
     updatedAt
     title
-    image
     textSnippet
     creator {
       id
@@ -286,14 +343,13 @@ export const UserResponseFragmentFragmentDoc = gql`
   ${UserFragmentFragmentDoc}
 `;
 export const CreateTodoDocument = gql`
-  mutation CreateTodo($input: TodoInput!, $image: Upload!) {
-    createTodo(input: $input, image: $image) {
+  mutation CreateTodo($input: TodoInput!) {
+    createTodo(input: $input) {
       id
       createdAt
       updatedAt
       title
       text
-      image
       creatorId
     }
   }
@@ -353,17 +409,11 @@ export function useRegisterMutation() {
   );
 }
 export const UpdateTodoDocument = gql`
-  mutation UpdateTodo(
-    $id: Int!
-    $title: String!
-    $text: String!
-    $image: Upload!
-  ) {
-    updateTodo(id: $id, title: $title, text: $text, image: $image) {
+  mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
+    updateTodo(id: $id, title: $title, text: $text) {
       id
       title
       text
-      image
       textSnippet
     }
   }
@@ -396,7 +446,6 @@ export const TodoDocument = gql`
       updatedAt
       title
       text
-      image
       creator {
         id
         email

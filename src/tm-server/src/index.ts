@@ -25,7 +25,9 @@ const main = async () => {
     synchronize: !__prod__,
     entities: [User, Todo],
   });
-  await conn.runMigrations();
+  if (process.env.NODE_ENV === 'production') {
+    await conn.runMigrations();
+  }
 
   const app = express();
 
