@@ -35,7 +35,7 @@ const CreateTodoPage: React.FC<{}> = () => {
       />
       <Flex>
         <Formik<FormValues>
-          initialValues={{ title: '', text: '', image: '' }}
+          initialValues={{ title: '', text: '' }}
           onSubmit={async (values) => {
             const { error } = await createTodo({
               input: {

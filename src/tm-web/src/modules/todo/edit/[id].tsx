@@ -72,7 +72,6 @@ const EditPage: React.FC<{}> = () => {
           initialValues={{
             title: data.todo.title,
             text: data.todo.text,
-            image: data.todo.image,
           }}
           onSubmit={async (values) => {
             await updateTodo({

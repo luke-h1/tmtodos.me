@@ -3,32 +3,25 @@ import session from 'express-session';
 import 'dotenv-safe/config';
 import connectRedis from 'connect-redis';
 import express from 'express';
-import path from 'path';
+import { join } from 'path';
 import { ApolloServer } from 'apollo-server-express';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { User } from './entities/User';
-import { Todo } from './entities/Todo';
 import { createUserLoader } from './utils/createUserLoader';
 import { COOKIE_NAME, __prod__ } from './shared/constants';
 import { createSchema } from './shared/createSchema';
 import { redis } from './shared/redis';
 
 const main = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    logging: !__prod__,
-    migrations: [path.join(__dirname, './migrations/*')],
-    synchronize: !__prod__,
-    entities: [User, Todo],
+    logging: true,
+    migrations: [join(__dirname, './migrations/*')],
+    entities: [join(__dirname, './entities/*')],
   });
-  if (process.env.NODE_ENV === 'production') {
-    await conn.runMigrations();
-  }
-
   const app = express();
 
   const RedisStore = connectRedis(session);
