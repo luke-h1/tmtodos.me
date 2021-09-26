@@ -35,13 +35,6 @@ export class Todo extends BaseEntity {
   creator: User;
 
   @Field(() => String)
-  @Column({ nullable: true })
-  image: string;
-
-  @Column({ nullable: true })
-  imageFileName: string;
-
-  @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
 

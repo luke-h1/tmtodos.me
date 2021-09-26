@@ -17,7 +17,6 @@ import { useGetIntId } from '../../../utils/useGetIntId';
 interface FormValues {
   title: string;
   text: string;
-  image: string;
 }
 
 const EditPage: React.FC<{}> = () => {
@@ -73,12 +72,10 @@ const EditPage: React.FC<{}> = () => {
           initialValues={{
             title: data.todo.title,
             text: data.todo.text,
-            image: data.todo.image,
           }}
           onSubmit={async (values) => {
             await updateTodo({
               id: intId,
-              image: values.image,
               title: values.title,
               text: values.text,
             });
@@ -89,7 +86,7 @@ const EditPage: React.FC<{}> = () => {
             router.back();
           }}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ isSubmitting }) => (
             <Form>
               <InputField
                 name="title"
@@ -103,18 +100,6 @@ const EditPage: React.FC<{}> = () => {
                   placeholder="text"
                   label="body"
                   data-testid="body"
-                />
-              </div>
-              <div className="mt-4 mb-4">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={({ target: { validity, files } }) => {
-                    if (validity.valid && files) {
-                      setFieldValue('image', files[0]);
-                      // set 'file' of the form data as files[0]
-                    }
-                  }}
                 />
               </div>
               <button

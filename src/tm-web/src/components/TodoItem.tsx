@@ -7,7 +7,6 @@ interface TodoItemProps {
   textSnippet: string;
   email: string;
   id: number;
-  image: string;
   creatorId: number;
 }
 
@@ -15,7 +14,6 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   title,
   textSnippet,
   email,
-  image,
   id,
   creatorId,
 }) => {
@@ -28,9 +26,6 @@ export const TodoItem: React.FC<TodoItemProps> = ({
               {title}
             </h4>
           </Link>
-        </div>
-        <div className="mt-10 overflow-hidden rounded-2xl text-[0px]">
-          <img src={image} alt={title} />
         </div>
         <p className="text-gray-600 dark:text-gray-500 mb-3 text-left">
           {textSnippet}
