@@ -43,7 +43,6 @@
 - CRUD todos 
 - CRUD user
 - upload profile images (s3)
-- upload todo images (s3)
 
 ## Build 
 
