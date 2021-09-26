@@ -21,7 +21,9 @@ const main = async () => {
     logging: true,
     migrations: [join(__dirname, './migrations/*')],
     entities: [join(__dirname, './entities/*')],
+    synchronize: true,
   });
+  // await conn.runMigrations();
   const app = express();
 
   const RedisStore = connectRedis(session);
