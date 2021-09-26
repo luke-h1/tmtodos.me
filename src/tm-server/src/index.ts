@@ -68,8 +68,8 @@ const main = async () => {
   });
 
   const apolloServer = new ApolloServer({
-    playground: process.env.NODE_ENV !== 'production',
-    uploads: false,
+    // playground: process.env.NODE_ENV !== 'production',
+    // uploads: false,
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
@@ -78,6 +78,7 @@ const main = async () => {
       userLoader: createUserLoader(), // batches SQL requests for users
     }),
   });
+  await apolloServer.start();
   apolloServer.applyMiddleware({ app, cors: false });
   app.listen(process.env.PORT, () => {
     console.log(`Server running on http://localhost:${process.env.PORT} 🚀`);
