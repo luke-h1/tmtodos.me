@@ -9,8 +9,9 @@ import { createConnection } from 'typeorm';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { graphqlUploadExpress } from 'graphql-upload';
+import compression from 'compression';
 import { createUserLoader } from './utils/createUserLoader';
-import { COOKIE_NAME, __prod__ } from './shared/constants';
+import { COOKIE_NAME, isProd } from './shared/constants';
 import { createSchema } from './shared/createSchema';
 import { redis } from './shared/redis';
 
@@ -25,9 +26,10 @@ const main = async () => {
   });
   // await conn.runMigrations();
   const app = express();
+  app.use(compression());
 
   const RedisStore = connectRedis(session);
-  app.set('trust proxy', 1); // Let Express know about nginx proxies
+  app.set('trust proxy', 1);
   app.use(
     cors({
       origin: process.env.CORS_ORIGIN!,
@@ -48,8 +50,8 @@ const main = async () => {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         httpOnly: true,
         sameSite: 'lax', // csrf
-        secure: __prod__, // cookie only works in https
-        domain: __prod__ ? '.tmtodos.me' : undefined, // SSR issues with forwarding cookies
+        secure: isProd,
+        domain: isProd ? '.tmtodos.me' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
