@@ -209,7 +209,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await bcrypt.compare(user.password, password);
+    const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       return {
         errors: [
