@@ -22,6 +22,7 @@
         "prefer-destructuring": "off",
         "func-names": "off",
         "max-len": "off",
+        "no-promise-executor-return": "off",
         "no-return-await": "off",
         "import/prefer-default-export": "off",
         "max-classes-per-file": "off",
