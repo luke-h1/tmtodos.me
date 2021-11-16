@@ -24,6 +24,7 @@
     ],
     "react/jsx-props-no-spreading": "off",
     "react/state-in-constructor": "off",
+    "react/require-default-props": "off",
     "no-unsafe-finally": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "off",
