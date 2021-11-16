@@ -52,12 +52,9 @@
 
 ### Prerequisites
 * This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
-* Ensure you have Node / NPM installed.
-* Ensure Docker is installed & running
-* Ensure you have postgres installed locally
-* Ensure your postgres user has superuser access on the `tmtodos` DB
-* run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
+* Node + NPM installed.
 * Docker (responsible for running Redis & Postgres)
+* run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 
 ### Backend: 
 * Ensure ports `5432` & `6479` are free
