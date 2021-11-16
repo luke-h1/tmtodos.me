@@ -52,17 +52,15 @@
 
 ### Prerequisites
 * This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
-* Ensure you have Node / NPM installed.
-* Ensure Docker is installed & running
-* Ensure you have postgres installed locally
-* Ensure your postgres user has superuser access on the `tmtodos` DB
+* Node + NPM installed.
+* Docker (responsible for running Redis & Postgres)
+* run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 
 ### Backend: 
-* Create a blank postgres database called `tmtodos`
-* run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
+* Ensure ports `5432` & `6479` are free
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
-* To start redis: `docker-compose up`
+* To start redis & the postgres DB: `docker-compose up`
 * to start the backend: `cd src/tm-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
 ### Frontend: 
