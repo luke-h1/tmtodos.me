@@ -7,7 +7,6 @@ import { join } from 'path';
 import { ApolloServer } from 'apollo-server-express';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
-import rateLimit from 'express-rate-limit';
 import { graphqlUploadExpress } from 'graphql-upload';
 import compression from 'compression';
 import { createUserLoader } from './utils/createUserLoader';
@@ -58,16 +57,6 @@ const main = async () => {
       resave: false,
     }),
   );
-
-  const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 15, // limit each IP to 15 requests per windowMs
-    message: 'Too many health check requests',
-  });
-
-  app.get('/api/health', limiter, (_, res) => {
-    res.status(200).json({ status: 'ok' });
-  });
 
   const apolloServer = new ApolloServer({
     // playground: process.env.NODE_ENV !== 'production',
