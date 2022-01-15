@@ -1,4 +1,4 @@
-# [tmtodos.me](tmtodos.me)
+# tmtodos
 
 ![tmtodos.me](https://socialify.git.ci/luke-h1/tmtodos.me/image?language=1&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark)
 
