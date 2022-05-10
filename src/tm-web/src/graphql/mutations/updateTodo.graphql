@@ -1,8 +1,0 @@
-mutation UpdateTodo($id: Int!, $title: String!, $text: String!) {
-  updateTodo(id: $id, title: $title, text: $text) {
-    id
-    title
-    text
-    textSnippet
-  }
-}
