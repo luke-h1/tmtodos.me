@@ -3,7 +3,10 @@
     "target": "ES5",
     "module": "commonjs",
     "lib": [
-      "esnext"
+      "dom",
+      "es6",
+      "es2017",
+      "esnext.asynciterable"
     ],
     "skipLibCheck": true,
     "sourceMap": true,
@@ -24,7 +27,8 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "strictPropertyInitialization": false,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "typeRoots": ["@types", "./node_modules/@types"]
   },
   "exclude": [
     "node_modules"

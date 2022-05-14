@@ -1,8 +1,9 @@
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import { checkAuth } from '../middleware/checkAuth';
 
 dotenv.config();
 
@@ -66,4 +67,67 @@ router.post(
     });
   },
 );
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findFirst({ where: { email } });
+
+  if (!user) {
+    return res.status(401).json({
+      errors: [{ message: "User doesn't exist" }],
+      data: null,
+    });
+  }
+
+  const isValid = await bcrypt.compare(password, user.password);
+
+  if (!isValid) {
+    return res.status(401).json({
+      errors: [{ message: 'Invalid credentials' }],
+      data: null,
+    });
+  }
+
+  const token = await jwt.sign(
+    {
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' },
+  );
+  return res.status(200).json({
+    errors: [],
+    data: {
+      token,
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+    },
+  });
+});
+
+router.get('/me', checkAuth, async (req, res) => {
+  const user = await prisma.user.findFirst({ where: { email: req.user } });
+
+  return res.status(200).json({
+    errors: [],
+    data: {
+      user: {
+        id: user?.id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+        createdAt: user?.createdAt,
+        updatedAt: user?.updatedAt,
+      },
+    },
+  });
+});
+
 export default router;
