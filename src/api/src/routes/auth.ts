@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import * as jwt from 'jsonwebtoken';
+import prisma from '../database/prisma';
 import { checkAuth } from '../middleware/checkAuth';
 
 dotenv.config();
@@ -47,9 +48,13 @@ router.post(
       },
     });
 
-    const token = await jwt.sign({ user: newUser }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const token = await jwt.sign(
+      { user: newUser },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: '1h',
+      },
+    );
 
     return res.status(201).json({
       errors: null,
@@ -71,7 +76,10 @@ router.post(
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await prisma.user.findFirst({ where: { email } });
+  const user = await prisma.user.findFirst({
+    where: { email },
+    include: { todos: true },
+  });
 
   if (!user) {
     return res.status(401).json({
@@ -93,7 +101,7 @@ router.post('/login', async (req, res) => {
     {
       email: user.email,
     },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET as string,
     { expiresIn: '1h' },
   );
   return res.status(200).json({
@@ -113,7 +121,10 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/me', checkAuth, async (req, res) => {
-  const user = await prisma.user.findFirst({ where: { email: req.user } });
+  const user = await prisma.user.findFirst({
+    where: { email: req.user },
+    include: { todos: true },
+  });
 
   return res.status(200).json({
     errors: [],
@@ -125,6 +136,7 @@ router.get('/me', checkAuth, async (req, res) => {
         email: user?.email,
         createdAt: user?.createdAt,
         updatedAt: user?.updatedAt,
+        todos: user?.todos,
       },
     },
   });

@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
-
 import dotenv from 'dotenv';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
+import prisma from '../database/prisma';
 import { checkAuth } from '../middleware/checkAuth';
 
 dotenv.config();
@@ -36,7 +36,7 @@ router.post(
     return res.status(201).json({
       errors: null,
       data: {
-        newTodo,
+        todo: newTodo,
       },
     });
   },

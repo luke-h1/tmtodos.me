@@ -19,7 +19,10 @@ export const checkAuth = async (
   token = token.split(' ')[1];
 
   try {
-    const user = (await jwt.verify(token, process.env.JWT_SECRET)) as User;
+    const user = (await jwt.verify(
+      token,
+      process.env.JWT_SECRET as string,
+    )) as User;
 
     req.user = user.email;
 
