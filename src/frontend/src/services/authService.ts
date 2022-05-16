@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from '../context/AuthContext';
 
 const authService = {
   register: async (
@@ -10,16 +11,10 @@ const authService = {
     errors?: [{ message: string }];
     data: {
       token: string;
-      user: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        createdAt: Date;
-        updatedAt: Date;
-      };
+      user: User;
     };
   }> => {
-    const res = await axios.post(
+    const { data } = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/auth/register`,
       {
         firstName,
@@ -28,7 +23,7 @@ const authService = {
         password,
       },
     );
-    return res.data;
+    return data;
   },
 
   login: async (
@@ -38,23 +33,29 @@ const authService = {
     errors?: [{ message: string }];
     data: {
       token: string;
-      user: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        createdAt: Date;
-        updatedAt: Date;
-      };
+      user: User;
     };
   }> => {
-    const res = await axios.post(
+    const { data } = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/auth/login`,
       {
         email,
         password,
       },
     );
-    return res.data;
+    return data;
+  },
+
+  me: async (): Promise<{
+    errors?: [{ message: string }];
+    data: {
+      user: User;
+    };
+  }> => {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/auth/me`,
+    );
+    return data;
   },
 };
 export default authService;
