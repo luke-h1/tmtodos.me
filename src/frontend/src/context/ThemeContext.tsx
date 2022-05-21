@@ -29,8 +29,9 @@ const storage = {
   set: (value: Theme) => window.localStorage.setItem(KEY, value),
 };
 
-const supportsDarkMode = () =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+const supportsDarkMode = () => {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+};
 
 const useDarkMode = (): [Theme, (theme?: Theme) => void] => {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
@@ -53,7 +54,10 @@ const useDarkMode = (): [Theme, (theme?: Theme) => void] => {
   useEffect(() => {
     const storedTheme = storage.get();
 
-    if (!storedTheme && supportsDarkMode()) {
+    if (
+      !storedTheme &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches === true
+    ) {
       return setThemeEnchanched(Theme.DARK);
     }
 

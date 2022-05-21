@@ -6,6 +6,14 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/testing-library__jest-dom": "^5.9.4",
+    "jest-junit": "^12.0.0",
+    "jest-matcher-utils": "^26.5.2",
+    "jest-mock-extended": "^2.0.4",
+    "jest-resolve": "^26.5.2",
+    "jest-serializer-html": "^7.0.0",
+    "jest-watch-typeahead": "^0.6.1",
+    "babel-jest": "^26.5.2",
     "@types/jest": "^27.5.1",
     "@types/node": "^16.11.35",
     "@types/react": "^18.0.9",
@@ -20,7 +28,7 @@
     "framer-motion": "^6.3.1",
     "gen-env-types": "1.3.4",
     "chalk": "4.1.1",
-    "@emotion/styled": "11.8.1", 
+    "@emotion/styled": "11.8.1",
     "@emotion/react": "11.9.0",
     "@emotion/css": "11.9.0",
     "d3-array": "2.12.0",
@@ -29,19 +37,28 @@
     "prism-react-renderer": "^1.1.1",
     "prismjs": "^1.25.0",
     "reading-time": "1.2.1",
-    "@stitches/react": "^1.2.7"
+    "@stitches/react": "^1.2.7",
+    "react-router-dom": "6.3.0",
+    "cross-fetch": "3.1.5",
+    "intersection-observer": "0.12.0"
   },
   "devDependencies": {
+    "@types/react-router-dom": "5.3.3",
+    "jest-serializer-html": "7.1.0",
     "@types/d3-array": "2.9.0",
+    "babel-jest": "28.1.0",
     "cypress": "9.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
+    "test:watch": "jest --watch",
+    "test:snapshot": "jest --updateSnapshot",
     "eject": "react-scripts eject",
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
-
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +76,78 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "resolver": "jest-pnp-resolver",
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/*.(test).{js,jsx,ts,tsx}",
+      "<rootDir>/test/**/*.(test).{js,jsx,ts,tsx}"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "__data__"
+    ],
+    "testEnvironment": "jsdom",
+    "testURL": "http://localhost",
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^@frontend/(.*)$": "<rootDir>/src/$1",
+      "^@frontend-test/(.*)$": "<rootDir>/../explore-education-statistics-admin/test/$1",
+      "^react$": "<rootDir>/node_modules/react",
+      "^formik$": "<rootDir>/node_modules/formik"
+    },
+    "testRegex": "(/.*|\\.(test))\\.(ts|tsx)$",
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "resetMocks": true,
+    "snapshotSerializers": [
+      "jest-serializer-html"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>"
+    ],
+    "collectCoverage": false,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "html"
+    ],
+    "jest-junit": {
+      "ancestorSeparator": " › ",
+      "suiteName": "Frontend Jest tests",
+      "outputName": "junit-frontend.xml"
+    },
+    "watchPlugins": [
+      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
+      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
     ]
   }
 }
