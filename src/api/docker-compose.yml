@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    container_name: postgres-tmtodos
+    image: 'postgres:latest'
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tmtodos
+    volumes:
+      - .dbdata:/var/lib/postgres
+    expose:
+      - 5432
+
+  redis:
+    image: redis:latest
+    restart: always
+    command: --port 6379
+    expose:
+      - "6379"
+    volumes:
+      - .dbdata:/var/lib/redis
+    ports:
+      - 6379:6379

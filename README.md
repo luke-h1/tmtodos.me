@@ -1,41 +1,32 @@
-# [tmtodos.me](tmtodos.me)
+# tmtodos
 
 ![tmtodos.me](https://socialify.git.ci/luke-h1/tmtodos.me/image?language=1&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark)
 
 
 # Full stack todo app 
 * This project consists of 2 areas: 
-   * tm-web - Next.js frontend
-   * tm-server - Node/GraphQL backend
+   * frontend - React.js frontend
+   * server - Node backend
 
 
 ## Tech stack 
 
 ### General
 - [Lerna](https://lerna.js.org/)
-- [AWS](https://aws.amazon.com/)
 
 ### Frontend
 - [React](https://github.com/facebook/react)
-- [Next](https://github.com/vercel/next.js)
-- [tailwind](http://tailwindcss.com/)
-- [Emotion](https://github.com/emotion-js/emotion)
-- [Polished](https://github.com/styled-components/polished)
-- [React-icons](https://github.com/react-icons/react-icons)
+- [ChakraUI](https://chakra-ui.com/)
 - [Typescript](https://github.com/Microsoft/TypeScript)
 - [Vercel](https://vercel.com/)
-- [Graphql-Codegen](https://www.graphql-code-generator.com/)
 - [Cypress](https://www.cypress.io/)
-
+- React context + hooks for state management
 
 ### Backend 
-- [Graphql](https://graphql.org/)
-- [S3](https://aws.amazon.com/s3/)
-- [TypeORM](https://typeorm.io/#/)
-- [DataLoader](https://github.com/graphql/dataloader)
+- [Express](https://github.com/expressjs)
+- [Prisma](https://www.prisma.io/)
 - [Docker](https://www.docker.com/)
 - [Dokku](https://dokku.com/)
-- [Redis](https://redis.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 
 
@@ -51,29 +42,23 @@
 ## Getting started with local development 
 
 ### Prerequisites
-* This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
+* This project targets Node V16. Ensure you're using Node V14 by using something such as NVM. 
 * Node + NPM installed.
 * Docker (responsible for running Redis & Postgres)
 * run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 
 ### Backend: 
-* Ensure ports `5432` & `6479` are free
+* Ensure ports `5432` & `6379` are free
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
 * To start redis & the postgres DB: `docker-compose up`
-* to start the backend: `cd src/tm-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
+* to start the backend: `cd src/server && npm run prisma:migrate:dev && npm run dev`. This will run migrations & start the server
 
 ### Frontend: 
 * copy the `.env.example ` to `.env.local`. `cp .env.example .env.local`. 
 * run `npm run dev` to start the frontend
 
-### Running backend Migrations 
-* The backend contains 2 commands which are responsible for dealing with migrations. 
-* The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
-* The second one is responsible for running the generated migrations. `typeorm migration:run`
-
 ### Deployment 
-* Backend deployment is done via Dokku & hosted on AWS. Frontend deployment is done via Vercel. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/">blog post</a> if you're interested how I deployed this project 
+* Backend deployment is done via Dokku & hosted on AWS. Frontend deployment is done via Vercel. Take a look at my <a href="https://lhowsam.com/blog/deploying-a-full-stack-app-via-dokku/">blog post</a> if you're interested how I deployed this project in the past
 
 <br />
-

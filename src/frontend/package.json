@@ -1,0 +1,112 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/testing-library__jest-dom": "^5.9.4",
+    "jest-junit": "^12.0.0",
+    "jest-matcher-utils": "^26.5.2",
+    "jest-mock-extended": "^2.0.4",
+    "jest-resolve": "^26.5.2",
+    "date-fns": "2.28.0",
+    "jest-watch-typeahead": "^0.6.1",
+    "babel-jest": "^26.5.2",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^16.11.35",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-scripts": "5.0.1",
+    "yup": "0.32.11",
+    "@fontsource/open-sans": "4.5.10",
+    "@fontsource/raleway": "4.5.8",
+    "typescript": "^4.6.4",
+    "web-vitals": "^2.1.4",
+    "axios": "^0.27.2",
+    "formik": "^2.2.9",
+    "@chakra-ui/react": "2.0.2",
+    "framer-motion": "^6.3.1",
+    "gen-env-types": "1.3.4",
+    "chalk": "4.1.1",
+    "@emotion/styled": "11.8.1",
+    "@emotion/react": "11.9.0",
+    "@chakra-ui/icons": "2.0.0",
+    "@emotion/css": "11.9.0",
+    "globby": "11.0.2",
+    "prismjs": "^1.25.0",
+    "reading-time": "1.2.1",
+    "react-router-dom": "6.3.0",
+    "cross-fetch": "3.1.5",
+    "intersection-observer": "0.12.0"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "5.3.3",
+    "jest-serializer-html": "7.1.0",
+    "@types/d3-array": "2.9.0",
+    "babel-jest": "28.1.0",
+    "cypress": "9.6.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:snapshot": "jest --updateSnapshot",
+    "eject": "react-scripts eject",
+    "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest"
+    },
+
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^@frontend/(.*)$": "<rootDir>/src/$1",
+      "^@frontend-test/(.*)$": "<rootDir>/../explore-education-statistics-admin/test/$1",
+      "^react$": "<rootDir>/node_modules/react",
+      "^formik$": "<rootDir>/node_modules/formik"
+    },
+
+    "resetMocks": true,
+    "snapshotSerializers": [
+      "jest-serializer-html"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "html"
+    ]
+  }
+}
