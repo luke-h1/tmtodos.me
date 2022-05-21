@@ -1,17 +1,17 @@
-import { H1 } from './components/Typography/TypeographyHeading';
-import { ThemeProvider } from './context/ThemeContext';
-import { globalStyles } from './styles/globalStyles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
+import HomePage from './pages/Home';
+import { CSSReset, ThemeProvider } from '@chakra-ui/react';
+import theme from './styles/theme';
 
 const App = () => {
-  globalStyles();
   return (
     <BrowserRouter>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CSSReset />
         <AuthContextProvider>
           <Routes>
-            <Route path="/" element={<H1>Home</H1>} />
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </AuthContextProvider>
       </ThemeProvider>
