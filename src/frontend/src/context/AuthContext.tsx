@@ -6,12 +6,23 @@ enum Role {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
+
+export interface Todo {
+  id: string;
+  title: string;
+  body: string;
+  completed: boolean;
+  userId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface User {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
   role: Role;
+  todos: Todo[];
   loading: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -82,7 +93,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   const contextState: AuthContextState = useMemo(() => {
     return {
       user: state.user,
-      loading: !state.user?.loading as boolean,
+      loading: state?.user?.loading as boolean,
       state,
       setState,
     };

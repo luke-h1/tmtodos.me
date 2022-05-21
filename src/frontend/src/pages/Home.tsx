@@ -1,4 +1,7 @@
+import { Layout } from '../components/Layout';
+import { Wrapper } from '../components/Wrapper';
+
 const Home = () => {
-  return <>hi</>;
+  return <Layout>hi</Layout>;
 };
 export default Home;
