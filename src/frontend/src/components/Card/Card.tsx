@@ -31,3 +31,5 @@ function Card<T>(props: CardProps & CardComposition & T) {
 Card.Header = CardHeader;
 Card.Body = CardBody;
 Card.DisplayName = 'Card';
+
+export default Card;
