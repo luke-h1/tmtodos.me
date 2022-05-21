@@ -11,7 +11,7 @@
     "jest-matcher-utils": "^26.5.2",
     "jest-mock-extended": "^2.0.4",
     "jest-resolve": "^26.5.2",
-    "jest-serializer-html": "^7.0.0",
+    "date-fns": "2.28.0",
     "jest-watch-typeahead": "^0.6.1",
     "babel-jest": "^26.5.2",
     "@types/jest": "^27.5.1",
@@ -54,7 +54,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "jest --coverage",
-    "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "test:watch": "jest --watch",
     "test:snapshot": "jest --updateSnapshot",
     "eject": "react-scripts eject",
@@ -83,25 +82,10 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/*.(test).{js,jsx,ts,tsx}",
-      "<rootDir>/test/**/*.(test).{js,jsx,ts,tsx}"
-    ],
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest"
     },
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "__data__"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
+
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
@@ -113,41 +97,15 @@
       "^react$": "<rootDir>/node_modules/react",
       "^formik$": "<rootDir>/node_modules/formik"
     },
-    "testRegex": "(/.*|\\.(test))\\.(ts|tsx)$",
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
+
     "resetMocks": true,
     "snapshotSerializers": [
       "jest-serializer-html"
     ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>"
-    ],
-    "collectCoverage": false,
     "coverageReporters": [
       "lcov",
       "text",
       "html"
-    ],
-    "jest-junit": {
-      "ancestorSeparator": " › ",
-      "suiteName": "Frontend Jest tests",
-      "outputName": "junit-frontend.xml"
-    },
-    "watchPlugins": [
-      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
-      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
     ]
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { Dictionary } from '../types/util';
+import { Dictionary } from './types/util';
 
 export default function createLocalStorageMock(
   context: Dictionary<string> = {},
