@@ -1,9 +1,10 @@
 import { Button, Checkbox, Spacer } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
 import { InputField } from '../../components/InputField';
 import { Layout } from '../../components/Layout';
 import * as yup from 'yup';
+import todoService from '../../services/todoService';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   title: string;
@@ -18,14 +19,18 @@ const todoCreateSchema = yup.object({
 });
 
 const TodoCreatePage = () => {
-  const [checkedItem, setCheckedItem] = useState<boolean>(false);
+  const navigate = useNavigate();
   return (
     <Layout variant="small">
       <Formik<FormValues>
         initialValues={{ title: '', body: '', completed: false }}
         validationSchema={todoCreateSchema}
         onSubmit={async values => {
-          console.log(values);
+          const { body, completed, title } = values;
+
+          const res = await todoService.create(body, title, completed);
+
+          navigate(`/todo/${res.data.todo.id}`);
         }}
       >
         {({ isSubmitting, setFieldValue }) => (

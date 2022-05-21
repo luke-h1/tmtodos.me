@@ -9,6 +9,23 @@ dotenv.config();
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+  const user = await prisma.user.findFirst({ where: { email: req.user } });
+
+  const todos = await prisma.todo.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  return res.status(200).json({
+    errors: null,
+    data: {
+      todos,
+    },
+  });
+});
+
 router.post(
   '/',
   body('title').isString().withMessage('title is a required field'),
