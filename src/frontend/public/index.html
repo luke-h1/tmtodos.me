@@ -12,9 +12,65 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
+    <link
+      rel="preload"
+      href="/fonts/inter-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-var-latin-italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/fira-code.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk-SemiBold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
   </head>
-  <body>
+  <body className="tmtodos-light">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <script key="tmtodos-theme">
+      (function () {
+        try {
+          var mode = localStorage.getItem('mode');
+          var supportDarkMode =
+            window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+          if (!mode && supportDarkMode)
+            document.body.classList.add('tmtodos-dark');
+          if (!mode) return;
+          document.body.classList.add('tmtodos-' + mode);
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>
