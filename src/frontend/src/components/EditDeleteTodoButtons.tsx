@@ -12,7 +12,7 @@ interface Props {
 const EditDeleteTodoButtons = ({ id, userId }: Props) => {
   return (
     <Box>
-      <Link to={`/todo/${id}`}>
+      <Link to={`/todo/update/${id}`}>
         <IconButton
           as={ChakraLink}
           mr={4}

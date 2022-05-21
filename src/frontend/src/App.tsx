@@ -8,6 +8,7 @@ import LoginPage from './pages/Login';
 import TodoCreatePage from './pages/todos/create';
 import ProtectedRoute from './components/ProtectedRoute';
 import TodoUpdatePage from './pages/todos/update';
+import TodoSlugPage from './pages/todos/slug';
 
 const App = () => {
   return (
@@ -25,7 +26,11 @@ const App = () => {
             </Route>
 
             <Route path="/todo/:id" element={<ProtectedRoute />}>
-              <Route path="/todo/:id" element={<TodoUpdatePage />} />
+              <Route path="/todo/:id" element={<TodoSlugPage />} />
+            </Route>
+
+            <Route path="/todo/update/:id" element={<ProtectedRoute />}>
+              <Route path="/todo/update/:id" element={<TodoUpdatePage />} />
             </Route>
           </Routes>
         </AuthContextProvider>
