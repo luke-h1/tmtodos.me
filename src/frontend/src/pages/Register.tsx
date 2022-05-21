@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
 import authService from '../services/authService';
+import * as yup from 'yup';
 
 interface FormValues {
   firstName: string;
@@ -13,11 +14,19 @@ interface FormValues {
   password: string;
 }
 
+const registerSchema = yup.object({
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  email: yup.string().email().required('Email is required'),
+  password: yup.string().required('Password is required').min(6).max(70),
+});
+
 const RegisterPage = () => {
   const navigate = useNavigate();
   return (
     <Wrapper variant="small">
       <Formik<FormValues>
+        validationSchema={registerSchema}
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
           const { firstName, lastName, email, password } = values;

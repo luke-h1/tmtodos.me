@@ -6,6 +6,12 @@ import { Wrapper } from '../components/Wrapper';
 import authService from '../services/authService';
 import axios from 'axios';
 import { useAuthContext } from '../context/AuthContext';
+import * as yup from 'yup';
+
+const loginSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required().min(6).max(70),
+});
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,6 +20,7 @@ const LoginPage = () => {
   return (
     <Wrapper variant="small">
       <Formik
+        validationSchema={loginSchema}
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
           const { email, password } = values;

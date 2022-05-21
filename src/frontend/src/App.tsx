@@ -5,6 +5,8 @@ import { CSSReset, ThemeProvider } from '@chakra-ui/react';
 import theme from './styles/theme';
 import RegisterPage from './pages/Register';
 import LoginPage from './pages/Login';
+import TodoCreatePage from './pages/todos/create';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -16,6 +18,10 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+
+            <Route path="/todo/create" element={<ProtectedRoute />}>
+              <Route path="/todo/create" element={<TodoCreatePage />} />
+            </Route>
           </Routes>
         </AuthContextProvider>
       </ThemeProvider>
