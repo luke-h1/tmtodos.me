@@ -33,17 +33,22 @@ const todoService = {
     );
     return data;
   },
-  getTodos: async () => {
+  getTodos: async (): Promise<{ errors?: string; data: { todos: Todo[] } }> => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/todo`,
     );
     return data;
   },
-  getTodo: async (id: string) => {
+  getTodo: async (
+    id: string,
+  ): Promise<{ errors?: string; data: { todo: Todo } }> => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/todo/${id}`,
     );
     return data;
+  },
+  deleteTodo: async (id: number): Promise<void> => {
+    await axios.delete(`${process.env.REACT_APP_API_URL}/api/todo/${id}`);
   },
 };
 export default todoService;

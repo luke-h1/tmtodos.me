@@ -13,8 +13,8 @@ export interface Todo {
   body: string;
   completed: boolean;
   userId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface User {
   id: string;
@@ -24,8 +24,8 @@ export interface User {
   role: Role;
   todos: Todo[];
   loading: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface State {
@@ -88,7 +88,7 @@ export const AuthContextProvider = ({ children }: Props) => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   const contextState: AuthContextState = useMemo(() => {
     return {

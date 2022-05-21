@@ -7,6 +7,7 @@ import RegisterPage from './pages/Register';
 import LoginPage from './pages/Login';
 import TodoCreatePage from './pages/todos/create';
 import ProtectedRoute from './components/ProtectedRoute';
+import TodoUpdatePage from './pages/todos/update';
 
 const App = () => {
   return (
@@ -21,6 +22,10 @@ const App = () => {
 
             <Route path="/todo/create" element={<ProtectedRoute />}>
               <Route path="/todo/create" element={<TodoCreatePage />} />
+            </Route>
+
+            <Route path="/todo/:id" element={<ProtectedRoute />}>
+              <Route path="/todo/:id" element={<TodoUpdatePage />} />
             </Route>
           </Routes>
         </AuthContextProvider>
