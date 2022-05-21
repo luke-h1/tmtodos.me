@@ -30,11 +30,6 @@
 - [PostgreSQL](https://www.postgresql.org/)
 
 
-### Features 
-- CRUD todos 
-- CRUD user
-- upload profile images (s3)
-
 ## Build 
 
 [![CI / build (push / pull)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml/badge.svg)](https://github.com/luke-h1/tmtodos.me/actions/workflows/build.yml)
