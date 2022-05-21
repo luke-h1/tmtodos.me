@@ -1,10 +1,9 @@
 import { User } from '@prisma/client';
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import jwt from 'jsonwebtoken';
-import { IRequest } from '../types/express';
 
 export const checkAdmin = async (
-  req: IRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
@@ -29,7 +28,7 @@ export const checkAdmin = async (
     });
 
     if (maybeAdminUser?.Role === 'ADMIN') {
-      req.user = user;
+      req.user = user.email;
       next();
     } else {
       return res.status(401).json({
