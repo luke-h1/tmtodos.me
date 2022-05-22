@@ -31,6 +31,7 @@ const todoService = {
         completed,
       },
     );
+    console.log(data);
     return data.data;
   },
   getTodos: async (): Promise<{ errors?: string; data: { todos: Todo[] } }> => {

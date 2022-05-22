@@ -13,7 +13,6 @@ const Card = ({ todo }: Props) => {
   return (
     <>
       <Box
-        key={todo.id}
         maxW={'445px'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}

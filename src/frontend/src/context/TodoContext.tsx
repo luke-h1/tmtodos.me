@@ -56,7 +56,7 @@ export const TodoContextProvider = ({ children }: Props) => {
   const getTodos = async (): Promise<Todo[]> => {
     const res = await todoService.getTodos();
 
-    if (res.data.todos.length) {
+    if (res.data.todos) {
       setState({
         ready: true,
         todos: res.data.todos,
@@ -89,18 +89,24 @@ export const TodoContextProvider = ({ children }: Props) => {
 
     setState({
       ready: true,
-      todos: [...(state.todos as Todo[]), res.data.todo],
+      todo: res.data.todo,
+      todos: [],
       loading: false,
     });
     return res.data.todo;
   };
 
-  const updateTodo = async (id: number): Promise<Todo> => {
-    const todo = await todoService.update(id);
+  const updateTodo = async (
+    id: number,
+    title?: string,
+    body?: string,
+    completed?: boolean,
+  ): Promise<Todo> => {
+    const todo = await todoService.update(id, title, body, completed);
     if (todo) {
       setState({
         ready: true,
-        todos: [...(state.todos as Todo[]), todo],
+        todos: [],
         todo,
         loading: false,
       });
@@ -114,8 +120,7 @@ export const TodoContextProvider = ({ children }: Props) => {
       ready: true,
       loading: false,
       todo: state.todo,
-      // filter out todos that don't match the id
-      todos: (state.todos as Todo[]).filter(todo => todo.id !== id),
+      todos: state.todos?.filter(todo => todo.id !== id),
     });
   };
 
@@ -143,7 +148,7 @@ export const TodoContextProvider = ({ children }: Props) => {
 export function useTodoContext() {
   const context = useContext(TodoContext);
 
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useTodoContext must be used within a TodoContextProvider');
   }
 

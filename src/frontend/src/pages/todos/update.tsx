@@ -22,7 +22,6 @@ const todoCreateSchema = yup.object({
 const TodoUpdatePage = () => {
   const params = useParams();
   const { state, getTodo, updateTodo } = useTodoContext();
-
   useEffect(() => {
     getTodo(parseInt(params.id as string, 10));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,6 +76,7 @@ const TodoUpdatePage = () => {
               mt={4}
               type="submit"
               isLoading={isSubmitting}
+              disabled={isSubmitting}
               variant="teal"
             >
               Update todo
