@@ -47,7 +47,6 @@
     "@types/react-router-dom": "5.3.3",
     "jest-serializer-html": "7.1.0",
     "@types/d3-array": "2.9.0",
-    "babel-jest": "28.1.0",
     "cypress": "9.6.1"
   },
   "scripts": {

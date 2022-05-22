@@ -1,11 +1,11 @@
-import { Todo } from '../../context/AuthContext';
 import Card from '../Card';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { Todo, TodoContextProvider } from '../../context/TodoContext';
 
 describe('card', () => {
   const mockTodo: Todo = {
-    id: '1',
+    id: 1,
     title: 'title',
     body: 'todo body',
     completed: false,
@@ -17,7 +17,9 @@ describe('card', () => {
   it('renders a card with a full todo', () => {
     render(
       <BrowserRouter>
-        <Card todo={mockTodo} />
+        <TodoContextProvider>
+          <Card todo={mockTodo} />
+        </TodoContextProvider>
       </BrowserRouter>,
     );
 
