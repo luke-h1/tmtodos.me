@@ -93,10 +93,7 @@
     ],
     "moduleNameMapper": {
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "^@frontend/(.*)$": "<rootDir>/src/$1",
-      "^@frontend-test/(.*)$": "<rootDir>/../explore-education-statistics-admin/test/$1",
-      "^react$": "<rootDir>/node_modules/react",
-      "^formik$": "<rootDir>/node_modules/formik"
+      "^@frontend/(.*)$": "<rootDir>/src/$1"
     },
 
     "resetMocks": true,

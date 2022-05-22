@@ -18,6 +18,7 @@ const Card = ({ todo }: Props) => {
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
+        data-testid="todo-card"
         overflow={'hidden'}
       >
         <Stack>
@@ -38,7 +39,9 @@ const Card = ({ todo }: Props) => {
             {todo.body}
           </Heading>
         </Stack>
-        <Text fontWeight={600}>{todo.completed}</Text>
+        <Text fontWeight={600} data-testid="todo-completed">
+          {todo.completed}
+        </Text>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
           <Stack direction={'column'} spacing={0} fontSize={'sm'}>
             <Text color={'gray.500'}>
