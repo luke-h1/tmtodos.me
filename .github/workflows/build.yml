@@ -30,8 +30,8 @@ jobs:
       - name: lint
         run: yarn lint
 
-      # - name: jest
-      #   run: yarn test
+      - name: jest
+        run: yarn workspace frontend test
 
       - name: tsc
         run: yarn tsc

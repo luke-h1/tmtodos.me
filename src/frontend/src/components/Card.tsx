@@ -39,9 +39,7 @@ const Card = ({ todo }: Props) => {
             {todo.body}
           </Heading>
         </Stack>
-        <Text fontWeight={600} data-testid="todo-completed">
-          {todo.completed}
-        </Text>
+        <Text fontWeight={600}>{todo.completed}</Text>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
           <Stack direction={'column'} spacing={0} fontSize={'sm'}>
             <Text color={'gray.500'}>
