@@ -3,6 +3,7 @@ import { Todo } from '../context/AuthContext';
 import { format, parseISO } from 'date-fns';
 import EditDeleteTodoButtons from './EditDeleteTodoButtons';
 import { Link } from 'react-router-dom';
+import todoService from '../services/todoService';
 
 interface Props {
   todo: Todo;
@@ -55,6 +56,9 @@ const Card = ({ todo }: Props) => {
             key={todo.id}
             id={parseInt(todo.id, 10)}
             userId={todo.userId}
+            onDelete={async () => {
+              await todoService.deleteTodo(parseInt(todo.id, 10));
+            }}
           />
         </Box>
       </Box>

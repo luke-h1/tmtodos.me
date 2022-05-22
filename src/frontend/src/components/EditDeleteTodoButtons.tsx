@@ -2,14 +2,14 @@ import React from 'react';
 import { Box, IconButton, Link as ChakraLink } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import todoService from '../services/todoService';
 
 interface Props {
   id: number;
   userId: number;
+  onDelete: (id: number) => void;
 }
 
-const EditDeleteTodoButtons = ({ id, userId }: Props) => {
+const EditDeleteTodoButtons = ({ id, userId, onDelete }: Props) => {
   return (
     <Box>
       <Link to={`/todo/update/${id}`}>
@@ -23,9 +23,8 @@ const EditDeleteTodoButtons = ({ id, userId }: Props) => {
       <IconButton
         icon={<DeleteIcon />}
         aria-label="Delete todo"
-        onClick={async () => {
-          await todoService.deleteTodo(id);
-        }}
+        data-testid="delete-todo"
+        onClick={() => onDelete(id)}
       />
     </Box>
   );
