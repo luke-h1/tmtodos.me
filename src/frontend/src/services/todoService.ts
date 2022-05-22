@@ -22,7 +22,7 @@ const todoService = {
     body?: string,
     title?: string,
     completed?: boolean,
-  ): Promise<{ errors?: string; data: { todo: Todo } }> => {
+  ): Promise<Todo> => {
     const { data } = await axios.put(
       `${process.env.REACT_APP_API_URL}/api/todo/${id}`,
       {
@@ -31,7 +31,7 @@ const todoService = {
         completed,
       },
     );
-    return data;
+    return data.data;
   },
   getTodos: async (): Promise<{ errors?: string; data: { todos: Todo[] } }> => {
     const { data } = await axios.get(

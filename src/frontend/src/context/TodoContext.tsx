@@ -63,7 +63,6 @@ export const TodoContextProvider = ({ children }: Props) => {
         loading: false,
       });
     }
-    console.log(res.data.todos);
     return res.data.todos;
   };
 
@@ -97,27 +96,26 @@ export const TodoContextProvider = ({ children }: Props) => {
   };
 
   const updateTodo = async (id: number): Promise<Todo> => {
-    const res = await todoService.update(id);
-
-    if (res.data.todo) {
+    const todo = await todoService.update(id);
+    if (todo) {
       setState({
         ready: true,
-        todos: [...(state.todos as Todo[]), res.data.todo],
-        todo: res.data.todo,
+        todos: [...(state.todos as Todo[]), todo],
+        todo,
         loading: false,
       });
     }
-    return res.data.todo;
+    return todo;
   };
 
   const deleteTodo = async (id: number) => {
     await todoService.deleteTodo(id);
-
     setState({
       ready: true,
       loading: false,
       todo: state.todo,
-      todos: state?.todos?.filter(todo => todo.id !== id),
+      // filter out todos that don't match the id
+      todos: (state.todos as Todo[]).filter(todo => todo.id !== id),
     });
   };
 

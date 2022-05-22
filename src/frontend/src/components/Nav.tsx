@@ -12,12 +12,12 @@ import { useAuthContext } from '../context/AuthContext';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const { loading, user, setState } = useAuthContext();
+  const { loading, state, setState } = useAuthContext();
 
   let body = null;
 
   // user not logged in
-  if (!loading && !user) {
+  if (!loading && !state.user) {
     body = (
       <>
         <Link to="/login">
@@ -32,7 +32,7 @@ const Nav = () => {
   } else {
     body = (
       <Flex align="center">
-        <Box mr={2}>{user?.email}</Box>
+        <Box mr={2}>{state.user?.email}</Box>
         <Button
           onClick={() => {
             setState({

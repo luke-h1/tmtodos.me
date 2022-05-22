@@ -36,6 +36,13 @@ interface AuthContextState {
   loading: boolean;
   state: State;
   setState: React.Dispatch<React.SetStateAction<State>>;
+  register: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextState | undefined>(
@@ -76,6 +83,47 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   };
 
+  const register = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => {
+    const { data } = await authService.register(
+      firstName,
+      lastName,
+      email,
+      password,
+    );
+
+    if (data && data.user) {
+      setState({
+        ready: true,
+        user: data.user,
+      });
+      localStorage.setItem('token', data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    const { data } = await authService.login(email, password);
+
+    if (data && data.user) {
+      setState({
+        ready: true,
+        user: data.user,
+      });
+      localStorage.setItem('token', data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    } else {
+      setState({
+        user: undefined,
+        ready: true,
+      });
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetchUser();
@@ -94,6 +142,8 @@ export const AuthContextProvider = ({ children }: Props) => {
       loading: state?.user?.loading as boolean,
       state,
       setState,
+      register,
+      login,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user]);

@@ -52,7 +52,6 @@ const TodoUpdatePage = () => {
             title,
             completed,
           );
-
           navigate(`/todo/${todo.id}`);
         }}
       >

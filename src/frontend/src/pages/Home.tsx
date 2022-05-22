@@ -6,6 +6,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { useTodoContext } from '../context/TodoContext';
 
 const Home = () => {
+  const { state: authState } = useAuthContext();
   const { getTodos, state } = useTodoContext();
 
   useEffect(() => {
@@ -16,7 +17,8 @@ const Home = () => {
   return (
     <Layout>
       <Stack>
-        {state.todos &&
+        {authState?.user?.email &&
+          state.todos &&
           state.todos.map(todo => <Card key={todo.id} todo={todo} />)}
       </Stack>
     </Layout>

@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import TodoUpdatePage from './pages/todos/update';
 import TodoSlugPage from './pages/todos/slug';
 import { TodoContextProvider } from './context/TodoContext';
+import ForbiddenPage from './pages/forbidden';
 
 const App = () => {
   return (
@@ -19,7 +20,13 @@ const App = () => {
         <AuthContextProvider>
           <TodoContextProvider>
             <Routes>
+              {/* <Route path="/" element={<ProtectedRoute />}>
+                <Route path="/" element={<HomePage />} />
+              </Route> */}
+
               <Route path="/" element={<HomePage />} />
+              <Route path="/forbidden" element={<ForbiddenPage />} />
+
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
 
