@@ -18,7 +18,6 @@ const EditDeleteTodoButtons = ({ id, userId, onDelete }: Props) => {
           mr={4}
           icon={<EditIcon />}
           aria-label="Edit todo"
-          data-testid="edit-todo"
         />
       </Link>
       <IconButton
