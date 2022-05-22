@@ -1,21 +1,19 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import axios from 'axios';
 import authService from '../services/authService';
+import { Todo } from './TodoContext';
 
 enum Role {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
 
-export interface Todo {
-  id: string;
-  title: string;
-  body: string;
-  completed: boolean;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-}
 export interface User {
   id: string;
   firstName: string;
@@ -106,9 +104,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 };
 
 export function useAuthContext() {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuthContext must be used within a AuthProvider');
   }
 

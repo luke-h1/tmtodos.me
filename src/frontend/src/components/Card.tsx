@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Stack, useColorModeValue } from '@chakra-ui/react';
-import { Todo } from '../context/AuthContext';
+import { Todo } from '../context/TodoContext';
 import { format, parseISO } from 'date-fns';
 import EditDeleteTodoButtons from './EditDeleteTodoButtons';
 import { Link } from 'react-router-dom';
@@ -54,10 +54,10 @@ const Card = ({ todo }: Props) => {
         <Box ml="auto">
           <EditDeleteTodoButtons
             key={todo.id}
-            id={parseInt(todo.id, 10)}
+            id={todo.id}
             userId={todo.userId}
             onDelete={async () => {
-              await todoService.deleteTodo(parseInt(todo.id, 10));
+              await todoService.deleteTodo(todo.id);
             }}
           />
         </Box>

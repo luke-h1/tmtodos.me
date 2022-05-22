@@ -32,12 +32,16 @@ router.post(
   body('body').isString().withMessage('body is a required field'),
   checkAuth,
   async (req, res) => {
-    const user = await prisma.user.findFirst({ where: { email: req.user } });
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      const errors = validationErrors.array().map(error => {
+        return {
+          message: error.msg,
+        };
+      });
+      return res.status(422).json({ errors });
     }
+    const user = await prisma.user.findFirst({ where: { email: req.user } });
 
     const { title, body, completed } = req.body;
 

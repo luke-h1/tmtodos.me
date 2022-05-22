@@ -20,9 +20,14 @@ router.post(
     .withMessage('password must be between 6 and 70 characters'),
 
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      const errors = validationErrors.array().map(error => {
+        return {
+          message: error.msg,
+        };
+      });
+      return res.status(422).json({ errors });
     }
 
     const { firstName, lastName, email, password } = req.body;
@@ -73,52 +78,67 @@ router.post(
   },
 );
 
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+router.post(
+  '/login',
+  body('email').isEmail().withMessage('email is a required field'),
+  body('password').isString(),
+  async (req, res) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      const errors = validationErrors.array().map(error => {
+        return {
+          message: error.msg,
+        };
+      });
+      return res.status(422).json({ errors });
+    }
 
-  const user = await prisma.user.findFirst({
-    where: { email },
-    include: { todos: true },
-  });
+    const { email, password } = req.body;
 
-  if (!user) {
-    return res.status(401).json({
-      errors: [{ message: "User doesn't exist" }],
-      data: null,
+    const user = await prisma.user.findFirst({
+      where: { email },
+      include: { todos: true },
     });
-  }
 
-  const isValid = await bcrypt.compare(password, user.password);
+    if (!user) {
+      return res.status(401).json({
+        errors: [{ message: "User doesn't exist" }],
+        data: null,
+      });
+    }
 
-  if (!isValid) {
-    return res.status(401).json({
-      errors: [{ message: 'Invalid credentials' }],
-      data: null,
-    });
-  }
+    const isValid = await bcrypt.compare(password, user.password);
 
-  const token = await jwt.sign(
-    {
-      email: user.email,
-    },
-    process.env.JWT_SECRET as string,
-    { expiresIn: '1h' },
-  );
-  return res.status(200).json({
-    errors: [],
-    data: {
-      token,
-      user: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+    if (!isValid) {
+      return res.status(401).json({
+        errors: [{ message: 'Invalid credentials' }],
+        data: null,
+      });
+    }
+
+    const token = await jwt.sign(
+      {
         email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
       },
-    },
-  });
-});
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' },
+    );
+    return res.status(200).json({
+      errors: [],
+      data: {
+        token,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
+      },
+    });
+  },
+);
 
 router.get('/me', checkAuth, async (req, res) => {
   const user = await prisma.user.findFirst({

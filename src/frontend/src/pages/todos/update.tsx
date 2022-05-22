@@ -5,8 +5,8 @@ import { Layout } from '../../components/Layout';
 import * as yup from 'yup';
 import todoService from '../../services/todoService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Todo } from '../../context/AuthContext';
-import { useState, useEffect } from 'react';
+import { useTodoContext } from '../../context/TodoContext';
+import { useEffect } from 'react';
 
 interface FormValues {
   title: string;
@@ -22,22 +22,16 @@ const todoCreateSchema = yup.object({
 
 const TodoUpdatePage = () => {
   const params = useParams();
-
-  const [todo, setTodo] = useState<Todo | null>(null);
-
-  const fetchTodo = async () => {
-    const todo = await todoService.getTodo(params.id as string);
-    setTodo(todo.data as unknown as Todo);
-  };
+  const { state, getTodo, updateTodo } = useTodoContext();
 
   useEffect(() => {
-    fetchTodo();
+    getTodo(parseInt(params.id as string, 10));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = useNavigate();
 
-  if (!todo) {
+  if (!state.todo) {
     return null;
   }
 
@@ -45,17 +39,22 @@ const TodoUpdatePage = () => {
     <Layout variant="small">
       <Formik<FormValues>
         initialValues={{
-          title: todo.title,
-          body: todo.body,
-          completed: todo.completed,
+          title: state.todo.title,
+          body: state.todo.body,
+          completed: state.todo.completed,
         }}
         validationSchema={todoCreateSchema}
         onSubmit={async values => {
           const { body, completed, title } = values;
 
-          const res = await todoService.update(1, body, title, completed);
+          const todo = await updateTodo(
+            state?.todo?.id as number,
+            body,
+            title,
+            completed,
+          );
 
-          navigate(`/todo/${res.data.todo.id}`);
+          navigate(`/todo/${todo.id}`);
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
