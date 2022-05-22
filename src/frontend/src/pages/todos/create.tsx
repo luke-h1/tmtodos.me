@@ -1,4 +1,4 @@
-import { Button, Checkbox, Spacer } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Spacer } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { InputField } from '../../components/InputField';
 import { Layout } from '../../components/Layout';
@@ -51,14 +51,17 @@ const TodoCreatePage = () => {
             >
               Complete
             </Checkbox>
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              variant="teal"
-            >
-              create todo
-            </Button>
+            <Box>
+              <Button
+                mt={4}
+                colorScheme="blue"
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
+                create todo
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>

@@ -63,6 +63,7 @@ export const TodoContextProvider = ({ children }: Props) => {
         loading: false,
       });
     }
+    console.log(res.data.todos);
     return res.data.todos;
   };
 
@@ -73,7 +74,7 @@ export const TodoContextProvider = ({ children }: Props) => {
       setState({
         ready: true,
         todo,
-        todos: [todo, ...(state.todos as Todo[])],
+        todos: [...(state.todos as Todo[]), todo],
         loading: false,
       });
     }
@@ -87,13 +88,11 @@ export const TodoContextProvider = ({ children }: Props) => {
   ): Promise<Todo> => {
     const res = await todoService.create(title, body, completed);
 
-    if (res.data.todo) {
-      setState({
-        ready: true,
-        todos: [res.data.todo, ...(state.todos as Todo[])],
-        loading: false,
-      });
-    }
+    setState({
+      ready: true,
+      todos: [...(state.todos as Todo[]), res.data.todo],
+      loading: false,
+    });
     return res.data.todo;
   };
 
@@ -103,7 +102,7 @@ export const TodoContextProvider = ({ children }: Props) => {
     if (res.data.todo) {
       setState({
         ready: true,
-        todos: [res.data.todo, ...(state.todos as Todo[])],
+        todos: [...(state.todos as Todo[]), res.data.todo],
         todo: res.data.todo,
         loading: false,
       });
@@ -117,6 +116,7 @@ export const TodoContextProvider = ({ children }: Props) => {
     setState({
       ready: true,
       loading: false,
+      todo: state.todo,
       todos: state?.todos?.filter(todo => todo.id !== id),
     });
   };

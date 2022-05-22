@@ -1,18 +1,19 @@
 import { Box, Heading, Text, Stack, useColorModeValue } from '@chakra-ui/react';
-import { Todo } from '../context/TodoContext';
+import { Todo, useTodoContext } from '../context/TodoContext';
 import { format, parseISO } from 'date-fns';
 import EditDeleteTodoButtons from './EditDeleteTodoButtons';
 import { Link } from 'react-router-dom';
-import todoService from '../services/todoService';
 
 interface Props {
   todo: Todo;
 }
 
 const Card = ({ todo }: Props) => {
+  const { deleteTodo } = useTodoContext();
   return (
-    <Link to={`/todo/${todo.id}`}>
+    <>
       <Box
+        key={todo.id}
         maxW={'445px'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
@@ -22,24 +23,27 @@ const Card = ({ todo }: Props) => {
         data-testid="todo-card"
         overflow={'hidden'}
       >
-        <Stack>
-          <Text
-            color={'green.500'}
-            textTransform={'uppercase'}
-            fontWeight={800}
-            fontSize={'sm'}
-            letterSpacing={1.1}
-          >
-            {todo.title}
-          </Text>
-          <Heading
-            color={useColorModeValue('gray.700', 'white')}
-            fontSize={'2xl'}
-            fontFamily={'body'}
-          >
-            {todo.body}
-          </Heading>
-        </Stack>
+        <Link to={`/todo/${todo.id}`}>
+          <Stack>
+            <Text
+              color={'green.500'}
+              textTransform={'uppercase'}
+              fontWeight={800}
+              fontSize={'sm'}
+              letterSpacing={1.1}
+            >
+              {todo.title}
+            </Text>
+            <Heading
+              color={useColorModeValue('gray.700', 'white')}
+              fontSize={'2xl'}
+              fontFamily={'body'}
+            >
+              {todo.body}
+            </Heading>
+          </Stack>
+        </Link>
+
         <Text fontWeight={600}>{todo.completed}</Text>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
           <Stack direction={'column'} spacing={0} fontSize={'sm'}>
@@ -57,12 +61,12 @@ const Card = ({ todo }: Props) => {
             id={todo.id}
             userId={todo.userId}
             onDelete={async () => {
-              await todoService.deleteTodo(todo.id);
+              await deleteTodo(todo.id);
             }}
           />
         </Box>
       </Box>
-    </Link>
+    </>
   );
 };
 export default Card;

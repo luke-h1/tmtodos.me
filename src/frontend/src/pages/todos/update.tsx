@@ -3,7 +3,6 @@ import { Form, Formik } from 'formik';
 import { InputField } from '../../components/InputField';
 import { Layout } from '../../components/Layout';
 import * as yup from 'yup';
-import todoService from '../../services/todoService';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTodoContext } from '../../context/TodoContext';
 import { useEffect } from 'react';
@@ -48,7 +47,7 @@ const TodoUpdatePage = () => {
           const { body, completed, title } = values;
 
           const todo = await updateTodo(
-            state?.todo?.id as number,
+            parseInt(params.id as string, 10),
             body,
             title,
             completed,

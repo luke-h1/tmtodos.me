@@ -47,6 +47,11 @@ const Nav = () => {
         >
           Logout
         </Button>
+        <Box ml={5}>
+          <Link to="/todo/create">
+            <ChakraLink mr={2}>Create Todo</ChakraLink>
+          </Link>
+        </Box>
       </Flex>
     );
   }

@@ -2,6 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import Card from '../components/Card';
 import { Layout } from '../components/Layout';
+import { useAuthContext } from '../context/AuthContext';
 import { useTodoContext } from '../context/TodoContext';
 
 const Home = () => {
