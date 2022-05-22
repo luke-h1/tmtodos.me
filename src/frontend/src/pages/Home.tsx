@@ -1,25 +1,25 @@
 import { Stack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Card from '../components/Card';
 import { Layout } from '../components/Layout';
-import { Todo } from '../context/AuthContext';
-import todoService from '../services/todoService';
+import { useAuthContext } from '../context/AuthContext';
+import { useTodoContext } from '../context/TodoContext';
 
 const Home = () => {
-  const [todos, setTodos] = useState<Todo[] | null>(null);
-  const fetchTodos = async () => {
-    const res = await todoService.getTodos();
-    console.log(res.data);
-    setTodos(res.data.todos);
-  };
+  const { state: authState } = useAuthContext();
+  const { getTodos, state } = useTodoContext();
 
   useEffect(() => {
-    fetchTodos();
+    getTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <Layout>
       <Stack>
-        {todos && todos.map(todo => <Card key={todo.id} todo={todo} />)}
+        {authState?.user?.email &&
+          state.todos &&
+          state.todos.map(todo => <Card key={todo.id} todo={todo} />)}
       </Stack>
     </Layout>
   );

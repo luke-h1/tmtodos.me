@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Todo } from '../context/AuthContext';
+import { Todo } from '../context/TodoContext';
 
 const todoService = {
   create: async (
@@ -22,7 +22,7 @@ const todoService = {
     body?: string,
     title?: string,
     completed?: boolean,
-  ) => {
+  ): Promise<Todo> => {
     const { data } = await axios.put(
       `${process.env.REACT_APP_API_URL}/api/todo/${id}`,
       {
@@ -31,7 +31,8 @@ const todoService = {
         completed,
       },
     );
-    return data;
+    console.log(data);
+    return data.data;
   },
   getTodos: async (): Promise<{ errors?: string; data: { todos: Todo[] } }> => {
     const { data } = await axios.get(
@@ -39,13 +40,11 @@ const todoService = {
     );
     return data;
   },
-  getTodo: async (
-    id: string,
-  ): Promise<{ errors?: string; data: { todo: Todo } }> => {
+  getTodo: async (id: number): Promise<Todo> => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/todo/${id}`,
     );
-    return data;
+    return data.data;
   },
   deleteTodo: async (id: number): Promise<void> => {
     await axios.delete(`${process.env.REACT_APP_API_URL}/api/todo/${id}`);

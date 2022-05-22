@@ -1,9 +1,11 @@
 /* eslint-disable no-shadow */
 import dotenv from 'dotenv';
 import express from 'express';
-import { body, validationResult } from 'express-validator';
+import { body, validationResult, buildCheckFunction } from 'express-validator';
 import prisma from '../database/prisma';
 import { checkAuth } from '../middleware/checkAuth';
+
+const checkParams = buildCheckFunction(['params']);
 
 dotenv.config();
 
@@ -32,12 +34,16 @@ router.post(
   body('body').isString().withMessage('body is a required field'),
   checkAuth,
   async (req, res) => {
-    const user = await prisma.user.findFirst({ where: { email: req.user } });
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      const errors = validationErrors.array().map(error => {
+        return {
+          message: error.msg,
+        };
+      });
+      return res.status(422).json({ errors });
     }
+    const user = await prisma.user.findFirst({ where: { email: req.user } });
 
     const { title, body, completed } = req.body;
 
@@ -59,7 +65,17 @@ router.post(
   },
 );
 
-router.put('/:id', checkAuth, async (req, res) => {
+router.put('/:id', checkParams('id').isInt(), checkAuth, async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.array().map(error => {
+      return {
+        message: error.msg,
+      };
+    });
+    return res.status(422).json({ errors });
+  }
+
   const user = await prisma.user.findFirst({ where: { email: req.user } });
 
   const todo = await prisma.todo.findFirst({
@@ -91,11 +107,21 @@ router.put('/:id', checkAuth, async (req, res) => {
   });
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', checkParams('id').isInt(), async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.array().map(error => {
+      return {
+        message: error.msg,
+      };
+    });
+    return res.status(422).json({ errors });
+  }
+
   const user = await prisma.user.findFirst({ where: { email: req.user } });
 
   const todo = await prisma.todo.findFirst({
-    where: { id: parseInt(req.params.id, 10), userId: user?.id },
+    where: { id: parseInt(req?.params?.id, 10), userId: user?.id },
   });
 
   if (!todo) {
@@ -110,11 +136,21 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkParams('id').isInt(), async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.array().map(error => {
+      return {
+        message: error.msg,
+      };
+    });
+    return res.status(422).json({ errors });
+  }
+
   const user = await prisma.user.findFirst({ where: { email: req.user } });
 
   const todo = await prisma.todo.findFirst({
-    where: { id: parseInt(req.params.id, 10), userId: user?.id },
+    where: { id: parseInt(req?.params?.id, 10), userId: user?.id },
   });
 
   if (!todo) {
@@ -125,7 +161,7 @@ router.delete('/:id', async (req, res) => {
 
   await prisma.todo.delete({
     where: {
-      id: parseInt(req.params.id, 10),
+      id: parseInt(req?.params?.id, 10),
     },
   });
 

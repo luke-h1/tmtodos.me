@@ -1,21 +1,19 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import axios from 'axios';
 import authService from '../services/authService';
+import { Todo } from './TodoContext';
 
 enum Role {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
 
-export interface Todo {
-  id: string;
-  title: string;
-  body: string;
-  completed: boolean;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-}
 export interface User {
   id: string;
   firstName: string;
@@ -38,6 +36,13 @@ interface AuthContextState {
   loading: boolean;
   state: State;
   setState: React.Dispatch<React.SetStateAction<State>>;
+  register: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextState | undefined>(
@@ -78,6 +83,47 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   };
 
+  const register = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => {
+    const { data } = await authService.register(
+      firstName,
+      lastName,
+      email,
+      password,
+    );
+
+    if (data && data.user) {
+      setState({
+        ready: true,
+        user: data.user,
+      });
+      localStorage.setItem('token', data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    const { data } = await authService.login(email, password);
+
+    if (data && data.user) {
+      setState({
+        ready: true,
+        user: data.user,
+      });
+      localStorage.setItem('token', data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    } else {
+      setState({
+        user: undefined,
+        ready: true,
+      });
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetchUser();
@@ -96,6 +142,8 @@ export const AuthContextProvider = ({ children }: Props) => {
       loading: state?.user?.loading as boolean,
       state,
       setState,
+      register,
+      login,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user]);
@@ -106,9 +154,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 };
 
 export function useAuthContext() {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuthContext must be used within a AuthProvider');
   }
 

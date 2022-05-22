@@ -9,7 +9,7 @@ interface Props {
   onDelete: (id: number) => void;
 }
 
-const EditDeleteTodoButtons = ({ id, userId, onDelete }: Props) => {
+const EditDeleteTodoButtons = ({ id, onDelete }: Props) => {
   return (
     <Box>
       <Link to={`/todo/update/${id}`}>

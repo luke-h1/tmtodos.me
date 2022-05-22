@@ -1,10 +1,10 @@
-import { Button, Checkbox, Spacer } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Spacer } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { InputField } from '../../components/InputField';
 import { Layout } from '../../components/Layout';
 import * as yup from 'yup';
-import todoService from '../../services/todoService';
 import { useNavigate } from 'react-router-dom';
+import { useTodoContext } from '../../context/TodoContext';
 
 interface FormValues {
   title: string;
@@ -20,6 +20,7 @@ const todoCreateSchema = yup.object({
 
 const TodoCreatePage = () => {
   const navigate = useNavigate();
+  const { createTodo } = useTodoContext();
   return (
     <Layout variant="small">
       <Formik<FormValues>
@@ -28,9 +29,8 @@ const TodoCreatePage = () => {
         onSubmit={async values => {
           const { body, completed, title } = values;
 
-          const res = await todoService.create(body, title, completed);
-
-          navigate(`/todo/${res.data.todo.id}`);
+          const todo = await createTodo(body, title, completed);
+          navigate(`/todo/${todo.id}`);
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -51,14 +51,17 @@ const TodoCreatePage = () => {
             >
               Complete
             </Checkbox>
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              variant="teal"
-            >
-              create todo
-            </Button>
+            <Box>
+              <Button
+                mt={4}
+                colorScheme="blue"
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
+                create todo
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>

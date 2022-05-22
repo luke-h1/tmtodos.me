@@ -16,10 +16,10 @@
     "babel-jest": "^26.5.2",
     "@types/jest": "^27.5.1",
     "@types/node": "^16.11.35",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.4",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "@types/react": "18.0.9",
+    "@types/react-dom": "18.0.4",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-scripts": "5.0.1",
     "yup": "0.32.11",
     "@fontsource/open-sans": "4.5.10",
@@ -47,7 +47,6 @@
     "@types/react-router-dom": "5.3.3",
     "jest-serializer-html": "7.1.0",
     "@types/d3-array": "2.9.0",
-    "babel-jest": "28.1.0",
     "cypress": "9.6.1"
   },
   "scripts": {

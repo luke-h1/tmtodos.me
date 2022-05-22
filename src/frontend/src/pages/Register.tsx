@@ -1,11 +1,10 @@
 import { Box, Button } from '@chakra-ui/react';
-import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
-import authService from '../services/authService';
 import * as yup from 'yup';
+import { useAuthContext } from '../context/AuthContext';
 
 interface FormValues {
   firstName: string;
@@ -23,31 +22,17 @@ const registerSchema = yup.object({
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { register } = useAuthContext();
   return (
     <Wrapper variant="small">
       <Formik<FormValues>
         validationSchema={registerSchema}
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
-        onSubmit={async (values, { setErrors }) => {
+        onSubmit={async values => {
           const { firstName, lastName, email, password } = values;
-          const res = await authService.register(
-            firstName,
-            lastName,
-            email,
-            password,
-          );
+          await register(firstName, lastName, email, password);
 
-          if (res?.errors && res.errors.length) {
-            setErrors({
-              email: res.errors[0].message,
-            });
-          } else {
-            localStorage.setItem('token', res.data.token);
-            axios.defaults.headers.common[
-              'Authorization'
-            ] = `Bearer ${res.data.token}`;
-            navigate('/');
-          }
+          navigate('/');
         }}
       >
         {({ isSubmitting }) => (

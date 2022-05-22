@@ -9,6 +9,8 @@ import TodoCreatePage from './pages/todos/create';
 import ProtectedRoute from './components/ProtectedRoute';
 import TodoUpdatePage from './pages/todos/update';
 import TodoSlugPage from './pages/todos/slug';
+import { TodoContextProvider } from './context/TodoContext';
+import ForbiddenPage from './pages/forbidden';
 
 const App = () => {
   return (
@@ -16,23 +18,31 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CSSReset />
         <AuthContextProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+          <TodoContextProvider>
+            <Routes>
+              {/* <Route path="/" element={<ProtectedRoute />}>
+                <Route path="/" element={<HomePage />} />
+              </Route> */}
 
-            <Route path="/todo/create" element={<ProtectedRoute />}>
-              <Route path="/todo/create" element={<TodoCreatePage />} />
-            </Route>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/forbidden" element={<ForbiddenPage />} />
 
-            <Route path="/todo/:id" element={<ProtectedRoute />}>
-              <Route path="/todo/:id" element={<TodoSlugPage />} />
-            </Route>
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
 
-            <Route path="/todo/update/:id" element={<ProtectedRoute />}>
-              <Route path="/todo/update/:id" element={<TodoUpdatePage />} />
-            </Route>
-          </Routes>
+              <Route path="/todo/create" element={<ProtectedRoute />}>
+                <Route path="/todo/create" element={<TodoCreatePage />} />
+              </Route>
+
+              <Route path="/todo/:id" element={<ProtectedRoute />}>
+                <Route path="/todo/:id" element={<TodoSlugPage />} />
+              </Route>
+
+              <Route path="/todo/update/:id" element={<ProtectedRoute />}>
+                <Route path="/todo/update/:id" element={<TodoUpdatePage />} />
+              </Route>
+            </Routes>
+          </TodoContextProvider>
         </AuthContextProvider>
       </ThemeProvider>
     </BrowserRouter>
