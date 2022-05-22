@@ -29,7 +29,13 @@ const TodoSlugPage = () => {
     <Layout>
       <Heading mb={4}>{todo.title}</Heading>
       <Box mb={4}>{todo.body}</Box>
-      <EditDeleteTodoButtons id={parseInt(todo.id, 10)} userId={todo.userId} />
+      <EditDeleteTodoButtons
+        id={parseInt(todo.id, 10)}
+        userId={todo.userId}
+        onDelete={async () => {
+          await todoService.deleteTodo(parseInt(todo.id, 10));
+        }}
+      />
     </Layout>
   );
 };
