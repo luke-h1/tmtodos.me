@@ -34,3 +34,5 @@ idea/
 src/go-backend/.dbdata
 go-backend/.dbdata
 tmp
+.env.local
+!.env.local.example

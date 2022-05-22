@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "src/frontend",
-    "src/api"
+    "src/api",
+    "src/tests"
   ],
   "devDependencies": {
     "eslint-config-next": "^12.0.4",

@@ -1,0 +1,11 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "../../.eslintrc.json",
+    "plugin:cypress/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-console": "off"
+  }
+}
