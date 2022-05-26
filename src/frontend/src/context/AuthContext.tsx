@@ -43,6 +43,7 @@ interface AuthContextState {
     password: string,
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextState | undefined>(
@@ -55,33 +56,11 @@ interface Props {
 
 export const AuthContextProvider = ({ children }: Props) => {
   const [state, setState] = useState<State>({ ready: false });
+  const [token, setToken] = useState<string | undefined>(undefined);
 
-  const token = localStorage.getItem('token');
-
-  if (token) {
+  if (typeof token !== 'undefined') {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
-
-  const fetchUser = async () => {
-    const data = await authService.me();
-
-    if (data.data && data.data.user) {
-      setState({
-        ready: true,
-        user: data.data.user,
-      });
-    } else if (data && data.errors && data.errors.length > 0) {
-      setState({
-        user: undefined,
-        ready: true,
-      });
-    } else {
-      setState({
-        user: undefined,
-        ready: true,
-      });
-    }
-  };
 
   const register = async (
     firstName: string,
@@ -101,6 +80,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         ready: true,
         user: data.user,
       });
+      setToken(data.token);
       localStorage.setItem('token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
     }
@@ -116,11 +96,33 @@ export const AuthContextProvider = ({ children }: Props) => {
       });
       localStorage.setItem('token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+      setToken(data.token);
     } else {
       setState({
         user: undefined,
         ready: true,
       });
+    }
+  };
+
+  const logout = async (): Promise<void> => {
+    setToken(undefined);
+    axios.defaults.headers.common['Authorization'] = '';
+    setState({
+      user: undefined,
+      ready: true,
+    });
+  };
+  const fetchUser = async () => {
+    const data = await authService.me();
+    if (data.data.token && data.data.user) {
+      setToken(data.data.token);
+      setState({
+        user: data.data.user,
+        ready: true,
+      });
+    } else {
+      setState({ user: undefined, ready: true });
     }
   };
 
@@ -138,19 +140,24 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   const contextState: AuthContextState = useMemo(() => {
     return {
-      user: state.user,
+      user: state.user ?? undefined,
       loading: state?.user?.loading as boolean,
       state,
       setState,
       register,
       login,
+      logout,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user]);
 
-  return !state.user?.loading && state.ready ? (
-    <AuthContext.Provider value={contextState}>{children}</AuthContext.Provider>
-  ) : null;
+  return (
+    state.ready && (
+      <AuthContext.Provider value={contextState}>
+        {children}
+      </AuthContext.Provider>
+    )
+  );
 };
 
 export function useAuthContext() {

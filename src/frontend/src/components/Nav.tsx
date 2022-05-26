@@ -6,18 +6,16 @@ import {
   Button,
   Heading,
 } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 
 const Nav = () => {
-  const navigate = useNavigate();
-  const { loading, state, setState } = useAuthContext();
+  const { state, logout } = useAuthContext();
 
   let body = null;
 
   // user not logged in
-  if (!loading && !state.user) {
+  if (!state.user) {
     body = (
       <>
         <Link to="/login">
@@ -33,18 +31,7 @@ const Nav = () => {
     body = (
       <Flex align="center">
         <Box mr={2}>{state.user?.email}</Box>
-        <Button
-          onClick={() => {
-            setState({
-              user: undefined,
-              ready: true,
-            });
-            localStorage.removeItem('token');
-            axios.defaults.headers.common['Authorization'] = '';
-            navigate('/');
-          }}
-          variant="link"
-        >
+        <Button onClick={() => logout()} variant="link">
           Logout
         </Button>
         <Box ml={5}>

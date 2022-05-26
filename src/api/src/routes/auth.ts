@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -9,6 +10,36 @@ import { checkAuth } from '../middleware/checkAuth';
 dotenv.config();
 
 const router = express.Router();
+
+router.get('/token', async (req, res) => {
+  let token = req.header('Authorization');
+
+  if (!token) {
+    return res.status(401).json({
+      message: 'Unauthorized',
+    });
+  }
+
+  // eslint-disable-next-line prefer-destructuring
+  token = token.split(' ')[1];
+
+  try {
+    const user = (await jwt.verify(
+      token,
+      process.env.JWT_SECRET as string,
+    )) as User;
+
+    req.user = user.email;
+
+    return res.json({
+      token,
+    });
+  } catch (e) {
+    return res.status(401).json({
+      message: 'Unauthorized',
+    });
+  }
+});
 
 router.post(
   '/register',

@@ -17,6 +17,7 @@ const App = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CSSReset />
+        {/* @ts-ignore */}
         <AuthContextProvider>
           <TodoContextProvider>
             <Routes>
