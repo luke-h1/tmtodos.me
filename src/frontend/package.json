@@ -36,7 +36,7 @@
     "@emotion/react": "11.9.0",
     "@chakra-ui/icons": "2.0.0",
     "@emotion/css": "11.9.0",
-    "globby": "11.0.2",
+    "globby": "13.2.2",
     "prismjs": "^1.25.0",
     "reading-time": "1.2.1",
     "react-router-dom": "6.3.0",
