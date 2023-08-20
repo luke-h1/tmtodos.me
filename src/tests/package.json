@@ -12,7 +12,7 @@
     "cypress:verify": "cypress verify"
   },
   "dependencies": {
-    "cypress": "9.6.1",
+    "cypress": "12.17.4",
     "dotenv": "16.0.1",
     "eslint": "8.16.0",
     "@types/node": "17.0.31",
