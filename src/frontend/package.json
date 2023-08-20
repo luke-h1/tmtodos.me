@@ -32,7 +32,7 @@
     "framer-motion": "^6.3.1",
     "gen-env-types": "1.3.4",
     "chalk": "4.1.1",
-    "@emotion/styled": "11.8.1",
+    "@emotion/styled": "11.11.0",
     "@emotion/react": "11.9.0",
     "@chakra-ui/icons": "2.0.0",
     "@emotion/css": "11.9.0",
