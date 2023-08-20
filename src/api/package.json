@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "body-parser": "1.20.0",
-    "@prisma/client": "^3.12.0",
+    "@prisma/client": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
