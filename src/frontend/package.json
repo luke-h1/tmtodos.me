@@ -46,7 +46,7 @@
   "devDependencies": {
     "@types/react-router-dom": "5.3.3",
     "jest-serializer-html": "7.1.0",
-    "@types/d3-array": "2.9.0",
+    "@types/d3-array": "3.0.5",
     "cypress": "9.6.1"
   },
   "scripts": {
