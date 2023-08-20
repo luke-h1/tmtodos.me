@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "cypress": "9.6.1",
-    "dotenv": "16.0.1",
+    "dotenv": "16.3.1",
     "eslint": "8.16.0",
     "@types/node": "17.0.31",
     "eslint-plugin-cypress": "2.12.1",
